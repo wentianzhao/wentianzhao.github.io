@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.wentz.top/"/>
-  <updated>2019-11-05T14:55:55.834Z</updated>
+  <updated>2019-11-05T15:09:57.005Z</updated>
   <id>http://www.wentz.top/</id>
   
   <author>
@@ -21,13 +21,13 @@
     <link href="http://www.wentz.top/2019/11/05/Oracle-11g-%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E5%AE%9E%E7%8E%B0/"/>
     <id>http://www.wentz.top/2019/11/05/Oracle-11g-存储过程实现/</id>
     <published>2019-11-05T09:20:55.000Z</published>
-    <updated>2019-11-05T14:55:55.834Z</updated>
+    <updated>2019-11-05T15:09:57.005Z</updated>
     
-    <content type="html"><![CDATA[<p>感觉这块没多少东西，，，使用场景也很明显，就是在需要进行大量数据同步时设置，知道用法就可以了。   1</p><h3 id="参考："><a href="#参考：" class="headerlink" title="参考："></a>参考：</h3><p><a href="https://blog.csdn.net/qq_21419015/article/details/84651944" target="_blank" rel="noopener">Oracle 11g 存储过程实现</a></p><p><a href="https://xuexiyuan.cn/article/detail/212.html" target="_blank" rel="noopener">参考2</a></p><a id="more"></a><h3 id="创建公共数据库链接"><a href="#创建公共数据库链接" class="headerlink" title="创建公共数据库链接"></a>创建公共数据库链接</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">PUBLIC</span> <span class="keyword">DATABASE</span> <span class="keyword">LINK</span> <span class="string">"test_B"</span></span><br><span class="line"> <span class="keyword">CONNECT</span> <span class="keyword">TO</span> <span class="string">"ORACLE"</span> <span class="keyword">IDENTIFIED</span> <span class="keyword">BY</span> <span class="keyword">VALUES</span> <span class="string">':1'</span></span><br><span class="line"> <span class="keyword">USING</span> <span class="string">'(DESCRIPTION =</span></span><br><span class="line"><span class="string">      (ADDRESS_LIST =</span></span><br><span class="line"><span class="string">        (ADDRESS =(PROTOCOL = TCP)(HOST = 127.0.0.1)(PORT = 1521))</span></span><br><span class="line"><span class="string">      )</span></span><br><span class="line"><span class="string">      (CONNECT_DATA =(SERVICE_NAME = ORCL))</span></span><br><span class="line"><span class="string">    )'</span>;</span><br></pre></td></tr></table></figure>]]></content>
+    <content type="html"><![CDATA[<p>感觉这块没多少东西，，，，，使用场景也很明显，就是在需要进行大量数据同步时设置，知道用法就可以了。   </p><h3 id="参考："><a href="#参考：" class="headerlink" title="参考："></a>参考：</h3><p><a href="https://blog.csdn.net/qq_21419015/article/details/84651944" target="_blank" rel="noopener">Oracle 11g 存储过程实现</a></p><p><a href="https://xuexiyuan.cn/article/detail/212.html" target="_blank" rel="noopener">参考2</a></p><a id="more"></a><h3 id="创建公共数据库链接"><a href="#创建公共数据库链接" class="headerlink" title="创建公共数据库链接"></a>创建公共数据库链接</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">PUBLIC</span> <span class="keyword">DATABASE</span> <span class="keyword">LINK</span> <span class="string">"test_B"</span></span><br><span class="line"> <span class="keyword">CONNECT</span> <span class="keyword">TO</span> <span class="string">"ORACLE"</span> <span class="keyword">IDENTIFIED</span> <span class="keyword">BY</span> <span class="keyword">VALUES</span> <span class="string">':1'</span></span><br><span class="line"> <span class="keyword">USING</span> <span class="string">'(DESCRIPTION =</span></span><br><span class="line"><span class="string">      (ADDRESS_LIST =</span></span><br><span class="line"><span class="string">        (ADDRESS =(PROTOCOL = TCP)(HOST = 127.0.0.1)(PORT = 1521))</span></span><br><span class="line"><span class="string">      )</span></span><br><span class="line"><span class="string">      (CONNECT_DATA =(SERVICE_NAME = ORCL))</span></span><br><span class="line"><span class="string">    )'</span>;</span><br></pre></td></tr></table></figure>]]></content>
     
     <summary type="html">
     
-      &lt;p&gt;感觉这块没多少东西，，，使用场景也很明显，就是在需要进行大量数据同步时设置，知道用法就可以了。   1&lt;/p&gt;
+      &lt;p&gt;感觉这块没多少东西，，，，，使用场景也很明显，就是在需要进行大量数据同步时设置，知道用法就可以了。   &lt;/p&gt;
 &lt;h3 id=&quot;参考：&quot;&gt;&lt;a href=&quot;#参考：&quot; class=&quot;headerlink&quot; title=&quot;参考：&quot;&gt;&lt;/a&gt;参考：&lt;/h3&gt;&lt;p&gt;&lt;a href=&quot;https://blog.csdn.net/qq_21419015/article/details/84651944&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Oracle 11g 存储过程实现&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a href=&quot;https://xuexiyuan.cn/article/detail/212.html&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;参考2&lt;/a&gt;&lt;/p&gt;
     
