@@ -1,3 +1,3 @@
-http://www.wentz.top/2019/11/07/linux常见命令/
-http://www.wentz.top/2019/11/07/mysql的慢查询实战-sql优化/
-http://www.wentz.top/2019/11/07/SELECT-FROM-A-B-能查出多少条数据？/
+http://www.wentz.top/2019/11/07/器械召回系统总结/
+http://www.wentz.top/2019/11/07/java代码性能优化总结/
+http://www.wentz.top/2019/11/07/mysql 和 oracle 的不同/
