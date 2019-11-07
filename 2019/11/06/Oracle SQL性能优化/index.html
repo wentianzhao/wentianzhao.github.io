@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.8.0">
+<meta name="baidu-site-verification" content="dW0JLBKAAy" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/logo2.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/logo2.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/logo2.jpg">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '7.4.2',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: true,
+    lazyload: true,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+
+  <script>
+  (function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/0f81ff2f.js","daovoice")
+  daovoice('init', {
+      app_id: "cd424aa3"
+    });
+  daovoice('update');
+  </script>
+
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+  <meta name="description" content="（1）   选择最有效率的表名顺序(只在基于规则的优化器中有效)：">
+<meta name="keywords" content="数据库">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Oracle SQL性能优化">
+<meta property="og:url" content="http://www.wentz.top/2019/11/06/Oracle SQL性能优化/index.html">
+<meta property="og:site_name" content="飞黄">
+<meta property="og:description" content="（1）   选择最有效率的表名顺序(只在基于规则的优化器中有效)：">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-11-07T06:41:53.779Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Oracle SQL性能优化">
+<meta name="twitter:description" content="（1）   选择最有效率的表名顺序(只在基于规则的优化器中有效)：">
+
+<link rel="canonical" href="http://www.wentz.top/2019/11/06/Oracle SQL性能优化/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>Oracle SQL性能优化 | 飞黄</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-151358316-1"></script>
+    <script>
+      var host = window.location.hostname;
+      if (host !== "localhost" || !true) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-151358316-1');
+      }
+    </script>
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?9cbaa8d6018d0dfc38d6ccf792ae0526";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">飞黄</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <h1 class="site-subtitle" itemprop="description">不因兹白人间有，定是飞黄天上来</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none" placeholder="搜索..." spellcheck="false" type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.wentz.top/2019/11/06/Oracle SQL性能优化/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/mao01.jpg">
+      <meta itemprop="name" content="文天兆">
+      <meta itemprop="description" content="进一寸有进一寸的欢喜">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="飞黄">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          Oracle SQL性能优化
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-11-06 09:55:24" itemprop="dateCreated datePublished" datetime="2019-11-06T09:55:24+08:00">2019-11-06</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-11-07 14:41:53" itemprop="dateModified" datetime="2019-11-07T14:41:53+08:00">2019-11-07</time>
+              </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><strong>（1）</strong>   选择最有效率的表名顺序(只在基于规则的优化器中有效)：</p>
+<a id="more"></a>
+<p>ORACLE的解析器按照从右到左的顺序处理FROM子句中的表名，FROM子句中写在最后的表(基础表 driving table)将被最先处理，在FROM子句中包含多个表的情况下,你必须选择记录条数最少的表作为基础表。如果有3个以上的表连接查询, 那就需要选择交叉表(intersection table)作为基础表, 交叉表是指那个被其他表所引用的表.<br><strong>（2）</strong>   WHERE子句中的连接顺序．：<br>ORACLE采用自下而上的顺序解析WHERE子句,根据这个原理,表之间的连接必须写在其他WHERE条件之前, 那些可以过滤掉最大数量记录的条件必须写在WHERE子句的末尾.<br><strong>（3）</strong>   SELECT子句中避免使用 ‘ <em> ‘：<br>ORACLE在解析的过程中, 会将’</em>‘ 依次转换成所有的列名, 这个工作是通过查询数据字典完成的, 这意味着将耗费更多的时间<br><strong>（4）</strong>   减少访问数据库的次数：<br>ORACLE在内部执行了许多工作: 解析SQL语句, 估算索引的利用率, 绑定变量 , 读数据块等；<br><strong>（5）</strong>   在SQL<em>Plus , SQL</em>Forms和Pro<em>C中重新设置ARRAYSIZE参数, 可以增加每次数据库访问的检索数据量 ,建议值为200<br><strong>（6）</strong>   使用DECODE函数来减少处理时间：<br>使用DECODE函数可以避免重复扫描相同记录或重复连接相同的表.<br><strong>（7）</strong>   整合简单,无关联的数据库访问：<br>如果你有几个简单的数据库查询语句,你可以把它们整合到一个查询中(即使它们之间没有关系)<br><strong>（8）</strong>   删除重复记录：<br>最高效的删除重复记录方法 ( 因为使用了ROWID)例子：<br>DELETE FROM EMP E WHERE E.ROWID &gt; (SELECT MIN(X.ROWID)<br>FROM EMP X WHERE X.EMP_NO = E.EMP_NO);<br><strong>（9）</strong>   用TRUNCATE替代DELETE：<br>当删除表中的记录时,在通常情况下, 回滚段(rollback segments ) 用来存放可以被恢复的信息. 如果你没有COMMIT事务,ORACLE会将数据恢复到删除之前的状态(准确地说是恢复到执行删除命令之前的状况) 而当运用TRUNCATE时, 回滚段不再存放任何可被恢复的信息.当命令运行后,数据不能被恢复.因此很少的资源被调用,执行时间也会很短. (译者按: TRUNCATE只在删除全表适用,TRUNCATE是DDL不是DML)<br><strong>（10）</strong> 尽量多使用COMMIT：<br>只要有可能,在程序中尽量多使用COMMIT, 这样程序的性能得到提高,需求也会因为COMMIT所释放的资源而减少:<br>COMMIT所释放的资源:<br>a. 回滚段上用于恢复数据的信息.<br>b. 被程序语句获得的锁<br>c. redo log buffer 中的空间<br>d. ORACLE为管理上述3种资源中的内部花费<br><strong>（11）</strong> 用Where子句替换HAVING子句：<br>避免使用HAVING子句, HAVING 只会在检索出所有记录之后才对结果集进行过滤. 这个处理需要排序,总计等操作. 如果能通过WHERE子句限制记录的数目,那就能减少这方面的开销. (非oracle中)on、where、having这三个都可以加条件的子句中，on是最先执行，where次之，having最后，因为on是先把不符合条件的记录过滤后才进行统计，它就可以减少中间运算要处理的数据，按理说应该速度是最快的，where也应该比having快点的，因为它过滤数据后才进行sum，在两个表联接时才用on的，所以在一个表的时候，就剩下where跟having比较了。在这单表查询统计的情况下，如果要过滤的条件没有涉及到要计算字段，那它们的结果是一样的，只是where可以使用rushmore技术，而having就不能，在速度上后者要慢如果要涉及到计算的字段，就表示在没计算之前，这个字段的值是不确定的，根据上篇写的工作流程，where的作用时间是在计算之前就完成的，而having就是在计算后才起作用的，所以在这种情况下，两者的结果会不同。在多表联接查询时，on比where更早起作用。系统首先根据各个表之间的联接条件，把多个表合成一个临时表后，再由where进行过滤，然后再计算，计算完后再由having进行过滤。由此可见，要想过滤条件起到正确的作用，首先要明白这个条件应该在什么时候起作用，然后再决定放在那里<br><strong>（12）</strong> 减少对表的查询：<br>在含有子查询的SQL语句中,要特别注意减少对表的查询.例子：<br>   SELECT TAB_NAME FROM TABLES WHERE (TAB_NAME,DB_VER) = ( SELECT<br>TAB_NAME,DB_VER FROM TAB_COLUMNS WHERE VERSION = 604)<br><strong>（13）</strong> 通过内部函数提高SQL效率.：<br>复杂的SQL往往牺牲了执行效率. 能够掌握上面的运用函数解决问题的方法在实际工作中是非常有意义的<br><strong>（14）</strong> 使用表的别名(Alias)：<br>当在SQL语句中连接多个表时, 请使用表的别名并把别名前缀于每个Column上.这样一来,就可以减少解析的时间并减少那些由Column歧义引起的语法错误.<br><strong>（15）</strong> 用EXISTS替代IN、用NOT EXISTS替代NOT IN：<br>在许多基于基础表的查询中,为了满足一个条件,往往需要对另一个表进行联接.在这种情况下, 使用EXISTS(或NOT EXISTS)通常将提高查询的效率. 在子查询中,NOT IN子句将执行一个内部的排序和合并. 无论在哪种情况下,NOT IN都是最低效的 (因为它对子查询中的表执行了一个全表遍历). 为了避免使用NOT IN ,我们可以把它改写成外连接(Outer Joins)或NOT EXISTS.<br>例子：<br>（高效）SELECT </em> FROM EMP (基础表) WHERE EMPNO &gt; 0 AND <strong>EXISTS</strong> (SELECT ‘X’ FROM DEPT WHERE DEPT.DEPTNO = EMP.DEPTNO AND LOC = ‘MELB’)<br>(低效)SELECT * FROM EMP (基础表) WHERE EMPNO &gt; 0 AND DEPTNO <strong>IN</strong>(SELECT DEPTNO FROM DEPT WHERE LOC = ‘MELB’)<br><strong>（16）</strong> <strong>识别’**</strong>低效执行’的SQL语句：**<br>虽然目前各种关于SQL优化的图形化工具层出不穷,但是写出自己的SQL工具来解决问题始终是一个最好的方法：<br>SELECT EXECUTIONS , DISK_READS, BUFFER_GETS,<br>ROUND((BUFFER_GETS-DISK_READS)/BUFFER_GETS,2) Hit_radio,<br>ROUND(DISK_READS/EXECUTIONS,2) Reads_per_run,<br>SQL_TEXT<br>FROM V$SQLAREA<br>WHERE EXECUTIONS&gt;0<br>AND BUFFER_GETS &gt; 0<br>AND (BUFFER_GETS-DISK_READS)/BUFFER_GETS &lt; 0.8<br>ORDER BY 4 DESC;</p>
+<p><strong>（17）</strong> 用索引提高效率：<br>索引是表的一个概念部分,用来提高检索数据的效率，ORACLE使用了一个复杂的自平衡B-tree结构. 通常,通过索引查询数据比全表扫描要快. 当ORACLE找出执行查询和Update语句的最佳路径时, ORACLE优化器将使用索引. 同样在联结多个表时使用索引也可以提高效率. 另一个使用索引的好处是,它提供了主键(primary key)的唯一性验证.。那些LONG或LONG RAW数据类型, 你可以索引几乎所有的列. 通常, 在大型表中使用索引特别有效. 当然,你也会发现, 在扫描小表时,使用索引同样能提高效率. 虽然使用索引能得到查询效率的提高,但是我们也必须注意到它的代价. 索引需要空间来存储,也需要定期维护, 每当有记录在表中增减或索引列被修改时, 索引本身也会被修改. 这意味着每条记录的INSERT , DELETE , UPDATE将为此多付出4 , 5 次的磁盘I/O . 因为索引需要额外的存储空间和处理,那些不必要的索引反而会使查询反应时间变慢.。定期的重构索引是有必要的.：<br>ALTER INDEX <indexname> REBUILD <tablespacename><br><strong>（18）</strong> 用EXISTS替换DISTINCT：<br>当提交一个包含一对多表信息(比如部门表和雇员表)的查询时,避免在SELECT子句中使用DISTINCT. 一般可以考虑用EXIST替换, EXISTS 使查询更为迅速,因为RDBMS核心模块将在子查询的条件一旦满足后,立刻返回结果. 例子：<br>    (低效):<br>SELECT DISTINCT DEPT_NO,DEPT_NAME FROM DEPT D , EMP E<br>WHERE D.DEPT_NO = E.DEPT_NO<br>(高效):<br>SELECT DEPT_NO,DEPT_NAME FROM DEPT D WHERE EXISTS ( SELECT ‘X’<br>FROM EMP E WHERE E.DEPT_NO = D.DEPT_NO);<br><strong>（19）</strong> sql语句用大写的；因为oracle总是先解析sql语句，把小写的字母转换成大写的再执行<br><strong>（20）</strong> 在java代码中尽量少用连接符“＋”连接字符串！<br><strong>（21）</strong> <strong>避免在索引列上使用NOT</strong> <strong>通常</strong>，　<br>我们要避免在索引列上使用NOT, NOT会产生在和在索引列上使用函数相同的影响. 当ORACLE”遇到”NOT,他就会停止使用索引转而执行全表扫描.<br><strong>（22）</strong> 避免在索引列上使用计算．<br>WHERE子句中，如果索引列是函数的一部分．优化器将不使用索引而使用全表扫描．<br>举例:<br>低效：<br>SELECT … FROM DEPT WHERE SAL <em> 12 &gt; 25000;<br>高效:<br>SELECT … FROM DEPT WHERE SAL &gt; 25000/12;<br><strong>（23）</strong> 用&gt;=替代&gt;<br>高效:<br>SELECT </em> FROM EMP WHERE DEPTNO &gt;=4<br>低效:<br>SELECT * FROM EMP WHERE DEPTNO &gt;3<br>两者的区别在于, 前者DBMS将直接跳到第一个DEPT等于4的记录而后者将首先定位到DEPTNO=3的记录并且向前扫描到第一个DEPT大于3的记录.<br><strong>（24）</strong> <strong>用UNION**</strong>替换OR (<strong>**适用于索引列)</strong><br>通常情况下, 用UNION替换WHERE子句中的OR将会起到较好的效果. 对索引列使用OR将造成全表扫描. 注意, 以上规则只针对多个索引列有效. 如果有column没有被索引, 查询效率可能会因为你没有选择OR而降低. 在下面的例子中, LOC_ID 和REGION上都建有索引.<br>高效:<br>SELECT LOC_ID , LOC_DESC , REGION<br>FROM LOCATION<br>WHERE LOC_ID = 10<br>UNION<br>SELECT LOC_ID , LOC_DESC , REGION<br>FROM LOCATION<br>WHERE REGION = “MELBOURNE”<br>低效:<br>SELECT LOC_ID , LOC_DESC , REGION<br>FROM LOCATION<br>WHERE LOC_ID = 10 OR REGION = “MELBOURNE”<br>如果你坚持要用OR, 那就需要返回记录最少的索引列写在最前面.<br><strong>（25）</strong> <strong>用IN**</strong>来替换OR<strong><br>这是一条简单易记的规则，但是实际的执行效果还须检验，在ORACLE8i下，两者的执行路径似乎是相同的．　<br>低效:<br>SELECT…. FROM LOCATION WHERE LOC_ID = 10 OR LOC_ID = 20 OR LOC_ID = 30<br>高效<br>SELECT… FROM LOCATION WHERE LOC_IN IN (10,20,30);
+</strong>（26）<strong> </strong>避免在索引列上使用IS NULL<strong>**和IS NOT NULL</strong><br>避免在索引中使用任何可以为空的列，ORACLE将无法使用该索引．对于单列索引，如果列包含空值，索引中将不存在此记录. 对于复合索引，如果每个列都为空，索引中同样不存在此记录.　如果至少有一个列不为空，则记录存在于索引中．举例: 如果唯一性索引建立在表的A列和B列上, 并且表中存在一条记录的A,B值为(123,null) , ORACLE将不接受下一条具有相同A,B值（123,null）的记录(插入). 然而如果所有的索引列都为空，ORACLE将认为整个键值为空而空不等于空. 因此你可以插入1000 条具有相同键值的记录,当然它们都是空! 因为空值不存在于索引列中,所以WHERE子句中对索引列进行空值比较将使ORACLE停用该索引.<br>低效: (索引失效)<br>SELECT … FROM DEPARTMENT WHERE DEPT_CODE IS NOT NULL;<br>高效: (索引有效)<br>SELECT … FROM DEPARTMENT WHERE DEPT_CODE &gt;=0;<br><strong>（27）</strong> <strong>总是使用索引的第一个列**</strong>：<strong><br>如果索引是建立在多个列上, 只有在它的第一个列(leading column)被where子句引用时,优化器才会选择使用该索引. 这也是一条简单而重要的规则，当仅引用索引的第二个列时,优化器使用了全表扫描而忽略了索引
+</strong>（28）<strong> </strong>用UNION-ALL<strong> </strong>替换UNION (<strong> </strong>如果有可能的话)<strong>**：</strong><br>当SQL语句需要UNION两个查询结果集合时,这两个结果集合会以UNION-ALL的方式被合并, 然后在输出最终结果前进行排序. 如果用UNION ALL替代UNION, 这样排序就不是必要了. 效率就会因此得到提高. 需要注意的是，UNION ALL 将重复输出两个结果集合中相同记录. 因此各位还是要从业务需求分析使用UNION ALL的可行性. UNION 将对结果集合排序,这个操作会使用到SORT_AREA_SIZE这块内存. 对于这块内存的优化也是相当重要的. 下面的SQL可以用来查询排序的消耗量<br>低效：<br>SELECT ACCT_NUM, BALANCE_AMT<br>FROM DEBIT_TRANSACTIONS<br>WHERE TRAN_DATE = ‘31-DEC-95’<br>UNION<br>SELECT ACCT_NUM, BALANCE_AMT<br>FROM DEBIT_TRANSACTIONS<br>WHERE TRAN_DATE = ‘31-DEC-95’<br>高效:<br>SELECT ACCT_NUM, BALANCE_AMT<br>FROM DEBIT_TRANSACTIONS<br>WHERE TRAN_DATE = ‘31-DEC-95’<br>UNION ALL<br>SELECT ACCT_NUM, BALANCE_AMT<br>FROM DEBIT_TRANSACTIONS<br>WHERE TRAN_DATE = ‘31-DEC-95’<br><strong>（29）</strong> <strong>用WHERE**</strong>替代ORDER BY<strong>**：</strong><br>ORDER BY 子句只在两种严格的条件下使用索引.<br>ORDER BY中所有的列必须包含在相同的索引中并保持在索引中的排列顺序.<br>ORDER BY中所有的列必须定义为非空.<br>WHERE子句使用的索引和ORDER BY子句中所使用的索引不能并列.<br>例如:<br>表DEPT包含以下列:<br>DEPT_CODE PK NOT NULL<br>DEPT_DESC NOT NULL<br>DEPT_TYPE NULL<br>低效: (索引不被使用)<br>SELECT DEPT_CODE FROM DEPT ORDER BY DEPT_TYPE<br>高效: (使用索引)<br>SELECT DEPT_CODE FROM DEPT WHERE DEPT_TYPE &gt; 0<br><strong>（30）</strong> <strong>避免改变索引列的类型.:</strong><br>当比较不同数据类型的数据时, ORACLE自动对列进行简单的类型转换.<br>假设 EMPNO是一个数值类型的索引列.<br>SELECT … FROM EMP WHERE EMPNO = ‘123’<br>实际上,经过ORACLE类型转换, 语句转化为:<br>SELECT … FROM EMP WHERE EMPNO = TO_NUMBER(‘123’)<br>幸运的是,类型转换没有发生在索引列上,索引的用途没有被改变.<br>现在,假设EMP_TYPE是一个字符类型的索引列.<br>SELECT … FROM EMP WHERE EMP_TYPE = 123<br>这个语句被ORACLE转换为:<br>SELECT … FROM EMP WHERETO_NUMBER(EMP_TYPE)=123<br>因为内部发生的类型转换, 这个索引将不会被用到! 为了避免ORACLE对你的SQL进行隐式的类型转换, 最好把类型转换用显式表现出来. 注意当字符和数值比较时, ORACLE会优先转换数值类型到字符类型<br><strong>（31）</strong> <strong>需要当心的WHERE**</strong>子句:<strong><br>某些SELECT 语句中的WHERE子句不使用索引. 这里有一些例子.<br>在下面的例子里, (1)‘!=’ 将不使用索引. 记住, 索引只能告诉你什么存在于表中, 而不能告诉你什么不存在于表中. (2) ‘||’是字符连接函数. 就象其他函数那样, 停用了索引. (3) ‘+’是数学函数. 就象其他数学函数那样, 停用了索引. (4)相同的索引列不能互相比较,这将会启用全表扫描.
+</strong>（32）<strong> a. 如果检索数据量超过30%的表中记录数.使用索引将没有显著的效率提高.<br>b. 在特定情况下, 使用索引也许会比全表扫描慢, 但这是同一个数量级上的区别. 而通常情况下,使用索引比全表扫描要块几倍乃至几千倍!
+</strong>（33）<strong> </strong>避免使用耗费资源的操作:<strong><br>带有DISTINCT,UNION,MINUS,INTERSECT,ORDER BY的SQL语句会启动SQL引擎<br>执行耗费资源的排序(SORT)功能. DISTINCT需要一次排序操作, 而其他的至少需要执行两次排序. 通常, 带有UNION, MINUS , INTERSECT的SQL语句都可以用其他方式重写. 如果你的数据库的SORT_AREA_SIZE调配得好, 使用UNION , MINUS, INTERSECT也是可以考虑的, 毕竟它们的可读性很强
+</strong>（34）<strong> </strong>优化GROUP BY:**<br>提高GROUP BY 语句的效率, 可以通过将不需要的记录在GROUP BY 之前过滤掉.下面两个查询返回相同结果但第二个明显就快了许多.<br>低效:<br>SELECT JOB , AVG(SAL)<br>FROM EMP<br>GROUP JOB<br>HAVING JOB = ‘PRESIDENT’<br>OR JOB = ‘MANAGER’<br>高效:<br>SELECT JOB , AVG(SAL)<br>FROM EMP<br>WHERE JOB = ‘PRESIDENT’<br>OR JOB = ‘MANAGER’<br>GROUP JOB</tablespacename></indexname></p>
+<p><a href="https://www.cnblogs.com/rootq/archive/2008/11/17/1334727.html" target="_blank" rel="noopener">参考</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/数据库/" rel="tag"># 数据库</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/2019/11/05/Oracle-11g-存储过程实现/" rel="next" title="Oracle 11g 存储过程实现">
+                  <i class="fa fa-chevron-left"></i> Oracle 11g 存储过程实现
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/2019/11/06/实现session共享/" rel="prev" title="实现session共享">
+                  实现session共享 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="site-author-image" itemprop="image" alt="文天兆" src="/images/mao01.jpg">
+  <p class="site-author-name" itemprop="name">文天兆</p>
+  <div class="site-description" itemprop="description">进一寸有进一寸的欢喜</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">24</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">23</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/wentianzhao" title="GitHub &rarr; https://github.com/wentianzhao" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:834023657@qq.com" title="E-Mail &rarr; mailto:834023657@qq.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2018 – 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">文天兆</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://mist.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.4.2
+  </div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/medium-zoom@1/dist/medium-zoom.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+<script src="/js/utils.js"></script>
+<script src="/js/schemes/muse.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  <script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
