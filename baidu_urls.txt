@@ -1,3 +1,3 @@
-http://www.wentz.top/2019/11/07/器械召回系统总结/
-http://www.wentz.top/2019/11/07/java代码性能优化总结/
-http://www.wentz.top/2019/11/07/mysql 和 oracle 的不同/
+http://www.wentz.top/2019/11/08/Nginx使用/
+http://www.wentz.top/2019/11/08/子系统实现cookie共享和SSO单点登录应用代码/
+http://www.wentz.top/2019/11/08/Http-协议/
