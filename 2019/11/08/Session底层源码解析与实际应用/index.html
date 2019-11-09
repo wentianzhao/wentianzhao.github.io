@@ -84,7 +84,7 @@
 <meta property="og:site_name" content="飞黄">
 <meta property="og:description" content="# 简介">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-11-08T02:44:43.269Z">
+<meta property="og:updated_time" content="2019-11-08T06:16:51.483Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Session底层源码解析与实际应用">
 <meta name="twitter:description" content="# 简介">
@@ -286,7 +286,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2019-11-08 06:56:20 / 修改时间：10:44:43" itemprop="dateCreated datePublished" datetime="2019-11-08T06:56:20+08:00">2019-11-08</time>
+              <time title="创建时间：2019-11-08 06:56:20 / 修改时间：14:16:51" itemprop="dateCreated datePublished" datetime="2019-11-08T06:56:20+08:00">2019-11-08</time>
             </span>
 
           
@@ -329,6 +329,14 @@
 <p>最重要的是看其 createSession 方法。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Session <span class="title">createSession</span><span class="params">(String sessionId)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> ((maxActiveSessions &gt;= <span class="number">0</span>) &amp;&amp;</span><br><span class="line">                (getActiveSessions() &gt;= maxActiveSessions)) &#123;</span><br><span class="line">            rejectedSessions++;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> TooManyActiveSessionsException(</span><br><span class="line">                    sm.getString(<span class="string">"managerBase.createSession.ise"</span>),</span><br><span class="line">                    maxActiveSessions);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Recycle or create a Session instance</span></span><br><span class="line">        Session session = createEmptySession();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Initialize the properties of the new session and return it</span></span><br><span class="line">        session.setNew(<span class="keyword">true</span>);</span><br><span class="line">        session.setValid(<span class="keyword">true</span>);</span><br><span class="line">        session.setCreationTime(System.currentTimeMillis());</span><br><span class="line">        session.setMaxInactiveInterval(getContext().getSessionTimeout() * <span class="number">60</span>);</span><br><span class="line">        String id = sessionId;</span><br><span class="line">        <span class="keyword">if</span> (id == <span class="keyword">null</span>) &#123;</span><br><span class="line">            id = generateSessionId();</span><br><span class="line">        &#125;</span><br><span class="line">        session.setId(id);</span><br><span class="line">        sessionCounter++;</span><br><span class="line"></span><br><span class="line">        SessionTiming timing = <span class="keyword">new</span> SessionTiming(session.getCreationTime(), <span class="number">0</span>);</span><br><span class="line">        <span class="keyword">synchronized</span> (sessionCreationTiming) &#123;</span><br><span class="line">            sessionCreationTiming.add(timing);</span><br><span class="line">            sessionCreationTiming.poll();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> session;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
 <p>这个方法是在什么时候调用的呢？当浏览器访问系统时，request 会解析请求中携带的 jssesionid，用它去找到存在于应用中的 session，但是如果没有找到，那么就会调用 session 的创建方法，并且生成一个新的 jssessionid，返回 session。</p>
+<ul>
+<li>客户端第一次请求服务器，cookie 中不存在与 url 相对应的 sessionid。所以 request headers 的 cookie 头里不包含 sessionid 的内容，甚至不包含 cookie 请求头；</li>
+<li>服务端调用 request.getSession (); , 没有 sessionid 自然无法取得相应的 session 信息，立即创建新的 session；</li>
+<li>新创建的 session 信息被服务端存储下来，sessionid 被添加到 response 的 set-cookie 响应头，并返回给客户端；</li>
+<li>客户端接收到 response 报文的 cookie 内容，并将其保存在本地；</li>
+<li>客户端再一次请求服务器，浏览器将根据 url，解析出相应的 sessionid，并添加到 cookie 请求头，发送给服务器；</li>
+<li>服务端调用 request.getSession (); , 根据 sessionid 从 session 存储里获得相应的 session 信息，然后进一步操作，再响应给客户端。</li>
+</ul>
 <p>总而言之，session 是存在于线程安全的 map 中的值，可以通过 id 找到，也可以使用 invalidate 方法销毁，但绝不会是浏览器关闭，就能对它进行销毁的。</p>
 <h3 id="Cookie-简介"><a href="#Cookie-简介" class="headerlink" title="# Cookie 简介"></a><strong># Cookie 简介</strong></h3><p>提到 session，那么 cookie 是不得不说的。至于 cookie 是什么，我就不多说了，大家都懂。直接看其内容吧。</p>
 <p><img alt="img" data-src="/images/说说你对 Session 的理解？/640-1573167483598.webp"></p>
@@ -426,8 +434,8 @@
 
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
-                <a href="/2019/11/07/面试准备阶段总结/" rel="next" title="面试准备阶段总结">
-                  <i class="fa fa-chevron-left"></i> 面试准备阶段总结
+                <a href="/2019/11/07/面试准备阶段总结/" rel="next" title>
+                  <i class="fa fa-chevron-left"></i> 
                 </a>
             </div>
 
@@ -490,14 +498,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">35</span>
+          <span class="site-state-item-count">39</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">29</span>
+        <span class="site-state-item-count">33</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

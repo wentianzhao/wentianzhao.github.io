@@ -1,6 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>java序列化</title>
+    <url>/2019/11/09/java%E5%BA%8F%E5%88%97%E5%8C%96/</url>
+    <content><![CDATA[]]></content>
+      <tags>
+        <tag>Java序列化</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>shiro常见面试题</title>
+    <url>/2019/11/09/shiro%E5%B8%B8%E8%A7%81%E9%9D%A2%E8%AF%95%E9%A2%98/</url>
+    <content><![CDATA[]]></content>
+      <tags>
+        <tag>shiro</tag>
+        <tag>权限管理</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>权限管理系统整体设计</title>
+    <url>/2019/11/09/%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E6%95%B4%E4%BD%93%E8%AE%BE%E8%AE%A1/</url>
+    <content><![CDATA[]]></content>
+      <tags>
+        <tag>权限管理</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>cookie前后端传递过程</title>
+    <url>/2019/11/08/cookie%E5%89%8D%E5%90%8E%E7%AB%AF%E4%BC%A0%E9%80%92%E8%BF%87%E7%A8%8B/</url>
+    <content><![CDATA[]]></content>
+      <tags>
+        <tag>cookie</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Nginx使用</title>
     <url>/2019/11/08/Nginx%E4%BD%BF%E7%94%A8/</url>
     <content><![CDATA[]]></content>
@@ -35,7 +68,7 @@
       </tags>
   </entry>
   <entry>
-    <title>面试准备阶段总结</title>
+    <title></title>
     <url>/2019/11/07/%E9%9D%A2%E8%AF%95%E5%87%86%E5%A4%87%E9%98%B6%E6%AE%B5%E6%80%BB%E7%BB%93/</url>
     <content><![CDATA[]]></content>
       <tags>
