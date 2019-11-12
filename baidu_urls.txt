@@ -1,3 +1,3 @@
-http://www.wentz.top/2019/11/10/面试题（一）/
-http://www.wentz.top/2019/11/10/equals与==的区别/
-http://www.wentz.top/2019/11/10/《唐家三少谈网文趋势》/
+http://www.wentz.top/2019/11/12/Form-表单中-post-和-get-的区别/
+http://www.wentz.top/2019/11/12/Form表单提交方式/
+http://www.wentz.top/2019/11/12/http协议整理/
