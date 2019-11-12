@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>maven知识整理</title>
+    <url>/2019/11/12/maven%E7%9F%A5%E8%AF%86%E6%95%B4%E7%90%86/</url>
+    <content><![CDATA[]]></content>
+      <tags>
+        <tag>maven</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Form 表单中 post 和 get 的区别</title>
     <url>/2019/11/12/Form-%E8%A1%A8%E5%8D%95%E4%B8%AD-post-%E5%92%8C-get-%E7%9A%84%E5%8C%BA%E5%88%AB/</url>
     <content><![CDATA[]]></content>
