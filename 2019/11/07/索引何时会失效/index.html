@@ -76,6 +76,16 @@
 })();
 </script>
 
+<script>
+    (function(){
+        if(''){
+            if (prompt('请输入文章密码') !== ''){
+                alert('密码错误');
+                history.back();
+            }
+        }
+    })();
+</script>
   <meta name="description" content="虽然你这列上建了索引，查询条件也是索引列，但最终执行计划没有走它的索引。下面是引起这种问题的几个关键点。">
 <meta name="keywords" content="数据库,索引">
 <meta property="og:type" content="article">
@@ -266,7 +276,7 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/mao01.jpg">
-      <meta itemprop="name" content="文天兆">
+      <meta itemprop="name" content="wentz">
       <meta itemprop="description" content="进一寸有进一寸的欢喜">
     </span>
 
@@ -417,8 +427,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <img class="site-author-image" itemprop="image" alt="文天兆" src="/images/mao01.jpg">
-  <p class="site-author-name" itemprop="name">文天兆</p>
+  <img class="site-author-image" itemprop="image" alt="wentz" src="/images/mao01.jpg">
+  <p class="site-author-name" itemprop="name">wentz</p>
   <div class="site-description" itemprop="description">进一寸有进一寸的欢喜</div>
 </div>
 <div class="site-state-wrap motion-element">
@@ -470,7 +480,7 @@
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">文天兆</span>
+  <span class="author" itemprop="copyrightHolder">wentz</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0
   </div>
