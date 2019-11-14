@@ -10,15 +10,6 @@
       </tags>
   </entry>
   <entry>
-    <title>事物、Transaction的用法</title>
-    <url>/2019/11/13/%E4%BA%8B%E7%89%A9%E3%80%81Transaction%E7%9A%84%E7%94%A8%E6%B3%95/</url>
-    <content><![CDATA[]]></content>
-      <tags>
-        <tag>事物</tag>
-        <tag>Transactional</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>redis知识整理</title>
     <url>/2019/11/13/redis%E7%9F%A5%E8%AF%86%E6%95%B4%E7%90%86/</url>
     <content><![CDATA[]]></content>
