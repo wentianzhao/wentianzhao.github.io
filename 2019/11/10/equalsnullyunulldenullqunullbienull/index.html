@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.8.0">
+<meta name="baidu-site-verification" content="dW0JLBKAAy" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/logo2.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/logo2.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/logo2.jpg">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '7.4.2',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: true,
+    lazyload: true,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+
+  <script>
+  (function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/0f81ff2f.js","daovoice")
+  daovoice('init', {
+      app_id: "cd424aa3"
+    });
+  daovoice('update');
+  </script>
+
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+<script>
+    (function(){
+        if(''){
+            if (prompt('请输入文章密码') !== ''){
+                alert('密码错误');
+                history.back();
+            }
+        }
+    })();
+</script>
+  <meta name="description" content="Equals源码实现Object 类的两个方法 hashCode 和 equals，我们先来看一下这两个方法的默认实现：">
+<meta name="keywords" content="equals">
+<meta property="og:type" content="article">
+<meta property="og:title" content="equals与==的区别">
+<meta property="og:url" content="http://www.wentz.top/2019/11/10/equalsnullyunulldenullqunullbienull/index.html">
+<meta property="og:site_name" content="飞黄">
+<meta property="og:description" content="Equals源码实现Object 类的两个方法 hashCode 和 equals，我们先来看一下这两个方法的默认实现：">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-11-10T06:23:54.443Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="equals与==的区别">
+<meta name="twitter:description" content="Equals源码实现Object 类的两个方法 hashCode 和 equals，我们先来看一下这两个方法的默认实现：">
+
+<link rel="canonical" href="http://www.wentz.top/2019/11/10/equalsnullyunulldenullqunullbienull/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>equals与==的区别 | 飞黄</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-151358316-1"></script>
+    <script>
+      var host = window.location.hostname;
+      if (host !== "localhost" || !true) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-151358316-1');
+      }
+    </script>
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?9cbaa8d6018d0dfc38d6ccf792ae0526";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">飞黄</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <h1 class="site-subtitle" itemprop="description">不因兹白人间有，定是飞黄天上来</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none" placeholder="搜索..." spellcheck="false" type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.wentz.top/2019/11/10/equalsnullyunulldenullqunullbienull/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/mao01.jpg">
+      <meta itemprop="name" content="wentz">
+      <meta itemprop="description" content="进一寸有进一寸的欢喜">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="飞黄">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          equals与==的区别
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2019-11-10 12:09:59 / 修改时间：14:23:54" itemprop="dateCreated datePublished" datetime="2019-11-10T12:09:59+08:00">2019-11-10</time>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h3 id="Equals源码实现"><a href="#Equals源码实现" class="headerlink" title="Equals源码实现"></a>Equals源码实现</h3><p>Object 类的两个方法 hashCode 和 equals，我们先来看一下这两个方法的默认实现：</p>
+<a id="more"></a>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** JNI，调用底层其它语言实现 */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">native</span> <span class="keyword">int</span> <span class="title">hashCode</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/** 默认同==，直接比较对象 */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">equals</span><span class="params">(Object obj)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">return</span> (<span class="keyword">this</span> == obj);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="String-Equals"><a href="#String-Equals" class="headerlink" title="String Equals"></a>String Equals</h3><p> equals 方法我们太熟悉了，我们经常用于字符串比较，String 类中重写了 equals 方法，比较的是字符串值，看一下源码实现： </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">equals</span><span class="params">(Object anObject)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (<span class="keyword">this</span> == anObject) &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> (anObject <span class="keyword">instanceof</span> String) &#123;</span><br><span class="line">		String anotherString = (String) anObject;</span><br><span class="line">		<span class="keyword">int</span> n = value.length;</span><br><span class="line">		<span class="keyword">if</span> (n == anotherString.value.length) &#123;</span><br><span class="line">			<span class="keyword">char</span> v1[] = value;</span><br><span class="line">			<span class="keyword">char</span> v2[] = anotherString.value;</span><br><span class="line">			<span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">			<span class="comment">// 逐个判断字符是否相等</span></span><br><span class="line">			<span class="keyword">while</span> (n-- != <span class="number">0</span>) &#123;</span><br><span class="line">				<span class="keyword">if</span> (v1[i] != v2[i])</span><br><span class="line">						<span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">				i++;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>  重写 equals 要满足几个条件： （特性）</p>
+<ul>
+<li>自反性：对于任何非空引用值 x，x.equals (x) 都应返回 true。 </li>
+<li>对称性：对于任何非空引用值 x 和 y，当且仅当 y.equals (x) 返回 true 时，x.equals (y) 才应返回 true。 </li>
+<li>传递性：对于任何非空引用值 x、y 和 z，如果 x.equals (y) 返回 true，并且 y.equals (z) 返回 true，那么 x.equals (z) 应返回 true。 </li>
+<li>一致性：对于任何非空引用值 x 和 y，多次调用 x.equals (y) 始终返回 true 或始终返回 false，前提是对象上 equals 比较中所用的信息没有被修改。 </li>
+<li>对于任何非空引用值 x，x.equals (null) 都应返回 false。 </li>
+</ul>
+<h3 id="Object-Equals"><a href="#Object-Equals" class="headerlink" title="Object  Equals"></a>Object  Equals</h3><p>Object 类的 equals 方法实现对象上差别可能性最大的相等关系；即，对于任何非空引用值 x 和 y，当且仅当 x 和 y 引用同一个对象时，此方法才返回 true（x == y 具有值 true）。 当此方法被重写时，通常有必要重写 hashCode 方法，以维护 hashCode 方法的常规协定，该协定声明相等对象必须具有相等的哈希码。</p>
+<p><strong>对象必须为相同引用，相同hash码，且值相同时，才返回true。</strong></p>
+<blockquote>
+<p> 有对象 A 和 B， A.equals (B) == true, A 和 B 的 hashCode 可以不同 </p>
+</blockquote>
+<p> 答案是否定的。如果 A 和 B equals 的话，那么他们的哈希值一定要相同。 </p>
+<h3 id="hashCode-的计算"><a href="#hashCode-的计算" class="headerlink" title="hashCode 的计算"></a><strong>hashCode 的计算</strong></h3><p>举个例子，在没有 hashCode 的情况下，在 Set 集合中存储 1000 个对象的话需要用 equals 来比较对象的值是否重复， 我们知道 Set 是不允许重复对象存在的， 那么当这一千个对象都不重复的情况下， 第 1000 个对象的存储需要调用 1000 次 equals 去进行比较，这是非常低效的。</p>
+<p>而 hashCode 能解决这种问题，对象的存储不再是顺序存放，而是通过 hashCode 直接计算出存储的位置， (可以理解为内存地址，虽然并不是) 之后新对象在存储的时候如果 hashCode 跟之前的没有重复则直接存储，如果重复了则用 equals () 校验是否相等， 如果不相等的话，以 HashMap 作为例子，默认是在同一个地址上用链表存储起来新的对象， 这在之前介绍哈希冲突的解决办法那篇文章里提到过。</p>
+<ul>
+<li><p>如果两个对象 equals，那么他们的 hashCode 一定要相同 (否则在 Set 中就会出现重复元素) </p>
+</li>
+<li><p>如果两个对象 hashCode 相同，他们可以不 equals </p>
+</li>
+</ul>
+<p>1、如果两个对象 equals，Java 运行时环境会认为他们的 hashcode 一定相等。<br>2、如果两个对象不 equals，他们的 hashcode 有可能相等。<br>3、如果两个对象 hashcode 相等，他们不一定 equals。<br>4、如果两个对象 hashcode 不相等，他们一定不 equals。  </p>
+<h3 id="Set"><a href="#Set" class="headerlink" title="Set"></a>Set</h3><p><img alt="1573366715445" data-src="/images/equals与==的区别/1573366715445.png"></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Set&lt;Enp&gt; map = <span class="keyword">new</span> HashSet&lt;&gt;();</span><br><span class="line">Enp enp1 = <span class="keyword">new</span> Enp();</span><br><span class="line">Enp enp2 = <span class="keyword">new</span> Enp();</span><br><span class="line">System.out.println(enp1.equals(enp2));</span><br><span class="line">map.add(enp1);</span><br><span class="line">map.add(enp2);</span><br><span class="line">System.out.println(map);</span><br></pre></td></tr></table></figure>
+<h3 id="Map"><a href="#Map" class="headerlink" title="Map"></a>Map</h3><p>map在测试时，如果对象为key，会校验hashCode和equals是否一直，但是如果为value，不会校验。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Map&lt;Enp,Object&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">Enp enp1 = <span class="keyword">new</span> Enp();</span><br><span class="line">Enp enp2 = <span class="keyword">new</span> Enp();</span><br><span class="line">System.out.println(enp1.equals(enp2));</span><br><span class="line">map.put(enp1,<span class="keyword">new</span> Object());</span><br><span class="line">map.put(enp2,<span class="keyword">new</span> Object());</span><br><span class="line">System.out.println(map);</span><br></pre></td></tr></table></figure>
+<p><img alt="1573366906111" data-src="/images/equals与==的区别/1573366906111.png"></p>
+<p>  Java 运行时环境是怎样判断 HashSet 和 HastMap 中的两个对象相同或不同了。我的推断是：先判断 hashcode 是否相等，再判断是否 equals。  </p>
+<h3 id="总结："><a href="#总结：" class="headerlink" title="总结："></a>总结：</h3><ul>
+<li>在 Java 中任何一个对象都具备 equals (Object obj) 和 hashcode () 这两个方法，因为他们是在 Object 类中定义的。 </li>
+<li>equals (Object obj) 方法用来判断两个对象是否 “相同”，如果 “相同” 则返回 true，否则返回 false。 </li>
+<li>hashcode () 方法返回一个 int 数，在 Object 类中的默认实现是 “将该对象的内部地址转换成一个整数返回”。</li>
+<li>规范 1：若重写 equals (Object obj) 方法，有必要重写 hashcode () 方法，确保通过 equals (Object obj) 方法判断结果为 true 的两个对象具备相等的 hashcode () 返回值。说得简单点就是：“如果两个对象相同，那么他们的 hashcode 应该 相等”。不过请注意：这个只是规范，如果你非要写一个类让 equals (Object obj) 返回 true 而 hashcode () 返回两个不相等的值，编译和运行都是不会报错的。不过这样违反了 Java 规范，程序也就埋下了 BUG。 </li>
+<li>规范 2：如果 equals (Object obj) 返回 false，即两个对象 “不相同”，并不要求对这两个对象调用 hashcode () 方法得到两个不相同的数。说的简单点就是：“如果两个对象不相同，他们的 hashcode 可能相同”。  </li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/equals/" rel="tag"># equals</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/2019/11/10/nulltangnulljianullsannullshaonulltannullwangnullwennullqunullshinull/" rel="next" title="《唐家三少谈网文趋势》">
+                  <i class="fa fa-chevron-left"></i> 《唐家三少谈网文趋势》
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/2019/11/10/miannullshinulltinullyinull/" rel="prev" title="面试题（一）">
+                  面试题（一） <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Equals源码实现"><span class="nav-number">1.</span> <span class="nav-text">Equals源码实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#String-Equals"><span class="nav-number">2.</span> <span class="nav-text">String Equals</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Object-Equals"><span class="nav-number">3.</span> <span class="nav-text">Object  Equals</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#hashCode-的计算"><span class="nav-number">4.</span> <span class="nav-text">hashCode 的计算</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Set"><span class="nav-number">5.</span> <span class="nav-text">Set</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Map"><span class="nav-number">6.</span> <span class="nav-text">Map</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结："><span class="nav-number">7.</span> <span class="nav-text">总结：</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="site-author-image" itemprop="image" alt="wentz" src="/images/mao01.jpg">
+  <p class="site-author-name" itemprop="name">wentz</p>
+  <div class="site-description" itemprop="description">进一寸有进一寸的欢喜</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">51</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/wentianzhao" title="GitHub &rarr; https://github.com/wentianzhao" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:834023657@qq.com" title="E-Mail &rarr; mailto:834023657@qq.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2018 – 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">wentz</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://mist.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.4.2
+  </div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/medium-zoom@1/dist/medium-zoom.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+<script src="/js/utils.js"></script>
+<script src="/js/schemes/muse.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  <script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
