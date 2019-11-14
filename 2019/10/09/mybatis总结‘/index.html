@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.8.0">
+<meta name="baidu-site-verification" content="dW0JLBKAAy" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/logo2.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/logo2.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/logo2.jpg">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '7.4.2',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: true,
+    lazyload: true,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+
+  <script>
+  (function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/0f81ff2f.js","daovoice")
+  daovoice('init', {
+      app_id: "cd424aa3"
+    });
+  daovoice('update');
+  </script>
+
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+<script>
+    (function(){
+        if(''){
+            if (prompt('请输入文章密码') !== ''){
+                alert('密码错误');
+                history.back();
+            }
+        }
+    })();
+</script>
+  <meta name="description" content="参考学习：CG国斌 1.所需jar包">
+<meta name="keywords" content="mybatis">
+<meta property="og:type" content="article">
+<meta property="og:title" content="mybatis总结">
+<meta property="og:url" content="http://www.wentz.top/2019/10/09/mybatis总结‘/index.html">
+<meta property="og:site_name" content="飞黄">
+<meta property="og:description" content="参考学习：CG国斌 1.所需jar包">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-11-14T03:57:19.246Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="mybatis总结">
+<meta name="twitter:description" content="参考学习：CG国斌 1.所需jar包">
+
+<link rel="canonical" href="http://www.wentz.top/2019/10/09/mybatis总结‘/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>mybatis总结 | 飞黄</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-151358316-1"></script>
+    <script>
+      var host = window.location.hostname;
+      if (host !== "localhost" || !true) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-151358316-1');
+      }
+    </script>
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?9cbaa8d6018d0dfc38d6ccf792ae0526";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">飞黄</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <h1 class="site-subtitle" itemprop="description">不因兹白人间有，定是飞黄天上来</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none" placeholder="搜索..." spellcheck="false" type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.wentz.top/2019/10/09/mybatis总结‘/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/mao01.jpg">
+      <meta itemprop="name" content="wentz">
+      <meta itemprop="description" content="进一寸有进一寸的欢喜">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="飞黄">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          mybatis总结
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-10-09 16:27:14" itemprop="dateCreated datePublished" datetime="2019-10-09T16:27:14+08:00">2019-10-09</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-11-14 11:57:19" itemprop="dateModified" datetime="2019-11-14T11:57:19+08:00">2019-11-14</time>
+              </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><strong>参考学习：<a href="https://blog.csdn.net/qq_35246620/article/details/54802944" target="_blank" rel="noopener">CG国斌</a></strong></p>
+<h3 id="1-所需jar包"><a href="#1-所需jar包" class="headerlink" title="1.所需jar包"></a>1.所需jar包</h3><a id="more"></a>
+<h3 id><a href="#" class="headerlink" title></a><img alt="1570609934294" data-src="/images/mybatis总结‘/1570609934294.png"></h3><h2 id="2-mybatis核心配置"><a href="#2-mybatis核心配置" class="headerlink" title="2.mybatis核心配置"></a>2.mybatis核心配置</h2><p>sqlMapConfig.xml</p>
+<p><img alt="1570610644687" data-src="/images/mybatis总结‘/1570610644687.png"></p>
+<p><img alt="1570610672625" data-src="/images/mybatis总结‘/1570610672625.png"></p>
+<p><img alt="1570613212440" data-src="/images/mybatis总结‘/1570613212440.png"></p>
+<h2 id="3-增删查改"><a href="#3-增删查改" class="headerlink" title="3.增删查改"></a>3.增删查改</h2><p><img alt="1570613258325" data-src="/images/mybatis总结‘/1570613258325.png"></p>
+<p><img alt="1570613274721" data-src="/images/mybatis总结‘/1570613274721.png"></p>
+<p><img alt="1570613282915" data-src="/images/mybatis总结‘/1570613282915.png"></p>
+<p><img alt="1570613296385" data-src="/images/mybatis总结‘/1570613296385.png"></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="UTF-8" ?&gt;</span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE mapper</span></span><br><span class="line"><span class="meta">        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"</span></span><br><span class="line"><span class="meta">        "http://mybatis.org/dtd/mybatis-3-mapper.dtd"&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">mapper</span> <span class="attr">namespace</span>=<span class="string">"yeepay.payplus/mapper.UserMapper"</span>&gt;</span>   <span class="comment">&lt;!-- 命名空间，名字可以随意起，只要不冲突即可 --&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 对象映射，可以不写 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">resultMap</span> <span class="attr">type</span>=<span class="string">"yeepay.payplus.Person"</span> <span class="attr">id</span>=<span class="string">"personRM"</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- property="id"，表示实体对象的属性；column="ID"，表示结果集字段 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">id</span> <span class="attr">property</span>=<span class="string">"id"</span> <span class="attr">column</span>=<span class="string">"ID"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">"Name"</span> <span class="attr">column</span>=<span class="string">"NAME"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">"age"</span> <span class="attr">column</span>=<span class="string">"AGE"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">resultMap</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- 查询功能，resultType 设置返回值类型 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">"findAll"</span> <span class="attr">resultType</span>=<span class="string">"yeepay.payplus.Person"</span>&gt;</span>  <span class="comment">&lt;!-- 书写 SQL 语句 --&gt;</span></span><br><span class="line">        SELECT * FROM person</span><br><span class="line">    <span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- 通过 ID 查询 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">"get"</span> <span class="attr">parameterType</span>=<span class="string">"Integer"</span> <span class="attr">resultMap</span>=<span class="string">"personRM"</span>&gt;</span>  <span class="comment">&lt;!-- 书写 SQL 语句 --&gt;</span></span><br><span class="line">        SELECT * FROM person</span><br><span class="line">        WHERE id = #&#123;id&#125;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- 新增功能，在SQL语句中有参数，并以实体来封装参数 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">insert</span> <span class="attr">id</span>=<span class="string">"insert"</span> <span class="attr">parameterType</span>=<span class="string">"yeepay.payplus.Person"</span>&gt;</span></span><br><span class="line">        INSERT INTO person (id,name,age) VALUES (#&#123;id&#125;,#&#123;name&#125;,#&#123;age&#125;)</span><br><span class="line">    <span class="tag">&lt;/<span class="name">insert</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- 修改功能 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">update</span> <span class="attr">id</span>=<span class="string">"update"</span> <span class="attr">parameterType</span>=<span class="string">"yeepay.payplus.Person"</span>&gt;</span></span><br><span class="line">        UPDATE person set name=#&#123;name&#125;,age=#&#123;age&#125;</span><br><span class="line">        WHERE id = #&#123;id&#125;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">update</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- 删除功能 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">delete</span> <span class="attr">id</span>=<span class="string">"deleteById"</span> <span class="attr">parameterType</span>=<span class="string">"integer"</span>&gt;</span></span><br><span class="line">        DELETE FROM person</span><br><span class="line">        WHERE id = #&#123;id&#125;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">delete</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">mapper</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Created by 维C果糖 on 2017/2/2.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CeshiMyBatis</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">ceshi</span><span class="params">()</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         *  1、获得 SqlSessionFactory</span></span><br><span class="line"><span class="comment">         *  2、获得 SqlSession</span></span><br><span class="line"><span class="comment">         *  3、调用在 mapper 文件中配置的 SQL 语句</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        String resource = <span class="string">"sqlMapConfig.xml"</span>;           <span class="comment">// 定位核心配置文件</span></span><br><span class="line">        InputStream inputStream = Resources.getResourceAsStream(resource);</span><br><span class="line">        SqlSessionFactory sqlSessionFactory = <span class="keyword">new</span> SqlSessionFactoryBuilder().build(inputStream);    <span class="comment">// 创建 SqlSessionFactory</span></span><br><span class="line"></span><br><span class="line">        SqlSession sqlSession = sqlSessionFactory.openSession();    <span class="comment">// 获取到 SqlSession</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// 调用 mapper 中的方法：命名空间 + id</span></span><br><span class="line">        List&lt;Person&gt; personList = sqlSession.selectList(<span class="string">"yeepay.payplus/mapper.UserMapper.findAll"</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (Person p : personList)&#123;</span><br><span class="line">            System.out.println(p);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testInsert</span><span class="params">()</span></span>&#123;</span><br><span class="line">        String resource = <span class="string">"sqlMapConfig.xml"</span>;           <span class="comment">//定位核心配置文件</span></span><br><span class="line">        InputStream inputStream = <span class="keyword">this</span>.getClass().getResourceAsStream(resource);</span><br><span class="line">        SqlSessionFactory sqlSessionFactory = <span class="keyword">new</span> SqlSessionFactoryBuilder().build(inputStream);        <span class="comment">// 创建 SqlSessionFactory</span></span><br><span class="line"></span><br><span class="line">        SqlSession sqlSession = sqlSessionFactory.openSession();            <span class="comment">//获取到 SqlSession</span></span><br><span class="line"></span><br><span class="line">        Person p = <span class="keyword">new</span> Person();</span><br><span class="line">        p.setId(<span class="number">5</span>);</span><br><span class="line">        p.setName(<span class="string">"gavin"</span>);</span><br><span class="line">        p.setAge(<span class="number">12</span>);</span><br><span class="line"></span><br><span class="line">        sqlSession.insert(<span class="string">"yeepay.payplus.mapper.UserMapper.insert"</span>, p);</span><br><span class="line">        sqlSession.commit();            <span class="comment">//默认是不自动提交，必须手工提交</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testUpdate</span><span class="params">()</span></span>&#123;</span><br><span class="line">        String resource = <span class="string">"sqlMapConfig.xml"</span>;           <span class="comment">//定位核心配置文件</span></span><br><span class="line">        InputStream inputStream = <span class="keyword">this</span>.getClass().getResourceAsStream(resource);</span><br><span class="line">        SqlSessionFactory sqlSessionFactory = <span class="keyword">new</span> SqlSessionFactoryBuilder().build(inputStream);        <span class="comment">// 创建 SqlSessionFactory</span></span><br><span class="line"></span><br><span class="line">        SqlSession sqlSession = sqlSessionFactory.openSession();            <span class="comment">// 获取到 SqlSession</span></span><br><span class="line"></span><br><span class="line">        Person p = sqlSession.selectOne(<span class="string">"yeepay.payplus.mapper.UserMapper.get"</span>, <span class="number">2</span>);   <span class="comment">// 获得 id=2 的记录</span></span><br><span class="line">        p.setName(<span class="string">"jane"</span>);</span><br><span class="line">        p.setAge(<span class="number">16</span>);</span><br><span class="line"></span><br><span class="line">        sqlSession.insert(<span class="string">"yeepay.payplus.mapper.UserMapper.update"</span>, p);</span><br><span class="line">        sqlSession.commit();            <span class="comment">//默认是不自动提交，必须手工提交</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testDeleteById</span><span class="params">()</span></span>&#123;</span><br><span class="line">        String resource = <span class="string">"sqlMapConfig.xml"</span>;           <span class="comment">//定位核心配置文件</span></span><br><span class="line">        InputStream inputStream = <span class="keyword">this</span>.getClass().getResourceAsStream(resource);</span><br><span class="line">        SqlSessionFactory sqlSessionFactory = <span class="keyword">new</span> SqlSessionFactoryBuilder().build(inputStream);        <span class="comment">// 创建 SqlSessionFactory</span></span><br><span class="line"></span><br><span class="line">        SqlSession sqlSession = sqlSessionFactory.openSession();            <span class="comment">// 获取到 SqlSession</span></span><br><span class="line"></span><br><span class="line">        sqlSession.delete(<span class="string">"yeepay.payplus.mapper.UserMapper.deleteById"</span>, <span class="number">2</span>);</span><br><span class="line">        sqlSession.commit();            <span class="comment">//默认是不自动提交，必须手工提交</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="4-基本参数使用"><a href="#4-基本参数使用" class="headerlink" title="4. 基本参数使用"></a>4. 基本参数使用</h2><p><img alt="1570613502563" data-src="/images/mybatis总结‘/1570613502563.png"></p>
+<p><img alt="1570613513253" data-src="/images/mybatis总结‘/1570613513253.png"></p>
+<p><img alt="1570613525935" data-src="/images/mybatis总结‘/1570613525935.png"></p>
+<p><img alt="1570613534820" data-src="/images/mybatis总结‘/1570613534820.png"></p>
+<h2 id="5-复杂sql查询"><a href="#5-复杂sql查询" class="headerlink" title="5.复杂sql查询"></a>5.复杂sql查询</h2><p><img alt="1570613591334" data-src="/images/mybatis总结‘/1570613591334.png"></p>
+<p><img alt="1570613606264" data-src="/images/mybatis总结‘/1570613606264.png"></p>
+<p><img alt="1570613964034" data-src="/images/mybatis总结‘/1570613964034.png"></p>
+<p><img alt="1570613973246" data-src="/images/mybatis总结‘/1570613973246.png"></p>
+<p><img alt="1570613989332" data-src="/images/mybatis总结‘/1570613989332.png"></p>
+<p><img alt="1570614006737" data-src="/images/mybatis总结‘/1570614006737.png"></p>
+<p><img alt="1570614015434" data-src="/images/mybatis总结‘/1570614015434.png"></p>
+<p><img alt="1570614032639" data-src="/images/mybatis总结‘/1570614032639.png"></p>
+<p><img alt="1570614042639" data-src="/images/mybatis总结‘/1570614042639.png"></p>
+<p><img alt="1570614057734" data-src="/images/mybatis总结‘/1570614057734.png"></p>
+<h2 id="6-关系映射"><a href="#6-关系映射" class="headerlink" title="6.关系映射"></a>6.关系映射</h2><p><img alt="1570614123421" data-src="/images/mybatis总结‘/1570614123421.png"></p>
+<p><img alt="1570614135194" data-src="/images/mybatis总结‘/1570614135194.png"></p>
+<p><img alt="1570614149458" data-src="/images/mybatis总结‘/1570614149458.png"></p>
+<p><img alt="1570614156962" data-src="/images/mybatis总结‘/1570614156962.png"></p>
+<p>创建 CustomerMapper.xml 映射文件</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="UTF-8" ?&gt;</span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE mapper</span></span><br><span class="line"><span class="meta">        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"</span></span><br><span class="line"><span class="meta">        "http://mybatis.org/dtd/mybatis-3-mapper.dtd"&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">mapper</span> <span class="attr">namespace</span>=<span class="string">"yeepay.payplus.mapper.CustomerMapper"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">resultMap</span> <span class="attr">type</span>=<span class="string">"yeepay.payplus.domain.Customer"</span> <span class="attr">id</span>=<span class="string">"customerRM"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">id</span> <span class="attr">property</span>=<span class="string">"id"</span> <span class="attr">column</span>=<span class="string">"ID"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">"name"</span> <span class="attr">column</span>=<span class="string">"NAME"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">resultMap</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- 配置关联关系 1:N --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">resultMap</span> <span class="attr">type</span>=<span class="string">"yeepay.payplus.domain.Customer"</span> <span class="attr">id</span>=<span class="string">"customerOrdersRM"</span> <span class="attr">extends</span>=<span class="string">"customerRM"</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 配置多的（N），property 属性就是实体中的 List 对象属性名称，ofType 属性就是集合元素的类型 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">collection</span> <span class="attr">property</span>=<span class="string">"orders"</span> <span class="attr">ofType</span>=<span class="string">"yeepay.payplus.domain.Orders"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">id</span> <span class="attr">property</span>=<span class="string">"id"</span> <span class="attr">column</span>=<span class="string">"ID"</span>/&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">"sn"</span> <span class="attr">column</span>=<span class="string">"SN"</span>/&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">"remark"</span> <span class="attr">column</span>=<span class="string">"REMARK"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">collection</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">resultMap</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- 查询，关联关系 Map 作为查询条件 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">"find"</span> <span class="attr">parameterType</span>=<span class="string">"map"</span> <span class="attr">resultMap</span>=<span class="string">"customerOrdersRM"</span>&gt;</span></span><br><span class="line">        SELECT</span><br><span class="line">            c.name,o.sn,o.remark</span><br><span class="line">        FROM</span><br><span class="line">            (SELECT id,name FROM customer) c</span><br><span class="line">        LEFT JOIN</span><br><span class="line">            (SELECT id,sn,remark,customer_id FROM orders) o</span><br><span class="line">        ON c.id = o.customer_id</span><br><span class="line">        WHERE c.name = #&#123;customerName&#125;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">mapper</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><img alt="1570614192503" data-src="/images/mybatis总结‘/1570614192503.png"></p>
+<p>修改 sqlMapConfig.xml 配置文件</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="UTF-8" ?&gt;</span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE configuration</span></span><br><span class="line"><span class="meta">        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"</span></span><br><span class="line"><span class="meta">        "http://mybatis.org/dtd/mybatis-3-config.dtd"&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- 赋别名 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">typeAliases</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">typeAlias</span> <span class="attr">type</span>=<span class="string">"yeepay.payplus.domain.Person"</span> <span class="attr">alias</span>=<span class="string">"Person"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">typeAliases</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- 配置开发环境，可以配置多个，在具体用时再做切换 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">environments</span> <span class="attr">default</span>=<span class="string">""</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">environment</span> <span class="attr">id</span>=<span class="string">"test"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">transactionManager</span> <span class="attr">type</span>=<span class="string">"JDBC"</span>&gt;</span><span class="tag">&lt;/<span class="name">transactionManager</span>&gt;</span>    <span class="comment">&lt;!-- 事务管理类型：JDBC、MANAGED --&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">dataSource</span> <span class="attr">type</span>=<span class="string">"POOLED"</span>&gt;</span>    <span class="comment">&lt;!-- 数据源类型：POOLED、UNPOOLED、JNDI --&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"driver"</span> <span class="attr">value</span>=<span class="string">"com.mysql.jdbc.Driver"</span> /&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"url"</span> <span class="attr">value</span>=<span class="string">"jdbc:mysql://localhost:3306/test?characterEncoding=utf-8"</span> /&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"username"</span> <span class="attr">value</span>=<span class="string">"root"</span> /&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"password"</span> <span class="attr">value</span>=<span class="string">"root"</span> /&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">dataSource</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">environment</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">environments</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- 加载映射文件 mapper --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">mappers</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 路径用 斜线（/） 分割，而不是用 点(.) --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">mapper</span> <span class="attr">resource</span>=<span class="string">"yeepay/payplus/mapper/UserMapper.xml"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">mapper</span> <span class="attr">resource</span>=<span class="string">"yeepay/payplus/mapper/CustomerMapper.xml"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">mappers</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><img alt="1570614246906" data-src="/images/mybatis总结‘/1570614246906.png"></p>
+<p>创建 CeshiCustomer 测试类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> yeepay.payplus.test;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.apache.ibatis.io.Resources;</span><br><span class="line"><span class="keyword">import</span> org.apache.ibatis.session.SqlSession;</span><br><span class="line"><span class="keyword">import</span> org.apache.ibatis.session.SqlSessionFactory;</span><br><span class="line"><span class="keyword">import</span> org.apache.ibatis.session.SqlSessionFactoryBuilder;</span><br><span class="line"><span class="keyword">import</span> org.junit.Test;</span><br><span class="line"><span class="keyword">import</span> yeepay.payplus.domain.Customer;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.io.InputStream;</span><br><span class="line"><span class="keyword">import</span> java.util.HashMap;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"><span class="keyword">import</span> java.util.Map;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Created by 维C果糖 on 2017/3/6.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CeshiCustomer</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testFind</span><span class="params">()</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         *  1、获得 SqlSessionFactory</span></span><br><span class="line"><span class="comment">         *  2、获得 SqlSession</span></span><br><span class="line"><span class="comment">         *  3、调用在 mapper 文件中配置的 SQL 语句</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        String resource = <span class="string">"sqlMapConfig.xml"</span>;           <span class="comment">// 定位核心配置文件</span></span><br><span class="line">        InputStream inputStream = Resources.getResourceAsStream(resource);</span><br><span class="line">        SqlSessionFactory sqlSessionFactory = <span class="keyword">new</span> SqlSessionFactoryBuilder().build(inputStream);    <span class="comment">// 创建 SqlSessionFactory</span></span><br><span class="line"></span><br><span class="line">        SqlSession sqlSession = sqlSessionFactory.openSession();    <span class="comment">// 获取到 SqlSession</span></span><br><span class="line"></span><br><span class="line">        Map map = <span class="keyword">new</span> HashMap();</span><br><span class="line">        map.put(<span class="string">"customerName"</span>, <span class="string">"charies"</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 调用 mapper 中的方法：命名空间 + id</span></span><br><span class="line">        List&lt;Customer&gt; customerList = sqlSession.selectList(<span class="string">"yeepay.payplus.mapper.CustomerMapper.find"</span>, map);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (Customer c : customerList) &#123;</span><br><span class="line">            System.out.println(c);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img alt="1570614270734" data-src="/images/mybatis总结‘/1570614270734.png"></p>
+<h2 id="7-学习"><a href="#7-学习" class="headerlink" title="7.学习"></a>7.学习</h2><ol>
+<li>本文基本上整体复制过来了，学习新知识的方法和对问题的尝试方法很值得学习；</li>
+<li>后续需要把spring boot+mybatis教程，整理一下；</li>
+<li>mybatis plus相关知识整理出来。</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/mybatis/" rel="tag"># mybatis</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/2019/10/01/sql developer修改时间戳和日期显示格式/" rel="next" title="sql developer修改时间戳和日期显示格式">
+                  <i class="fa fa-chevron-left"></i> sql developer修改时间戳和日期显示格式
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/2019/10/11/2019-10-11-导出功能优化/" rel="prev" title="导出功能优化">
+                  导出功能优化 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-所需jar包"><span class="nav-number">1.</span> <span class="nav-text">1.所需jar包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#"><span class="nav-number">2.</span> <span class="nav-text"></span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-mybatis核心配置"><span class="nav-number"></span> <span class="nav-text">2.mybatis核心配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-增删查改"><span class="nav-number"></span> <span class="nav-text">3.增删查改</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-基本参数使用"><span class="nav-number"></span> <span class="nav-text">4. 基本参数使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-复杂sql查询"><span class="nav-number"></span> <span class="nav-text">5.复杂sql查询</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-关系映射"><span class="nav-number"></span> <span class="nav-text">6.关系映射</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-学习"><span class="nav-number"></span> <span class="nav-text">7.学习</span></a></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="site-author-image" itemprop="image" alt="wentz" src="/images/mao01.jpg">
+  <p class="site-author-name" itemprop="name">wentz</p>
+  <div class="site-description" itemprop="description">进一寸有进一寸的欢喜</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">52</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/wentianzhao" title="GitHub &rarr; https://github.com/wentianzhao" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:834023657@qq.com" title="E-Mail &rarr; mailto:834023657@qq.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2018 – 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">wentz</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://mist.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.4.2
+  </div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/medium-zoom@1/dist/medium-zoom.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+<script src="/js/utils.js"></script>
+<script src="/js/schemes/muse.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  <script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
