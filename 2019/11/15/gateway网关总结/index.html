@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.8.0">
+<meta name="baidu-site-verification" content="dW0JLBKAAy" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/logo2.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/logo2.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/logo2.jpg">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '7.4.2',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: true,
+    lazyload: true,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+
+  <script>
+  (function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/0f81ff2f.js","daovoice")
+  daovoice('init', {
+      app_id: "cd424aa3"
+    });
+  daovoice('update');
+  </script>
+
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+  <meta name="description" content="项目描述：功能设计及开发流程：  添加表： 应用信息表：（参考system表，添加系统给生成的key，应用管理企业名称）">
+<meta name="keywords" content="gateway网关,接口权限管理">
+<meta property="og:type" content="article">
+<meta property="og:title" content="gateway网关总结">
+<meta property="og:url" content="http://www.wentz.top/2019/11/15/gateway网关总结/index.html">
+<meta property="og:site_name" content="飞黄">
+<meta property="og:description" content="项目描述：功能设计及开发流程：  添加表： 应用信息表：（参考system表，添加系统给生成的key，应用管理企业名称）">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-11-15T06:16:39.036Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="gateway网关总结">
+<meta name="twitter:description" content="项目描述：功能设计及开发流程：  添加表： 应用信息表：（参考system表，添加系统给生成的key，应用管理企业名称）">
+
+<link rel="canonical" href="http://www.wentz.top/2019/11/15/gateway网关总结/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>gateway网关总结 | 飞黄</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-151358316-1"></script>
+    <script>
+      var host = window.location.hostname;
+      if (host !== "localhost" || !true) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-151358316-1');
+      }
+    </script>
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?9cbaa8d6018d0dfc38d6ccf792ae0526";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">飞黄</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <h1 class="site-subtitle" itemprop="description">不因兹白人间有，定是飞黄天上来</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none" placeholder="搜索..." spellcheck="false" type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.wentz.top/2019/11/15/gateway网关总结/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/mao01.jpg">
+      <meta itemprop="name" content="wentz">
+      <meta itemprop="description" content="进一寸有进一寸的欢喜">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="飞黄">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          gateway网关总结
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2019-11-15 10:00:33 / 修改时间：14:16:39" itemprop="dateCreated datePublished" datetime="2019-11-15T10:00:33+08:00">2019-11-15</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/项目总结/" itemprop="url" rel="index">
+                    <span itemprop="name">项目总结</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h3 id="项目描述："><a href="#项目描述：" class="headerlink" title="项目描述："></a>项目描述：</h3><p>功能设计及开发流程：</p>
+<ul>
+<li><p>添加表：</p>
+<p>应用信息表：（参考system表，添加系统给生成的key，应用管理企业名称）</p>
+<a id="more"></a>
+<p>系统接口信息表：（系统编码，接口名/xxx，系统地址）</p>
+<p>应用系统接口对应表（应用名，接口id，接口名，系统名）</p>
+</li>
+<li><p>流程：</p>
+<ol>
+<li>会给不同的企业分配一个key，企业调用接口时把key、系统编码，时间戳，密钥放header传过来</li>
+<li>由网关（spring cloud gateway）接收，拦截后从权限管理获取token，匹配加密对不对，之后再获取该应用能调用的所有接口，网关获取后保存到缓存中，方便下次调用，如果两步鉴定正确，再把接口分配到所属系统</li>
+</ol>
+</li>
+<li><p>开发流程：</p>
+<ol>
+<li>建表</li>
+<li>权限管理中添加应用管理，（查询条件：应用编码，应用名称，）功能：生成key，添加系统接口权限（要能够根据系统查询），</li>
+<li>开发网关系统进行鉴权</li>
+<li>系统间调用，需要加一个共用sdk，方便授权其他系统调用</li>
+</ol>
+</li>
+<li><p>好处：</p>
+<ol>
+<li>接口级控制，能够对不同系统调用本企业系统接口的调用进行控制，方便进行授权管理；</li>
+<li><p>统一第三方系统调用入口，由gateway获取后分发；</p>
+</li>
+<li><p>能够记录接口调用日志，记录不同企业系统间的调用，</p>
+</li>
+</ol>
+</li>
+</ul>
+<h3 id="职责描述："><a href="#职责描述：" class="headerlink" title="职责描述："></a>职责描述：</h3><ul>
+<li>开发系统权限管理功能，给系统赋接口权限；</li>
+<li>开发spring cloud gateway，通过使用feign调用权限管理接口，获取应用权限，保存到redis中，降低接口调用时间；</li>
+<li>开发SDK包，集成接口加密规则，方便第三方系统调用；</li>
+<li>调整业务系统通过gateway调用权限管理系统接口，已应用到线上生产环境；</li>
+</ul>
+<h3 id="技术描述："><a href="#技术描述：" class="headerlink" title="技术描述："></a>技术描述：</h3><p>项目使用spring cloud gateway框架开发，集成spring cloud feign进行系统接口调用，前期有集成Eurake服务，进行第三方接口调用时的系统接口权限验证，通过jar包方式部署，目前已有三个业务系统调用，整体运行正常。</p>
+<p><strong>接口加密规则：</strong></p>
+<p><img alt="1573786564259" data-src="/images/gateway网关总结/1573786564259.png"></p>
+<p><strong>（见页面附录）</strong></p>
+<h3 id="系统页面："><a href="#系统页面：" class="headerlink" title="系统页面："></a>系统页面：</h3><p><img alt="1573786456671" data-src="/images/gateway网关总结/1573786456671.png"></p>
+<p><img alt="1573786486443" data-src="/images/gateway网关总结/1573786486443.png"></p>
+<p>附录：</p>
+<h3 id="1-概述"><a href="#1-概述" class="headerlink" title="1   概述"></a>1   概述</h3><p>检查管理系统V4.0（以下简称证后监管系统）提供获取化妆品经营企业检查信息、药品零售企业检查信息、医疗机构信息等Open API接口，提供相关企业的检查信息供第三方系统使用。</p>
+<h4 id="1-1-Open-API-说明"><a href="#1-1-Open-API-说明" class="headerlink" title="1.1 Open API 说明"></a>1.1 Open API 说明</h4><p>Open API 提供外部应用系统通过主动调用的方式进行访问，当你的应用调用开放平台接口时，需使用 HTTPS 协议、JSON 数据格式、UTF8 编码。</p>
+<p>系统管理员可通过证后监管系统对需要对接的外部应用系统进行授权和发放相关密钥信息，通过密钥可以生成每次调用接口的签名sign,密钥不会在请求调用中传输，请妥善保存。</p>
+<p> sign是用来验证相关系统访问证后监管系统合法性的凭证，当外部系统调用证后监管系统接口时，证后监管系统会根据提交的AppId校验访问的合法性以及所对应的权限并返回相应的结果。</p>
+<h4 id="1-2-访问频次控制说明"><a href="#1-2-访问频次控制说明" class="headerlink" title="1.2 访问频次控制说明"></a>1.2 访问频次控制说明</h4><p>Open API 的访问频次不能超过 1000次/每分钟。</p>
+<h3 id="2-请求说明"><a href="#2-请求说明" class="headerlink" title="2   请求说明"></a>2   请求说明</h3><p>证后监管系统提供正式环境地址，需申请AppId和AppSecret，调用开放平台的任何接口都需要携带sign和AppId。请求响应格式目前仅支持json。所有请求需签名，签名算法目前仅支持MD5，具体签名规则在2.4中描述。</p>
+<h4 id="2-1-接口地址"><a href="#2-1-接口地址" class="headerlink" title="2.1 接口地址"></a>2.1 接口地址</h4><p>正式环境：XXX </p>
+<h4 id="2-2-公共请求头（Header）"><a href="#2-2-公共请求头（Header）" class="headerlink" title="2.2 公共请求头（Header）"></a>2.2 公共请求头（Header）</h4><table>
+<thead>
+<tr>
+<th><strong>参数</strong></th>
+<th><strong>类型</strong></th>
+<th><strong>是否必填</strong></th>
+<th><strong>描述</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>appId</td>
+<td>String</td>
+<td>是</td>
+<td>证后监管系统分配给开发者的应用ID</td>
+</tr>
+<tr>
+<td>timestamp</td>
+<td>String</td>
+<td>是</td>
+<td>时间戳，格式为yyyy-MM-dd  HH:mm:ss，时区为GMT+8，例如：2019-07-01  12:00:00。允许客户端请求最大时间误差为10分钟。</td>
+</tr>
+<tr>
+<td>sign</td>
+<td>String</td>
+<td>是</td>
+<td>API输入参数签名结果，签名算法参照下面的介绍</td>
+</tr>
+</tbody>
+</table>
+<h4 id="2-3-公共响应参数"><a href="#2-3-公共响应参数" class="headerlink" title="2.3 公共响应参数"></a>2.3 公共响应参数</h4><table>
+<thead>
+<tr>
+<th><strong>参数</strong></th>
+<th><strong>类型</strong></th>
+<th><strong>是否必填</strong></th>
+<th><strong>描述</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>returnCode</td>
+<td>String</td>
+<td>是</td>
+<td>“0”表示正常返回，“1”查看returnMessage信息，“-1”服务器异常</td>
+</tr>
+<tr>
+<td>returnMessage</td>
+<td>String</td>
+<td>是</td>
+<td>业务提示信息</td>
+</tr>
+<tr>
+<td>returnDate</td>
+<td>String</td>
+<td>否</td>
+<td>具体接口返回数据</td>
+</tr>
+</tbody>
+</table>
+<h4 id="2-4-签名算法"><a href="#2-4-签名算法" class="headerlink" title="2.4 签名算法"></a>2.4 签名算法</h4><p>为了防止API调用过程中被黑客恶意篡改，调用任何一个API都需要携带签名，证后监管会根据请求参数，对签名进行验证，签名不合法的请求将会被拒绝。目前仅支持MD5算法，签名大体过程如下：</p>
+<p>·     对所有API请求参数（包括公共参数和业务参数，但除去sign参数），根据参数名称的<a href="http://www.asciima.com/" target="_blank" rel="noopener">ASCII</a>码表的顺序排序。如：foo:1, bar:2, foo_bar:3, foobar:4排序后的顺序是bar:2, foo:1, foo_bar:3, foobar:4。</p>
+<p>·     将排序好的参数名和参数值拼装在一起，根据上面的示例得到的结果为：bar2foo1foo_bar3foobar4。</p>
+<p>·     把拼装好的字符串采用utf-8编码，使用签名算法对编码后的字节流进行摘要。如果使用MD5算法，则需要在拼装的字符串前后加上app的secret后，再进行摘要，如：md5(secret+bar2foo1foo_bar3foobar4+secret)。</p>
+<p>·     将摘要得到的字节流结果使用十六进制表示，如：hex(“helloworld”.getBytes(“utf-8”)) = “68656C6C6F776F726C64”</p>
+<h4 id="拦截器代码："><a href="#拦截器代码：" class="headerlink" title="拦截器代码："></a><strong>拦截器代码：</strong></h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.boornet.gateway.filter;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.alibaba.fastjson.JSONObject;</span><br><span class="line"><span class="keyword">import</span> com.boor.sdk.util.ShfdaConfusionUtil;</span><br><span class="line"><span class="keyword">import</span> com.boornet.gateway.model.ApiHeaderResponse;</span><br><span class="line"><span class="keyword">import</span> com.boornet.gateway.model.ApiLog;</span><br><span class="line"><span class="keyword">import</span> com.boornet.gateway.service.QxglService;</span><br><span class="line"><span class="keyword">import</span> com.boornet.gateway.util.SignUtils;</span><br><span class="line"><span class="keyword">import</span> org.joda.time.DateTime;</span><br><span class="line"><span class="keyword">import</span> org.joda.time.Minutes;</span><br><span class="line"><span class="keyword">import</span> org.joda.time.format.DateTimeFormat;</span><br><span class="line"><span class="keyword">import</span> org.joda.time.format.DateTimeFormatter;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.cloud.gateway.filter.GatewayFilterChain;</span><br><span class="line"><span class="keyword">import</span> org.springframework.cloud.gateway.filter.GlobalFilter;</span><br><span class="line"><span class="keyword">import</span> org.springframework.core.Ordered;</span><br><span class="line"><span class="keyword">import</span> org.springframework.core.io.buffer.DataBuffer;</span><br><span class="line"><span class="keyword">import</span> org.springframework.http.HttpHeaders;</span><br><span class="line"><span class="keyword">import</span> org.springframework.http.server.reactive.ServerHttpRequest;</span><br><span class="line"><span class="keyword">import</span> org.springframework.http.server.reactive.ServerHttpResponse;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Component;</span><br><span class="line"><span class="keyword">import</span> org.springframework.util.CollectionUtils;</span><br><span class="line"><span class="keyword">import</span> org.springframework.util.MultiValueMap;</span><br><span class="line"><span class="keyword">import</span> org.springframework.util.StringUtils;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.server.ServerWebExchange;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.util.UriComponentsBuilder;</span><br><span class="line"><span class="keyword">import</span> reactor.core.publisher.Mono;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.net.URI;</span><br><span class="line"><span class="keyword">import</span> java.nio.charset.StandardCharsets;</span><br><span class="line"><span class="keyword">import</span> java.util.Date;</span><br><span class="line"><span class="keyword">import</span> java.util.HashMap;</span><br><span class="line"><span class="keyword">import</span> java.util.Map;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Author</span>: 文天兆</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Description</span> //TODO 应用权限验证</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Date</span> 2019/8/28 17:56</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Program</span>: shfda-server</span></span><br><span class="line"><span class="comment"> **/</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AppAuthFilter</span> <span class="keyword">implements</span> <span class="title">GlobalFilter</span>, <span class="title">Ordered</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String AUTHORIZE_APPID = <span class="string">"appId"</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String AUTHORIZE_TIME_STAMP = <span class="string">"timeStamp"</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String AUTHORIZE_APPSECRET = <span class="string">"appSecret"</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String AUTHORIZE_SIGN = <span class="string">"sign"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/*@Setter</span></span><br><span class="line"><span class="comment">    @Value("#&#123;'$&#123;filter.ignore&#125;'.split(',')&#125;")</span></span><br><span class="line"><span class="comment">    private List&lt;String&gt; ignoreLists = new ArrayList();*/</span></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> QxglService qxglService;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Mono&lt;Void&gt; <span class="title">filter</span><span class="params">(ServerWebExchange exchange, GatewayFilterChain chain)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        URI uri = exchange.getRequest().getURI();</span><br><span class="line">        ApiLog apiLog = <span class="keyword">new</span> ApiLog();</span><br><span class="line">        apiLog.setUrlPath(uri.toString());</span><br><span class="line">        apiLog.setAppIp(uri.getHost());</span><br><span class="line">        apiLog.setCreateTime(<span class="keyword">new</span> Date());</span><br><span class="line">        <span class="keyword">if</span> (uri.toString().contains(<span class="string">"qyglServer"</span>)) &#123;</span><br><span class="line">            apiLog.setRemark(<span class="string">"拦截未校验！"</span>);</span><br><span class="line">            qxglService.saveApiLog(apiLog);</span><br><span class="line">            <span class="keyword">return</span> chain.filter(exchange);</span><br><span class="line">        &#125;</span><br><span class="line">        ServerHttpRequest request = exchange.getRequest();</span><br><span class="line">        ServerHttpResponse response = exchange.getResponse();</span><br><span class="line">        MultiValueMap&lt;String, String&gt; queryParams = request.getQueryParams();</span><br><span class="line">        <span class="comment">//Header中参数不能为空</span></span><br><span class="line">        HttpHeaders headers = request.getHeaders();</span><br><span class="line">        String appId = headers.getFirst(AUTHORIZE_APPID);</span><br><span class="line">        String headSign = headers.getFirst(AUTHORIZE_SIGN);</span><br><span class="line">        String timaStamp = headers.getFirst(AUTHORIZE_TIME_STAMP);</span><br><span class="line">        ApiHeaderResponse headerResponse = ApiHeaderResponse.builder()</span><br><span class="line">                .appId(appId)</span><br><span class="line">                .timeStamp(timaStamp)</span><br><span class="line">                .sign(headSign)</span><br><span class="line">                .build();</span><br><span class="line">        String msg = headerResponse.checkFields();</span><br><span class="line">        apiLog.setSysCode(appId);</span><br><span class="line">        <span class="keyword">if</span> (org.apache.commons.lang3.StringUtils.isNotBlank(msg)) &#123;</span><br><span class="line">            apiLog.setRemark(<span class="string">"Header中参数不能为空，校验失败！"</span>);</span><br><span class="line">            qxglService.saveApiLog(apiLog);</span><br><span class="line">            response.getHeaders().add(<span class="string">"Content-Type"</span>, <span class="string">"text/plain;charset=UTF-8"</span>);</span><br><span class="line">            <span class="keyword">return</span> response.writeWith(Mono.just(getResponseMsg(response, <span class="string">"Header中参数不能为空！！"</span>)));</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//timeStamp时间校验，十分钟有效</span></span><br><span class="line">        DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern(<span class="string">"yyyy-MM-dd HH:mm:ss"</span>);</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            DateTime dateTime = dateTimeFormatter.parseDateTime(timaStamp);</span><br><span class="line">            DateTime currentDateTime = <span class="keyword">new</span> DateTime();</span><br><span class="line">            <span class="keyword">int</span> minutes = Minutes.minutesBetween(currentDateTime, dateTime).getMinutes();</span><br><span class="line">            <span class="keyword">if</span> (minutes &gt; <span class="number">10</span> || minutes &lt; -<span class="number">10</span>) &#123;</span><br><span class="line">                apiLog.setRemark(<span class="string">"timeStamp超时，校验失败！"</span>);</span><br><span class="line">                qxglService.saveApiLog(apiLog);</span><br><span class="line">                response.getHeaders().add(<span class="string">"Content-Type"</span>, <span class="string">"text/plain;charset=UTF-8"</span>);</span><br><span class="line">                <span class="keyword">return</span> response.writeWith(Mono.just(getResponseMsg(response, <span class="string">"timeStamp超时！！"</span>)));</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">            apiLog.setRemark(<span class="string">"timeStamp格式错误，校验失败！"</span>);</span><br><span class="line">            qxglService.saveApiLog(apiLog);</span><br><span class="line">            response.getHeaders().add(<span class="string">"Content-Type"</span>, <span class="string">"text/plain;charset=UTF-8"</span>);</span><br><span class="line">            <span class="keyword">return</span> response.writeWith(Mono.just(getResponseMsg(response, <span class="string">"timeStamp格式错误！！"</span>)));</span><br><span class="line">        &#125;</span><br><span class="line">        String sysSecret = qxglService.getappSecret(appId);</span><br><span class="line">        <span class="keyword">if</span> (sysSecret == <span class="keyword">null</span>) &#123;</span><br><span class="line">            apiLog.setRemark(<span class="string">"应用无权限，校验失败！"</span>);</span><br><span class="line">            qxglService.saveApiLog(apiLog);</span><br><span class="line">            response.getHeaders().add(<span class="string">"Content-Type"</span>, <span class="string">"text/plain;charset=UTF-8"</span>);</span><br><span class="line">            <span class="keyword">return</span> response.writeWith(Mono.just(getResponseMsg(response, <span class="string">"应用无权限！！"</span>)));</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//校验签名，参数为空不校验</span></span><br><span class="line">        <span class="keyword">if</span> (!queryParams.isEmpty()) &#123;</span><br><span class="line">            Map&lt;String, String&gt; singleMap = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">            queryParams.toSingleValueMap().forEach((key, val) -&gt; singleMap.put(key, val));</span><br><span class="line">            singleMap.put(<span class="string">"sign"</span>, headSign);</span><br><span class="line">            <span class="keyword">if</span> (!SignUtils.checkSign(singleMap, appId, sysSecret)) &#123;</span><br><span class="line">                apiLog.setRemark(<span class="string">"签名校验失败，校验失败！"</span>);</span><br><span class="line">                qxglService.saveApiLog(apiLog);</span><br><span class="line">                response.getHeaders().add(<span class="string">"Content-Type"</span>, <span class="string">"text/plain;charset=UTF-8"</span>);</span><br><span class="line">                <span class="keyword">return</span> response.writeWith(Mono.just(getResponseMsg(response, <span class="string">"签名校验失败！！"</span>)));</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//校验接口权限</span></span><br><span class="line">        String path = uri.getPath();</span><br><span class="line">        <span class="keyword">if</span> (!qxglService.isHaveApi(appId, path)) &#123;</span><br><span class="line">            apiLog.setRemark(<span class="string">"没有此接口权限，校验失败！"</span>);</span><br><span class="line">            qxglService.saveApiLog(apiLog);</span><br><span class="line">            response.getHeaders().add(<span class="string">"Content-Type"</span>, <span class="string">"text/plain;charset=UTF-8"</span>);</span><br><span class="line">            <span class="keyword">return</span> response.writeWith(Mono.just(getResponseMsg(response, <span class="string">"没有此接口权限，请向管理员申请！！"</span>)));</span><br><span class="line">        &#125;</span><br><span class="line">        apiLog.setRemark(<span class="string">"校验通过！"</span>);</span><br><span class="line">        qxglService.saveApiLog(apiLog);</span><br><span class="line">        <span class="keyword">if</span> (uri.toString().contains(<span class="string">"/zhjg/"</span>) || uri.toString().contains(<span class="string">"/zcbg/"</span>) || uri.toString().contains(<span class="string">"/zssb/"</span>)) &#123;</span><br><span class="line">            <span class="keyword">return</span> chain.filter(exchange);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//添加权限管理系统权限验证参数</span></span><br><span class="line">        StringBuilder query = <span class="keyword">new</span> StringBuilder();</span><br><span class="line">        String originalQuery = uri.getRawQuery();</span><br><span class="line">        <span class="keyword">if</span> (uri.toString().contains(<span class="string">"/qxglServer/"</span>)) &#123;</span><br><span class="line">            <span class="keyword">if</span> (StringUtils.hasText(originalQuery)) &#123;</span><br><span class="line">                query.append(originalQuery);</span><br><span class="line">                <span class="keyword">if</span> (originalQuery.charAt(originalQuery.length() - <span class="number">1</span>) != <span class="string">'&amp;'</span>) &#123;</span><br><span class="line">                    query.append(<span class="string">'&amp;'</span>);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            query.append(<span class="string">"sysCode="</span> + appId + <span class="string">"&amp;userToken="</span>).append(ShfdaConfusionUtil.getLoginStr(<span class="string">"ADMIN_INNER"</span>, <span class="string">"ADMIN_INNER"</span>));</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> chain.filter(exchange);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            URI newUri = UriComponentsBuilder.fromUri(uri)</span><br><span class="line">                    .replaceQuery(query.toString())</span><br><span class="line">                    .build(<span class="keyword">true</span>)</span><br><span class="line">                    .toUri();</span><br><span class="line">            ServerHttpRequest request1 = exchange.getRequest().mutate()</span><br><span class="line">                    .uri(newUri)</span><br><span class="line">                    .build();</span><br><span class="line">            <span class="keyword">return</span> chain.filter(exchange.mutate().request(request1).build());</span><br><span class="line">        &#125; <span class="keyword">catch</span> (RuntimeException ex) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalStateException(<span class="string">"Invalid URI query: \""</span> + query.toString() + <span class="string">"\""</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getOrder</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> -<span class="number">2</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 返回信息</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> response</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> msg</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> DataBuffer <span class="title">getResponseMsg</span><span class="params">(ServerHttpResponse response, String msg)</span> </span>&#123;</span><br><span class="line">        JSONObject message = <span class="keyword">new</span> JSONObject();</span><br><span class="line">        message.put(<span class="string">"returnCode"</span>, -<span class="number">1</span>);</span><br><span class="line">        message.put(<span class="string">"returnMsg"</span>, msg);</span><br><span class="line">        <span class="keyword">byte</span>[] bits = message.toJSONString().getBytes(StandardCharsets.UTF_8);</span><br><span class="line">        <span class="keyword">return</span> response.bufferFactory().wrap(bits);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 判读是否在忽略列表中</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="comment">/*private boolean inIgnore() &#123;</span></span><br><span class="line"><span class="comment">        if (CollectionUtils.isEmpty(ignoreLists)) &#123;</span></span><br><span class="line"><span class="comment">            return false;</span></span><br><span class="line"><span class="comment">        &#125;</span></span><br><span class="line"><span class="comment">        //   if()</span></span><br><span class="line"><span class="comment">        return true;</span></span><br><span class="line"><span class="comment">    &#125;*/</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/gateway网关/" rel="tag"># gateway网关</a>
+              <a href="/tags/接口权限管理/" rel="tag"># 接口权限管理</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/2019/11/14/权限管理系统总结/" rel="next" title="权限管理系统总结">
+                  <i class="fa fa-chevron-left"></i> 权限管理系统总结
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/2019/11/15/上海药店APP开发总结/" rel="prev" title="上海药店APP开发总结">
+                  上海药店APP开发总结 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#项目描述："><span class="nav-number">1.</span> <span class="nav-text">项目描述：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#职责描述："><span class="nav-number">2.</span> <span class="nav-text">职责描述：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#技术描述："><span class="nav-number">3.</span> <span class="nav-text">技术描述：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#系统页面："><span class="nav-number">4.</span> <span class="nav-text">系统页面：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-概述"><span class="nav-number">5.</span> <span class="nav-text">1   概述</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-Open-API-说明"><span class="nav-number">5.1.</span> <span class="nav-text">1.1 Open API 说明</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-访问频次控制说明"><span class="nav-number">5.2.</span> <span class="nav-text">1.2 访问频次控制说明</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-请求说明"><span class="nav-number">6.</span> <span class="nav-text">2   请求说明</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-接口地址"><span class="nav-number">6.1.</span> <span class="nav-text">2.1 接口地址</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-公共请求头（Header）"><span class="nav-number">6.2.</span> <span class="nav-text">2.2 公共请求头（Header）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-公共响应参数"><span class="nav-number">6.3.</span> <span class="nav-text">2.3 公共响应参数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-4-签名算法"><span class="nav-number">6.4.</span> <span class="nav-text">2.4 签名算法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#拦截器代码："><span class="nav-number">6.5.</span> <span class="nav-text">拦截器代码：</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="site-author-image" itemprop="image" alt="wentz" src="/images/mao01.jpg">
+  <p class="site-author-name" itemprop="name">wentz</p>
+  <div class="site-description" itemprop="description">进一寸有进一寸的欢喜</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">55</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">44</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/wentianzhao" title="GitHub &rarr; https://github.com/wentianzhao" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:834023657@qq.com" title="E-Mail &rarr; mailto:834023657@qq.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2018 – 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">wentz</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://mist.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.4.2
+  </div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/medium-zoom@1/dist/medium-zoom.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+<script src="/js/utils.js"></script>
+<script src="/js/schemes/muse.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  <script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

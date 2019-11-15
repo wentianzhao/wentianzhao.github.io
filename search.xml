@@ -1,6 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>上海药店后台管理开发总结</title>
+    <url>/2019/11/15/%E4%B8%8A%E6%B5%B7%E8%8D%AF%E5%BA%97%E5%90%8E%E5%8F%B0%E7%AE%A1%E7%90%86%E5%BC%80%E5%8F%91%E6%80%BB%E7%BB%93/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>项目总结</category>
+      </categories>
+      <tags>
+        <tag>shyd总结</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>上海药店APP开发总结</title>
+    <url>/2019/11/15/%E4%B8%8A%E6%B5%B7%E8%8D%AF%E5%BA%97APP%E5%BC%80%E5%8F%91%E6%80%BB%E7%BB%93/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>项目总结</category>
+      </categories>
+      <tags>
+        <tag>shyd总结</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>gateway网关总结</title>
+    <url>/2019/11/15/gateway%E7%BD%91%E5%85%B3%E6%80%BB%E7%BB%93/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>项目总结</category>
+      </categories>
+      <tags>
+        <tag>gateway网关</tag>
+        <tag>接口权限管理</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>权限管理系统总结</title>
+    <url>/2019/11/14/%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E6%80%BB%E7%BB%93/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>项目总结</category>
+      </categories>
+      <tags>
+        <tag>权限管理</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>事物、Transaction的用法</title>
     <url>/2019/11/13/%E4%BA%8B%E7%89%A9%E3%80%81-Transaction%E7%9A%84%E7%94%A8%E6%B3%95/</url>
     <content><![CDATA[]]></content>
@@ -71,8 +116,11 @@
     <title>追溯申报系统总结</title>
     <url>/2019/11/11/%E8%BF%BD%E6%BA%AF%E7%94%B3%E6%8A%A5%E7%B3%BB%E7%BB%9F%E6%80%BB%E7%BB%93/</url>
     <content><![CDATA[]]></content>
+      <categories>
+        <category>项目总结</category>
+      </categories>
       <tags>
-        <tag>总结</tag>
+        <tag>器械追溯申报</tag>
       </tags>
   </entry>
   <entry>
@@ -112,8 +160,8 @@
     <url>/2019/11/09/shiro%E5%B8%B8%E8%A7%81%E9%9D%A2%E8%AF%95%E9%A2%98/</url>
     <content><![CDATA[]]></content>
       <tags>
-        <tag>shiro</tag>
         <tag>权限管理</tag>
+        <tag>shiro</tag>
       </tags>
   </entry>
   <entry>
@@ -178,8 +226,11 @@
     <title>器械召回系统总结</title>
     <url>/2019/11/07/%E5%99%A8%E6%A2%B0%E5%8F%AC%E5%9B%9E%E7%B3%BB%E7%BB%9F%E6%80%BB%E7%BB%93/</url>
     <content><![CDATA[]]></content>
+      <categories>
+        <category>项目总结</category>
+      </categories>
       <tags>
-        <tag>项目总结</tag>
+        <tag>器械召回</tag>
       </tags>
   </entry>
   <entry>
