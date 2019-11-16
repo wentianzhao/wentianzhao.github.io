@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.wentz.top/"/>
-  <updated>2019-11-16T02:59:23.420Z</updated>
+  <updated>2019-11-16T11:25:21.529Z</updated>
   <id>http://www.wentz.top/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="http://www.wentz.top/2019/11/16/Autowired%E5%92%8CResource%E5%8C%BA%E5%88%AB/"/>
     <id>http://www.wentz.top/2019/11/16/Autowired和Resource区别/</id>
     <published>2019-11-16T02:45:46.000Z</published>
-    <updated>2019-11-16T02:59:23.420Z</updated>
+    <updated>2019-11-16T11:25:21.529Z</updated>
     
     <content type="html"><![CDATA[<p>自己在实际开发中一直在使用@Autowired从spring中获取bean，但也常看到 @Resource 的使用，特地搜了搜区别：实际作用来说，没什么区别；</p><a id="more"></a><h3 id="一、-Autowired："><a href="#一、-Autowired：" class="headerlink" title="一、@Autowired："></a>一、@Autowired：</h3><p>1、Spring 2.5 引入了 @Autowired 注释，它可以对类成员变量、方法及构造函数进行标注，完成自动装配的工作。 通过 @Autowired 的使用来消除 set ，get 方法。</p><p>这个注解就是 spring 可以自动帮你把 bean 里面引用的对象的 setter/getter 方法省略，它会自动帮你 set/get。</p><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;bean id=<span class="string">"userDao"</span> <span class="class"><span class="keyword">class</span></span>=<span class="string">"..."</span>/&gt;</span><br><span class="line">&lt;bean id=<span class="string">"userService"</span> <span class="class"><span class="keyword">class</span></span>=<span class="string">"..."</span>&gt;</span><br><span class="line">&lt;property name=<span class="string">"userDao"</span>&gt;</span><br><span class="line">&lt;ref bean=<span class="string">"userDao"</span>/&gt;</span><br><span class="line">&lt;/property&gt;</span><br><span class="line">&lt;/bean&gt;</span><br></pre></td></tr></table></figure><p>这样你在 userService 里面要做一个 userDao 的 setter/getter 方法。<br>但如果你用了 @Autowired 的话，你只需要在 UserService 的实现类中声明即可。<br>@Autowired<br>private IUserDao userdao;</p><p>PS：</p><p>1、@Autowired 是根据类型进行自动装配的。</p><p>2、@Autowired 也可以手动指定按照 byName 方式注入，使用 @Qualifier 标签，例如：</p><p>@Autowired() @Qualifier(“baseDao”)<br>private BaseDao baseDao;</p><p>二、@Resource 的作用相当于 @Autowired，只不过 @Autowired 按 byType 自动注入，而 @Resource 默认按 byName 自动注入。<br>@Resource 有两个属性是比较重要的，分是 name 和 type，Spring 将 @Resource 注解的 name 属性解析为 bean 的名字，而 type 属性则解析为 bean 的类型。所以如果使用 name 属性，则使用 byName 的自动注入策略，而使用 type 属性时则使用 byType 自动注入策略。如果既不指定 name 也不指定 type 属性，这时将通过反射机制使用 byName 自动注入策略。<br>@Resource 装配顺序　　</p><ol><li>如果同时指定了 name 和 type，则从 Spring 上下文中找到唯一匹配的 bean 进行装配，找不到则抛出异常　　</li><li>如果指定了 name，则从上下文中查找名称（id）匹配的 bean 进行装配，找不到则抛出异常</li><li>如果指定了 type，则从上下文中找到类型匹配的唯一 bean 进行装配，找不到或者找到多个，都会抛出异常　　</li><li>如果既没有指定 name，又没有指定 type，则自动按照 byName 方式进行装配；如果没有匹配，则回退为一个原始类型进行匹配，如果匹配则自动装配；</li></ol><p>三、@Autowired 与 @Resource 的区别<br>1、@Autowired 与 @Resource 都可以用来装配 bean. 都可以写在字段上，或写在 setter 方法上。<br>2、@Autowired 默认按类型装配（这个注解是属业 spring 的），默认情况下必须要求依赖对象必须存在，如果要允许 null 值，可以设置它的 required 属性为 false。<br>3、@Resource（这个注解属于 J2EE 的），默认安照名称进行装配，名称可以通过 name 属性进行指定，<br>如果没有指定 name 属性，当注解写在字段上时，默认取字段名进行按照名称查找，如果注解写在 setter 方法上默认取属性名进行装配。 当找不到与名称匹配的 bean 时才按照类型进行装配。但是需要注意的是，如果 name 属性一旦指定，就只会按照名称进行装配。<br>ps: @Resource 注解在字段上，这样就不用写 setter 方法了，并且这个注解是属于 J2EE 的，减少了与 spring 的耦合。</p>]]></content>
     
@@ -42,8 +42,8 @@
   
   <entry>
     <title>药店智能监管系统开发总结</title>
-    <link href="http://www.wentz.top/2019/11/15/%E4%B8%8A%E6%B5%B7%E8%8D%AF%E5%BA%97%E5%90%8E%E5%8F%B0%E7%AE%A1%E7%90%86%E5%BC%80%E5%8F%91%E6%80%BB%E7%BB%93/"/>
-    <id>http://www.wentz.top/2019/11/15/上海药店后台管理开发总结/</id>
+    <link href="http://www.wentz.top/2019/11/15/%E8%8D%AF%E5%BA%97%E6%99%BA%E8%83%BD%E7%9B%91%E7%AE%A1%E7%B3%BB%E7%BB%9F%E5%BC%80%E5%8F%91%E6%80%BB%E7%BB%93/"/>
+    <id>http://www.wentz.top/2019/11/15/药店智能监管系统开发总结/</id>
     <published>2019-11-15T04:00:33.000Z</published>
     <updated>2019-11-16T11:25:07.375Z</updated>
     
