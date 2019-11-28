@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.wentz.top/"/>
-  <updated>2019-11-21T00:35:01.165Z</updated>
+  <updated>2019-11-21T00:35:15.999Z</updated>
   <id>http://www.wentz.top/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="http://www.wentz.top/2019/11/21/hexo%E5%8D%9A%E5%AE%A2%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%94%99%E8%AF%AF/"/>
     <id>http://www.wentz.top/2019/11/21/hexo博客服务器错误/</id>
     <published>2019-11-21T00:26:14.000Z</published>
-    <updated>2019-11-21T00:35:01.165Z</updated>
+    <updated>2019-11-21T00:35:15.999Z</updated>
     
     <content type="html"><![CDATA[<p>今天访问我自己的博客时，突然遇到服务器故障，登录不进去的问题，着实把我着急了一把，比较最近是在面试阶段，我的博客地址还是在简历的最上边，几乎仅次与名字的位置，唉。</p><a id="more"></a><ol><li><p>之前我有把简历部署到github和coding上，在浏览器上访问两个网站提供的博客域名时，都登录不上，可能是在阿里云配置的域名解析的问题；</p></li><li><p>之后ping了一下网址，发现wenta.top的域名在国内是映射的coding的博客，但是IPping不通，但github上可以ping通，马上把coding博客的域名解析全部停掉，默认使用github博客；</p><p><img alt="1574296424276" data-src="/images/hexo博客服务器错误/1574296424276.png"></p><p>几分钟后，恢复正常，之前做coding博客是为了在国内访问是提升速度，没想到突然遇到这个问题。</p></li></ol>]]></content>
     
