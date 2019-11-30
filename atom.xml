@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.wentz.top/"/>
-  <updated>2019-11-28T14:52:50.413Z</updated>
+  <updated>2019-11-30T14:56:12.965Z</updated>
   <id>http://www.wentz.top/</id>
   
   <author>
@@ -17,11 +17,33 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>小米笔记本风扇声音响调整</title>
+    <link href="http://www.wentz.top/2019/11/30/%E5%B0%8F%E7%B1%B3%E7%AC%94%E8%AE%B0%E6%9C%AC%E9%A3%8E%E6%89%87%E5%A3%B0%E9%9F%B3%E5%93%8D%E8%B0%83%E6%95%B4/"/>
+    <id>http://www.wentz.top/2019/11/30/小米笔记本风扇声音响调整/</id>
+    <published>2019-11-30T14:40:22.000Z</published>
+    <updated>2019-11-30T14:56:12.965Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="小米笔记本风扇太响"><a href="#小米笔记本风扇太响" class="headerlink" title="小米笔记本风扇太响"></a>小米笔记本风扇太响</h3><p>好长时间一直在和小米笔记本风扇太响作斗争，之前网上有看过清灰，风扇加润滑油，售后等，但几乎都没什么用。</p><a id="more"></a><p>网上和小米的风扇太响作斗争的人太多，不过最新的小米游戏本好像不错，风扇没这么响，想能好像也还不错，但就是沉，很沉。</p><h3 id="过程中遇到的大坑"><a href="#过程中遇到的大坑" class="headerlink" title="过程中遇到的大坑"></a>过程中遇到的大坑</h3><p>就是有人建议<strong>调低cpu 处理器最大状态</strong>，有说调到99的，又是调到88的。</p><p>最近idea运行代码时，电脑卡的一批，找原因时发现了：</p><p><img alt="1575125528435" data-src="/images/小米笔记本风扇声音响调整/1575125528435.png"></p><p><img alt="1575125553924" data-src="/images/小米笔记本风扇声音响调整/1575125553924.png"></p><h3 id="总结："><a href="#总结：" class="headerlink" title="总结："></a>总结：</h3><p>重新调成100%，风扇状态改成主动降热，重新打开idea ，运行两个项目，发现代码一点都不卡，基本确定是因为这个原因。</p><p>CPU也达到了最高：</p><p><img alt="1575125716442" data-src="/images/小米笔记本风扇声音响调整/1575125716442.png"></p><p><img alt="1575125747061" data-src="/images/小米笔记本风扇声音响调整/1575125747061.png"></p><p>不卡了，明天再去找个地方给电脑清清灰，希望声音会小点。</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;小米笔记本风扇太响&quot;&gt;&lt;a href=&quot;#小米笔记本风扇太响&quot; class=&quot;headerlink&quot; title=&quot;小米笔记本风扇太响&quot;&gt;&lt;/a&gt;小米笔记本风扇太响&lt;/h3&gt;&lt;p&gt;好长时间一直在和小米笔记本风扇太响作斗争，之前网上有看过清灰，风扇加润滑油，售后等，但几乎都没什么用。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="记录" scheme="http://www.wentz.top/categories/%E8%AE%B0%E5%BD%95/"/>
+    
+    
+      <category term="小米笔记本" scheme="http://www.wentz.top/tags/%E5%B0%8F%E7%B1%B3%E7%AC%94%E8%AE%B0%E6%9C%AC/"/>
+    
+  </entry>
+  
+  <entry>
     <title>2019.11.28记录</title>
     <link href="http://www.wentz.top/2019/11/28/2019-11-28%E8%AE%B0%E5%BD%95/"/>
     <id>http://www.wentz.top/2019/11/28/2019-11-28记录/</id>
     <published>2019-11-28T13:30:17.000Z</published>
-    <updated>2019-11-28T14:52:50.413Z</updated>
+    <updated>2019-11-28T14:53:05.264Z</updated>
     
     <content type="html"><![CDATA[<div id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">  <div class="hbe-input-container">  <input type="password" id="hbePass" placeholder="输入密码，查看文章">    <label for="hbePass">输入密码，查看文章</label>    <div class="bottom-line"></div>  </div>  <script id="hbeData" type="hbeData" data-hmacdigest="bc80aa9b310cd91544febe1a4f670c96aa8ecede05f84df3b75823c2e12de8d8">1545010592de62f3d81325236b931d0c2e26dd324651b82fce9bcb8f0123d51bb257796fd14327b831b04511b895d8c4349a579dab6148fcbeb686b977cac75d4987b7d594ee19bf0097bc0ce1585c5601eea9b70f27d2e52d7c842d5b507aa69702aba78c481ad06211c852ad71634037dbc11acb5ffa0affa5ba8e40e6bc8dc047cbae8b267e510235d76c514b4ff58fab6b7101df2f7b53cc9ca8698e2762616c5cce35d7a770aeed39a7bd36fea9decefc8d43bf5c21ed3e1fcd897178976cfd90293266e2d7d13f2c1237214957410f705991bbac65fc3ded52d5c87c0366db3ccaa310ef62fd62061a591039aaa3832b1df41e60c9c5f353fc70aeef0d1b00ebe0cd9bbedff328dcd1b1a89444e9de59f9db546859b936d622a45cb60a488bf664804943bb2ce7784cb1782315d59746194f08066827f1a22867c8e030ecb093382e9680d74eb8298ee77edb1d1f0d96fd4876dafefb8698c3dccf56330bcdcabd37aa5ad9cfa4555be020785afe03b1d969c56212db5515c52c2b5f1eca5ada0b462919ec47efd6e8be0fcdf5300a68fb0c28a2ac6d4702efb21ffbdc8f0b2ac4d1209448243df79a0f3d2efc54b7162368afd1a178903e634fc7af24c3b7dc83d2a74fed7b43ffc426be4847aac3ef414fcfd19c7edfa4d180f8069fd7b1e96757dbe63a977b3f6208850b7e3821fe061d859fa4c7f4669336e5292ae99ae79e5a6e2e8b08690aad2ba12076aeda3742f76c908536bb14a4613ad28abfb96722723c5046ee83a3b2a4cf81ac7ff2f33b097daa4dd493b193c0b6a52b745f86ab1b4764e297fbcb30eecf48438f9cdcc4670fbf3d9dcedd4870df75141ad7611f571ef8f06bb7b6d413bba55a1650921af1712d54236712aa85a1bd3ad1fdd615847ecdc799c40ce149922fa68ffc1598f91c1e664bbb1f191d69b6c31047467ea2394b185269221daae2bc31499afeaac8ec14a50ed394b481e1126f5973fc24de70cf96879e5dd65a33784676ad7502383394293a99bce4a4bd85438dac1c1be0d521ed48066f22c6ba25a89f65fcaf53a92e6a730d9dc590688814cc854e11dd83ad17875e633f71ed03dc10ea18a54db890a4767d72089aec97451289aaf805c7be12de07a565763c0d17dc55a53d48d9c7fbd20505e077e98cd59bf23a0f5c501a95dc1dec1950c06481d41ae0ddcf85583b8d5435fca17fb2ce756f7f7943c8164a2f466ad121df3896d0d28730c1cbd2c491cfd2aa41dfa59c0d62d3c542c813e5d2b231cf348c760f1d9cd97948cc946c9ff92b4f97ea2277b91b4e75d738bc65e2b9f081c4df00874fe7d03db690bb582ffbf45500628b9a08832b526656cc9c8e85e8fa14771b5ffb1a05ddd34392c3c74120b8a1799b1f4a9a2ca11a3b12a6c7ea9d8fd3b4c58a4b5a74a51b45af842f0217ed3b73d076145b5038740c98e029bff033482a5247548ba440582c90f4dcc1ffef5d92358de798fee67d2fc9c1d66a556d6e0b15bfad9ed687981f07e67821a98ce0b6d1c7993d50ce8ece945482e43f1bb1376a895f85ce3edcd9ca42b1a92592ce7e0a1ab1151dd9e02858aef0fd22e8f2409b1d00b304a0529bbdab6eea9720295b7d7d73355a72b559e3d3067fc018c7bb74d3aff2f95a7dfe7e97b9b7a78b1c2f25d9cb23b3fbd6751ecc5e193aa32370c3993ebbe73a1ac24426a5fb98138547e71aa3145747f114b2a94c1bfc5871cbc510ade9d13763d4bd76394a0c30964f03a8dd57be565fcbeeb1dde5fd574e4ba0cca74dcd6f5614f517cf6736fec9383923fc0400a235942221ef2759969f035cc9106059ce07f8b38042b4bfab04870fca9452a82d372449063b7a3a6be8bb29fb20205ab284c018366b9d8c0a7a3bd77a5144725395d4b9aefad26769d3986df126758e93cad5104077fbc880bb78650d25768805a0396a972bb420b3f343d977699f702703aa23d9039d7dfe8ccb9338636c388ecb8934abf6651877ad914789d6e08b93e40f4d22021ba3914e250766fdb0b6d8f0ffe498d6c42a76bbe18dd088d43a7f871eb803dcef40b333388440d8bbb59723c7c5a2febe0ddd6e391d0c33a9c38c0793971dac9cd3f752a4937ec17bd961d746b955eff429e4d9a6384d0c090946b51abc6033644b471e04c0eceb91950852311fe790ff0acf5f7b280eb688adb31a38711d626de50dea4d19a7342af34f489f14641603db5ddf1307ba2eb7c16c3448497da27f1249f3fc7626c8f976afafa49f0b82f1527b9a536241545f9ffd1db51a5e4054c0bc0edde7463526ff3f58706d71b1814af8040764fe83f2fc9a245d0658a7452b14c9c3a7fd34c90994c42cf60d8992eecb96bd6a0297d58d78dd7df23821017562df30e03684493a961e82b7ce151b3979ca48f4a2ba00096261eda9c86df099eeab3b36d29897269878637fe8a2675ea7833899c29cc33096367b1ad494f2fc16dd876eadf0ccd0f5eb43bdfb5515e74654431c60ac873168f2e853481649977c2bde13c5075ba04c8bf2063424986b844a0f2b273824e82dc6431d7abf21700d2ee726f6c9905a36e734f759b14b27448a9632f5119c925b7a51c4610649a3a35fce547841ad17ea9dd98cd8d4d7953d3f671449607c4fa790e7cc92054b8a2640cb3561fd77911c791426c28fd46d2a43ad8ba011abab169d56773ba74f86d186a605fd63f89116df64507eed0e95d74fff1b89b3494720b44dc3bb45664c6a46080a7cba73cc196106587fed4a26dfd70438bf849bfa341b83b3fd31aeca207fe5fbad0277c14ae734c2c223fc8b80ac58ccdcd104c3536434b5b46076cf8a1d83f9e3ecfe4bc6de6157fb0208632ed70c3ec0b7e0ab075d12fb201932f945f744283dc8f89ec3793009a3bb637696ae99dbae740ec5979ca9c9ca6164982361bb389b5e4a11e4334e587b75d72d6144a4a5cb4ddbc04823de85b69a4532958d7bb31a25465d2f667d3a4f55572bb1a5addc7112b83207a9773bded52d430c24a6b07a091501a099364f45bc789b68c7bc65a161e79e2934ddc296f0f57b3b6a2309e3ef0101445d4ac11f5ee8c2db49dc16a63e7805541311dc8edfbea0a69c494cdc26e9d743db362cb3b753dce55f3b53b09a4ee05f8d1486f6736c078a590e1f0095b8c8c6c4902de2949241528b1d76dc3e0de72240763ef732ceeecd0593e6b7930aba7f3e45b29620bbb6dde66db1e0d18fc0a28a95248bd947de5ddfc10b93879680a32aa23808e5590f5e663e494aa9ac222af2b0fd180b0e4d273f0065028c4acfca131fab41b88844665aacb28f362e1c998a8ea784be38c9ddc4ca6193819ae0e4967fd0427fe0505ae2e162c8496052cc6b47c0fbdf99c09f52ad71ff9fea15e9ab8a1382ea3e02c94209819b36eb4c03cea18a4a8fb17584a12fd65d</script></div><script src="/lib/blog-encrypt.js"></script><link href="/css/blog-encrypt.css" rel="stylesheet" type="text/css">]]></content>
     
@@ -457,28 +479,6 @@
     
     
       <category term="思考" scheme="http://www.wentz.top/tags/%E6%80%9D%E8%80%83/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>java序列化</title>
-    <link href="http://www.wentz.top/2019/11/09/java%E5%BA%8F%E5%88%97%E5%8C%96/"/>
-    <id>http://www.wentz.top/2019/11/09/java序列化/</id>
-    <published>2019-11-09T14:53:27.000Z</published>
-    <updated>2019-11-18T07:32:50.599Z</updated>
-    
-    <content type="html"><![CDATA[<p><a href="https://juejin.im/post/5ce3cdc8e51d45777b1a3cdf" target="_blank" rel="noopener">序列化各种使用场景</a></p><a id="more"></a><p><img alt="1573311400202" data-src="/images/java序列化/1573311400202.png"></p><p><a href="https://www.cnblogs.com/wxgblogs/p/5849951.html" target="_blank" rel="noopener">序列化问题案例分析</a></p><p><img alt="1573311428896" data-src="/images/java序列化/1573311428896.png"></p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;&lt;a href=&quot;https://juejin.im/post/5ce3cdc8e51d45777b1a3cdf&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;序列化各种使用场景&lt;/a&gt;&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="Java" scheme="http://www.wentz.top/categories/Java/"/>
-    
-    
-      <category term="Java序列化" scheme="http://www.wentz.top/tags/Java%E5%BA%8F%E5%88%97%E5%8C%96/"/>
     
   </entry>
   
