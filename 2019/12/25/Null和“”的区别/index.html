@@ -76,20 +76,20 @@
 })();
 </script>
 
-  <meta name="description" content="方案一​        将sessionID当如redis中，所有的页面请求时都从redis获取，获取不到直接踢出；">
-<meta name="keywords" content="Nginx,session共享,spring session">
+  <meta name="description" content="Null和“”的区别">
+<meta name="keywords" content="java">
 <meta property="og:type" content="article">
-<meta property="og:title" content="实现session共享、Nginx使用">
-<meta property="og:url" content="http://www.wentz.top/2019/11/06/实现session共享/index.html">
+<meta property="og:title" content="Null和“”的区别">
+<meta property="og:url" content="http://www.wentz.top/2019/12/25/Null和“”的区别/index.html">
 <meta property="og:site_name" content="飞黄">
-<meta property="og:description" content="方案一​        将sessionID当如redis中，所有的页面请求时都从redis获取，获取不到直接踢出；">
+<meta property="og:description" content="Null和“”的区别">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-11-18T07:21:09.461Z">
+<meta property="og:updated_time" content="2019-12-25T10:39:30.091Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="实现session共享、Nginx使用">
-<meta name="twitter:description" content="方案一​        将sessionID当如redis中，所有的页面请求时都从redis获取，获取不到直接踢出；">
+<meta name="twitter:title" content="Null和“”的区别">
+<meta name="twitter:description" content="Null和“”的区别">
 
-<link rel="canonical" href="http://www.wentz.top/2019/11/06/实现session共享/">
+<link rel="canonical" href="http://www.wentz.top/2019/12/25/Null和“”的区别/">
 
 
 <script id="page-configurations">
@@ -103,7 +103,7 @@
   };
 </script>
 
-  <title>实现session共享、Nginx使用 | 飞黄</title>
+  <title>Null和“”的区别 | 飞黄</title>
   
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-151358316-1"></script>
     <script>
@@ -262,7 +262,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://www.wentz.top/2019/11/06/实现session共享/">
+    <link itemprop="mainEntityOfPage" href="http://www.wentz.top/2019/12/25/Null和“”的区别/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/mao01.jpg">
@@ -275,7 +275,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          实现session共享、Nginx使用
+          Null和“”的区别
         </h2>
 
         <div class="post-meta">
@@ -284,26 +284,9 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2019-11-06 15:59:13" itemprop="dateCreated datePublished" datetime="2019-11-06T15:59:13+08:00">2019-11-06</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-11-18 15:21:09" itemprop="dateModified" datetime="2019-11-18T15:21:09+08:00">2019-11-18</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/session/" itemprop="url" rel="index">
-                    <span itemprop="name">session</span>
-                  </a>
-                </span>
+              <time title="创建时间：2019-12-25 12:16:49 / 修改时间：18:39:30" itemprop="dateCreated datePublished" datetime="2019-12-25T12:16:49+08:00">2019-12-25</time>
             </span>
 
           
@@ -324,21 +307,23 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h3 id="方案一"><a href="#方案一" class="headerlink" title="方案一"></a>方案一</h3><p>​        将sessionID当如redis中，所有的页面请求时都从redis获取，获取不到直接踢出；</p>
-<a id="more"></a>
-<p>​        用户重新登录后，重新保存到redis中。</p>
-<p><img alt="1573027317783" data-src="/images/实现session共享/1573027317783.png"></p>
-<p><img alt="1573027415486" data-src="/images/实现session共享/1573027415486.png"></p>
-<h3 id="方案二"><a href="#方案二" class="headerlink" title="方案二"></a>方案二</h3><p> <strong>Spring Session</strong> </p>
-<p><img alt="1573027450982" data-src="/images/实现session共享/1573027450982.png"></p>
-<p>配置完成后直接使用就好了：<img alt="1573027619706" data-src="/images/实现session共享/1573027619706.png"></p>
-<h3 id="Nginx使用"><a href="#Nginx使用" class="headerlink" title="Nginx使用"></a>Nginx使用</h3><p>​        进入 Nginx 的安装目录的 conf 目录下（默认是在 <code>/usr/local/nginx/conf</code>），编辑 nginx.conf 文件:</p>
-<p><img alt="1573027848967" data-src="/images/实现session共享/1573027848967.png"></p>
-<p><img alt="1573027994588" data-src="/images/实现session共享/1573027994588.png"><img alt="1573092647459" data-src="/images/实现session共享/1573092647459.png"></p>
-<p><img alt="1573092685328" data-src="/images/实现session共享/1573092685328.png"></p>
-<p><img alt="1573092694599" data-src="/images/实现session共享/1573092694599.png"></p>
-<p><a href="https://zhuanlan.zhihu.com/p/68003585" target="_blank" rel="noopener">参考</a></p>
-<h3 id="其他方式："><a href="#其他方式：" class="headerlink" title="其他方式："></a>其他方式：</h3><h3 id><a href="#" class="headerlink" title></a><img alt="1573196340967" data-src="/images/实现session共享/1573196340967.png"></h3>
+        <h1 id="Null和“”的区别"><a href="#Null和“”的区别" class="headerlink" title="Null和“”的区别"></a>Null和“”的区别</h1><a id="more"></a>
+<p><img alt data-src="https://paper-attachments.dropbox.com/s_F3B064B7257955F95C6DD62AA89806D5B132089178CEDA145AB3B4C779A8BA61_1577267974518_image.png"></p>
+<p><strong>” 和 null 的区别</strong><br>null 是没有地址的，可以理解为空指针。当对象在构造器初始化时，如果没有被显示的赋于初值，那么会默认赋值为 null。<br>“” 空字符串是一个 String 对象是有地址的，只是内容是空。<br>关于构造器初始化，在没有显示赋予初值的情况下。默认将数值型赋为 0 ， 布尔型是 false，对象引用则是 null。<br>String 并不是基本数据类型，而是对象所以会被默认的赋予 null。</p>
+<h2 id="字符串非空判断"><a href="#字符串非空判断" class="headerlink" title="字符串非空判断"></a>字符串非空判断</h2><p>isEmpty() 和 isBlank() 区别在于 isBlank() 可以多了对于空格的判断，可以根据方法名区别使用 isEmpty() 判断字符串是否为空，而 isBlank() 则是判断字符串是否是空格，空或null</p>
+<p><img alt data-src="https://paper-attachments.dropbox.com/s_F3B064B7257955F95C6DD62AA89806D5B132089178CEDA145AB3B4C779A8BA61_1577269007385_image.png"></p>
+<p><img alt data-src="https://paper-attachments.dropbox.com/s_F3B064B7257955F95C6DD62AA89806D5B132089178CEDA145AB3B4C779A8BA61_1577268950577_image.png"></p>
+<h2 id="集合判空检查"><a href="#集合判空检查" class="headerlink" title="集合判空检查"></a>集合判空检查</h2><p>要了解集合判空方法的区别首先要理解对象为size == 0 和 null 的区别</p>
+<p>size==0 和 null 的区别<br>null 是没有地址的，可以理解为空指针。当对象在构造器初始化时，如果没有被显示的赋于初值，那么会默认赋值为 null。<br>size==0 表示集合已经指向一个地址，但是指向的对象中没有元素。<br>isEmpty() 和 isBlank() 区别在于 isBlank()</p>
+<p><img alt data-src="https://paper-attachments.dropbox.com/s_F3B064B7257955F95C6DD62AA89806D5B132089178CEDA145AB3B4C779A8BA61_1577269070933_image.png"></p>
+<h2 id="测试："><a href="#测试：" class="headerlink" title="测试："></a>测试：</h2><p><img alt data-src="https://paper-attachments.dropbox.com/s_F3B064B7257955F95C6DD62AA89806D5B132089178CEDA145AB3B4C779A8BA61_1577269568268_image.png"></p>
+<p>空指针的length会报错</p>
+<p><img alt data-src="https://paper-attachments.dropbox.com/s_F3B064B7257955F95C6DD62AA89806D5B132089178CEDA145AB3B4C779A8BA61_1577270087384_image.png"></p>
+<ol>
+<li>对象new出来以后是有地址的，所以不为空；</li>
+<li>对象不为空，但字段是null，对象.字段不会报错，但对象.字段length会报错（null.length）</li>
+</ol>
+
     </div>
 
     
@@ -347,26 +332,21 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/Nginx/" rel="tag"># Nginx</a>
-              <a href="/tags/session共享/" rel="tag"># session共享</a>
-              <a href="/tags/spring-session/" rel="tag"># spring session</a>
+              <a href="/tags/java/" rel="tag"># java</a>
           </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
-                <a href="/2019/11/06/Oracle SQL性能优化/" rel="next" title="Oracle SQL性能优化">
-                  <i class="fa fa-chevron-left"></i> Oracle SQL性能优化
+                <a href="/2019/12/13/redis锁/" rel="next" title="redis锁">
+                  <i class="fa fa-chevron-left"></i> redis锁
                 </a>
             </div>
 
             <span class="post-nav-divider"></span>
 
             <div class="post-nav-prev post-nav-item">
-                <a href="/2019/11/07/SELECT-FROM-A-B-能查出多少条数据？/" rel="prev" title="SELECT * FROM A,B 能查出多少条数据？">
-                  SELECT * FROM A,B 能查出多少条数据？ <i class="fa fa-chevron-right"></i>
-                </a>
             </div>
           </div>
       </footer>
@@ -405,7 +385,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#方案一"><span class="nav-number">1.</span> <span class="nav-text">方案一</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方案二"><span class="nav-number">2.</span> <span class="nav-text">方案二</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Nginx使用"><span class="nav-number">3.</span> <span class="nav-text">Nginx使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他方式："><span class="nav-number">4.</span> <span class="nav-text">其他方式：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#"><span class="nav-number">5.</span> <span class="nav-text"></span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Null和“”的区别"><span class="nav-number">1.</span> <span class="nav-text">Null和“”的区别</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#字符串非空判断"><span class="nav-number">1.1.</span> <span class="nav-text">字符串非空判断</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#集合判空检查"><span class="nav-number">1.2.</span> <span class="nav-text">集合判空检查</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#测试："><span class="nav-number">1.3.</span> <span class="nav-text">测试：</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
