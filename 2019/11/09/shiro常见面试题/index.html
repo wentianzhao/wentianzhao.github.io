@@ -1,0 +1,1188 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="shiro,权限管理," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="shiro教程极客学院完整shiro教程 （版本是1.2.2,太老了，并且1.2.4以后还有漏洞，安全扫面不会通过）">
+<meta property="og:type" content="article">
+<meta property="og:title" content="shiro常见面试题">
+<meta property="og:url" content="http://example.com/2019/11/09/shiro%E5%B8%B8%E8%A7%81%E9%9D%A2%E8%AF%95%E9%A2%98/index.html">
+<meta property="og:site_name" content="wentz">
+<meta property="og:description" content="shiro教程极客学院完整shiro教程 （版本是1.2.2,太老了，并且1.2.4以后还有漏洞，安全扫面不会通过）">
+<meta property="og:locale">
+<meta property="og:image" content="http://example.com/images/shiro%E5%B8%B8%E8%A7%81%E9%9D%A2%E8%AF%95%E9%A2%98/1573279654126.png">
+<meta property="article:published_time" content="2019-11-09T06:05:12.000Z">
+<meta property="article:modified_time" content="2019-11-18T07:26:46.727Z">
+<meta property="article:author" content="wentz">
+<meta property="article:tag" content="shiro">
+<meta property="article:tag" content="权限管理">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/shiro%E5%B8%B8%E8%A7%81%E9%9D%A2%E8%AF%95%E9%A2%98/1573279654126.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://example.com/2019/11/09/shiro常见面试题/"/>
+
+
+
+
+
+  <title>shiro常见面试题 | wentz</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">wentz</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/11/09/shiro%E5%B8%B8%E8%A7%81%E9%9D%A2%E8%AF%95%E9%A2%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wentz">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">shiro常见面试题</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-11-09T14:05:12+08:00">
+                2019-11-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/shiro/" itemprop="url" rel="index">
+                    <span itemprop="name">shiro</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="shiro教程"><a href="#shiro教程" class="headerlink" title="shiro教程"></a>shiro教程</h3><p><a target="_blank" rel="noopener" href="http://wiki.jikexueyuan.com/project/shiro/cache-mechanism.html">极客学院完整shiro教程</a> （版本是1.2.2,太老了，并且1.2.4以后还有漏洞，安全扫面不会通过）</p>
+<span id="more"></span>
+
+<p><img src="/images/shiro%E5%B8%B8%E8%A7%81%E9%9D%A2%E8%AF%95%E9%A2%98/1573279654126.png" alt="1573279654126"></p>
+<h3 id="shiro常见面试题"><a href="#shiro常见面试题" class="headerlink" title="shiro常见面试题"></a>shiro常见面试题</h3><h4 id="Shiro-的优点"><a href="#Shiro-的优点" class="headerlink" title="Shiro 的优点"></a>Shiro 的优点</h4><blockquote>
+<p> 简单的身份认证，支持多种数据源<br>对角色的简单的授权，支持细粒度的授权 (方法级)<br>支持一级缓存，以提升应用程序的性能；<br>内置的基于 POJO 企业会话管理，适用于 Web 以及非 Web 的环境<br>非常简单的加密 API<br>不跟任何的框架或者容器捆绑，可以独立运行 </p>
+</blockquote>
+<h4 id="Shiro-架构-核心组件"><a href="#Shiro-架构-核心组件" class="headerlink" title="Shiro 架构 核心组件:"></a>Shiro 架构 核心组件:</h4><blockquote>
+<p>Authenticator: 管理登陆登出<br>Autorizer: 授权器赋予主体有那些权限<br>session Manager：shiro 自己实现 session 管理器<br>session DAO：提供了 session 的增删改插<br>Cache Manager：缓冲管理器<br>Raelms：和数据库交互的桥梁</p>
+</blockquote>
+<h4 id="shiro-认证过程"><a href="#shiro-认证过程" class="headerlink" title="shiro 认证过程"></a>shiro 认证过程</h4><p> 创建 SecurityManager -&gt; 主体提交认证 -&gt; SecurityManager 认证 -&gt; Authenticator 认证 -&gt; Realm 验证 </p>
+<h4 id="shiro-授权过程"><a href="#shiro-授权过程" class="headerlink" title="shiro 授权过程"></a>shiro 授权过程</h4><p> 创建 SecurityManager -&gt; 主体授权 -&gt; securityManager 授权 -&gt; Authorizer 授权 -&gt;Realm 获取权限数据 </p>
+<h3 id="简单介绍一下-Shiro-框架"><a href="#简单介绍一下-Shiro-框架" class="headerlink" title="简单介绍一下 Shiro 框架"></a>简单介绍一下 Shiro 框架</h3><p>Apache Shiro 是 Java 的一个安全框架。使用 shiro 可以非常容易的开发出足够好的应用，其不仅可以用在 JavaSE 环境，也可以用在 JavaEE 环境。Shiro 可以帮助我们完成：认证、授权、加密、会话管理、与 Web 集成、缓存等。</p>
+<p>三个核心组件：Subject, SecurityManager 和 Realms.</p>
+<p>Subject：即 “当前操作用户”。但是，在 Shiro 中，Subject 这一概念并不仅仅指人，也可以是第三方进程、后台帐户（Daemon Account）或其他类似事物。它仅仅意味着 “当前跟软件交互的东西”。但考虑到大多数目的和用途，你可以把它认为是 Shiro 的 “用户” 概念。<br>Subject 代表了当前用户的安全操作，SecurityManager 则管理所有用户的安全操作。</p>
+<p>SecurityManager：它是 Shiro 框架的核心，典型的 Facade 模式，Shiro 通过 SecurityManager 来管理内部组件实例，并通过它来提供安全管理的各种服务。</p>
+<p>Realm： Realm 充当了 Shiro 与应用安全数据间的 “桥梁” 或者 “连接器”。也就是说，当对用户执行认证（登<br>录）和授权（访问控制）验证时，Shiro 会从应用配置的 Realm 中查找用户及其权限信息。</p>
+<h3 id="Shiro-主要的四个组件"><a href="#Shiro-主要的四个组件" class="headerlink" title="Shiro 主要的四个组件"></a>Shiro 主要的四个组件</h3><p>1）SecurityManager<br>典型的 Facade，Shiro 通过它对外提供安全管理的各种服务。</p>
+<p>2）Authenticator<br>对 “Who are you ？” 进行核实。通常涉及用户名和密码。 这个组件负责收集 principals 和 credentials，并将它们提交给应用系统。如果提交的 credentials 跟应用系统中提供的 credentials 吻合，就能够继续访问，否则需要重新提交 principals 和 credentials， 或者直接终止访问。</p>
+<p>3）Authorizer<br>身份份验证通过后，由这个组件对登录人员进行访问控制的筛查，比如 “who can do what”， 或者 “who can do which actions”。 Shiro 采用 “基于 Realm” 的方法，即用户（又称 Subject）、 用户组、角 色和 permission 的聚合体。</p>
+<p>4）Session Manager<br>这个组件保证了异构客户端的访问，配置简单。它是基于 POJO/J2SE 的，不跟任何的客户 端或者协议绑定。</p>
+<h3 id="Shiro-运行原理"><a href="#Shiro-运行原理" class="headerlink" title="Shiro 运行原理"></a>Shiro 运行原理</h3><p>1、Application Code: 应用程序代码，就是我们自己的编码，如果在程序中需要进 行权限控制，需要调用 Subject 的 API。</p>
+<p>2、Subject: 主体，代表的了当前用户。所有的 Subject 都绑定到 SecurityManager， 与 Subject 的所有交互都会委托给 SecurityManager, 可以将 Subject 当成一个 门面，而真正执行者是 SecurityManager 。</p>
+<p>3、SecurityManage: 安全管理器，所有与安全有关的操作都会与 SecurityManager 交互，并且它管理所有的 Subject 。</p>
+<p>4、Realm: 域 shiro 是从 Realm 来获取安全数据（用户，角色，权限）。就是说 SecurityManager 要验证用户身份， 那么它需要从 Realm 获取相应的用户进行比较以确定用户 身份是否合法；也需要从 Realm 得到用户相应的角色 / 权限进行验证用户是否 能进行操作； 可以把 Realm 看成 DataSource，即安全数据源 。</p>
+<h3 id="Shiro-的四种权限控制方式"><a href="#Shiro-的四种权限控制方式" class="headerlink" title="Shiro 的四种权限控制方式"></a>Shiro 的四种权限控制方式</h3><p>1）在自定义的 realm 中进行权限控制<br>在 applicationContext.xml 文件中添加 /areaAction_pageQuery.action = perms [“area”]</p>
+<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+    <!-- 注入shiro框架核心对象，安全管理器 -->
+    <property name="securityManager" ref="securityManager"/>
+    <!--private String loginUrl;登录页面
+        private String successUrl;登录成功后跳转页面
+        private String unauthorizedUrl;权限不足时的提示页面-->
+    <property name="loginUrl" value="/login.html"/>
+    <property name="successUrl" value="/index.html"/>
+    <property name="unauthorizedUrl" value="/unauthorized.html"/>
+    <!-- 指定URL拦截规则 -->
+    <property name="filterChainDefinitions">
+    <!--authc:代表shiro框架提供的一个过滤器，这个过滤器用于判断当前用户是否已经完成认证，
+        如果当前用户已经认证，就放行，如果当前用户没有认证，跳转到登录页面
+        anon:代表shiro框架提供的一个过滤器，允许匿名访问-->
+        <value>
+            /css/* = anon
+            /images/* = anon
+            /js/** = anon
+            /validatecode.jsp* = anon
+            /userAction_login.action = anon
+            /areaAction_pageQuery.action = perms["area"]
+            /** = authc
+        </value>
+    </property>
+</bean>
+此时访问 areaAction_pageQuery.action 是页面不会查询到数据，须要为用户授权
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 授权方法</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> AuthorizationInfo <span class="title">doGetAuthorizationInfo</span><span class="params">(PrincipalCollection arg0)</span> </span>&#123;</span><br><span class="line">    SimpleAuthorizationInfo info = <span class="keyword">new</span> SimpleAuthorizationInfo();</span><br><span class="line">    <span class="comment">//为用户授权,只需将用户的权限添加info中即可</span></span><br><span class="line">    info.addStringPermission(<span class="string">&quot;area&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> info;</span><br><span class="line">&#125;</span><br><span class="line">在自定义 realm 中为用户授权</span><br></pre></td></tr></table></figure>
+<p>2）使用 shiro 注解为用户授权</p>
+<ol>
+<li><p>在 spring 配置文件 applicationContext.xml 中配置开启 shiro 注解支持</p>
+ <!-- 基于spring自动代理方式为service创建代理对象,实现权限控制 -->
+ <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator">
+     <!-- 强制使用cglibdaili -->
+     <property name="proxyTargetClass" value="true"></property>
+ </bean>
+ <!-- 配置切面 -->
+ <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
+     <property name="securityManager" ref="securityManager"></property>
+ </bean></li>
+<li><p>配置事物注解，强制使用 cglib 代理</p>
+</li>
+</ol>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">tx:annotation-driven</span> <span class="attr">proxy-target-class</span>=<span class="string">&quot;true&quot;</span> <span class="attr">transaction-manager</span>=<span class="string">&quot;transactionManager&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<ol start="3">
+<li><p>在 service 上配置注解</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RequiresPermissions(&quot;courier:delete&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">deleteBatch</span><span class="params">(String ids)</span> </span>&#123;</span><br><span class="line">    <span class="comment">//判断是否为空</span></span><br><span class="line">    <span class="keyword">if</span>(StringUtils.isNoneBlank(ids))&#123;</span><br><span class="line">        String[] idsArrays = ids.split(<span class="string">&quot;,&quot;</span>);</span><br><span class="line">        <span class="keyword">for</span> (String id : idsArrays) &#123;</span><br><span class="line">            Integer courierid = Integer.parseInt(id);</span><br><span class="line">            dao.deleteCourier(courierid);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">3）使用 shiro 标签进行权限控制</span><br><span class="line"></span><br><span class="line">4. 在 jsp 页面中引入 shiro 标签库</span><br><span class="line"></span><br><span class="line">​```xml</span><br><span class="line">&lt;%@ taglib prefix=&quot;shiro&quot; uri=&quot;http://shiro.apache.org/tags&quot; %&gt;</span><br></pre></td></tr></table></figure></li>
+<li><p>在页面中使用标签</p>
+</li>
+</ol>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page language=&quot;java&quot; contentType=&quot;text/html; charset=utf-8&quot;</span><br><span class="line">    pageEncoding=&quot;utf-8&quot;%&gt;</span><br><span class="line">&lt;%@ taglib prefix=&quot;shiro&quot; uri=&quot;http://shiro.apache.org/tags&quot; %&gt;</span><br></pre></td></tr></table></figure>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+    <!-- 判断当前用户是否已经认证,已认证就可以看到标签中的内容 -->
+    <shiro:authenticated>
+        看到内容就说明你已经认证成功了!
+    </shiro:authenticated>
+
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 判断当前用户是否拥有指定的权限 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">shiro:hasPermission</span> <span class="attr">name</span>=<span class="string">&quot;area&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">value</span>=<span class="string">&quot;这是判断权限的按钮&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">shiro:hasPermission</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 判断当前用户是否拥有指定的角色 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">shiro:hasRole</span> <span class="attr">name</span>=<span class="string">&quot;admin&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">value</span>=<span class="string">&quot;这是判断角色的按钮&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">shiro:hasRole</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>4）编程方式实现用户权限控制</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Subject subject = SecurityUtils.getSubject();</span><br><span class="line"><span class="keyword">if</span>(subject.hasRole(<span class="string">&quot;admin&quot;</span>))&#123;</span><br><span class="line">    <span class="comment">//有权限</span></span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="comment">//无权限</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol start="5">
+<li>授权实现的流程<br>（1）什么是粗颗粒和细颗粒权限？<br>对资源类型的管理称为粗颗粒度权限控制，即只控制到菜单、按钮、方法，粗粒度的例子比如：用户具有用户管理的权限，具有导出订单明细的权限。对资源实例的控制称为细颗粒度权限管理，即控制到数据级别的权限，比如：用户只允许修改本部门的员工信息，用户只允许导出自己创建的订单明细。</li>
+</ol>
+<p>总结：<br>粗颗粒权限：针对 url 链接的控制。<br>细颗粒权限：针对数据级别的控制。</p>
+<p>比如：查询用户权限。<br>卫生局可以查询所有用户。<br>卫生室可以查询本单位的用户。</p>
+<p>通常在 service 中编程实现。</p>
+<p>（2）粗颗粒和细颗粒如何授权？<br>对于粗颗粒度的授权可以很容易做系统架构级别的功能，即系统功能操作使用统一的粗颗粒度的权限管理。</p>
+<p>对于细颗粒度的授权不建议做成系统架构级别的功能，因为对数据级别的控制是系统的业务需求，随着业务需求的变更业务功能变化的可能性很大，建议对数据级别的权限控制在业务层个性化开发，比如：用户只允许修改自己创建的商品信息可以在 service 接口添加校验实现，service 接口需要传入当前操作人的标识，与商品信息创建人标识对比，不一致则不允许修改商品信息。</p>
+<p>粗颗粒权限：可以使用过虑器统一拦截 url。<br>细颗粒权限：在 service 中控制，在程序级别来控制，个性化编程。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/shiro/" rel="tag"># shiro</a>
+          
+            <a href="/tags/%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86/" rel="tag"># 权限管理</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/11/09/%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E6%95%B4%E4%BD%93%E8%AE%BE%E8%AE%A1/" rel="next" title="权限管理系统整体设计">
+                <i class="fa fa-chevron-left"></i> 权限管理系统整体设计
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/11/09/java%E5%BA%8F%E5%88%97%E5%8C%96/" rel="prev" title="java序列化">
+                java序列化 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">72</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">58</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#shiro%E6%95%99%E7%A8%8B"><span class="nav-number">1.</span> <span class="nav-text">shiro教程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#shiro%E5%B8%B8%E8%A7%81%E9%9D%A2%E8%AF%95%E9%A2%98"><span class="nav-number">2.</span> <span class="nav-text">shiro常见面试题</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Shiro-%E7%9A%84%E4%BC%98%E7%82%B9"><span class="nav-number">2.1.</span> <span class="nav-text">Shiro 的优点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Shiro-%E6%9E%B6%E6%9E%84-%E6%A0%B8%E5%BF%83%E7%BB%84%E4%BB%B6"><span class="nav-number">2.2.</span> <span class="nav-text">Shiro 架构 核心组件:</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#shiro-%E8%AE%A4%E8%AF%81%E8%BF%87%E7%A8%8B"><span class="nav-number">2.3.</span> <span class="nav-text">shiro 认证过程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#shiro-%E6%8E%88%E6%9D%83%E8%BF%87%E7%A8%8B"><span class="nav-number">2.4.</span> <span class="nav-text">shiro 授权过程</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D%E4%B8%80%E4%B8%8B-Shiro-%E6%A1%86%E6%9E%B6"><span class="nav-number">3.</span> <span class="nav-text">简单介绍一下 Shiro 框架</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Shiro-%E4%B8%BB%E8%A6%81%E7%9A%84%E5%9B%9B%E4%B8%AA%E7%BB%84%E4%BB%B6"><span class="nav-number">4.</span> <span class="nav-text">Shiro 主要的四个组件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Shiro-%E8%BF%90%E8%A1%8C%E5%8E%9F%E7%90%86"><span class="nav-number">5.</span> <span class="nav-text">Shiro 运行原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Shiro-%E7%9A%84%E5%9B%9B%E7%A7%8D%E6%9D%83%E9%99%90%E6%8E%A7%E5%88%B6%E6%96%B9%E5%BC%8F"><span class="nav-number">6.</span> <span class="nav-text">Shiro 的四种权限控制方式</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">wentz</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">共91.6k字</span>
+</div>
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

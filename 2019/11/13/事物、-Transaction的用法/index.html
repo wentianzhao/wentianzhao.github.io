@@ -1,0 +1,1137 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="事物,Transactional," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="关键词：事务， 编程式事务，声明式事务、spring 事务管理、AOP 事务增强、@Transactional 在分析深入分析 @Transactional 的使用之前，我们先回顾一下事务的一些基本内容。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="事物、Transaction的用法">
+<meta property="og:url" content="http://example.com/2019/11/13/%E4%BA%8B%E7%89%A9%E3%80%81-Transaction%E7%9A%84%E7%94%A8%E6%B3%95/index.html">
+<meta property="og:site_name" content="wentz">
+<meta property="og:description" content="关键词：事务， 编程式事务，声明式事务、spring 事务管理、AOP 事务增强、@Transactional 在分析深入分析 @Transactional 的使用之前，我们先回顾一下事务的一些基本内容。">
+<meta property="og:locale">
+<meta property="og:image" content="http://example.com/images/%E4%BA%8B%E7%89%A9%E3%80%81-Transaction%E7%9A%84%E7%94%A8%E6%B3%95/783994-20160629124739796-10641559.jpg">
+<meta property="og:image" content="http://example.com/images/%E4%BA%8B%E7%89%A9%E3%80%81-Transaction%E7%9A%84%E7%94%A8%E6%B3%95/783994-20160630094423937-1350472183.jpg">
+<meta property="og:image" content="https://images2015.cnblogs.com/blog/783994/201606/783994-20160630094424937-1217089867.jpg">
+<meta property="og:image" content="http://example.com/images/%E4%BA%8B%E7%89%A9%E3%80%81-Transaction%E7%9A%84%E7%94%A8%E6%B3%95/783994-20160630094425968-1112376012.jpg">
+<meta property="og:image" content="http://example.com/images/%E4%BA%8B%E7%89%A9%E3%80%81-Transaction%E7%9A%84%E7%94%A8%E6%B3%95/783994-20160629124745077-347326622.jpg">
+<meta property="article:published_time" content="2019-11-13T09:14:07.000Z">
+<meta property="article:modified_time" content="2019-11-18T07:36:06.608Z">
+<meta property="article:author" content="wentz">
+<meta property="article:tag" content="事物">
+<meta property="article:tag" content="Transactional">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/%E4%BA%8B%E7%89%A9%E3%80%81-Transaction%E7%9A%84%E7%94%A8%E6%B3%95/783994-20160629124739796-10641559.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://example.com/2019/11/13/事物、-Transaction的用法/"/>
+
+
+
+
+
+  <title>事物、Transaction的用法 | wentz</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">wentz</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/11/13/%E4%BA%8B%E7%89%A9%E3%80%81-Transaction%E7%9A%84%E7%94%A8%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wentz">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">事物、Transaction的用法</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-11-13T17:14:07+08:00">
+                2019-11-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E4%BA%8B%E7%89%A9/" itemprop="url" rel="index">
+                    <span itemprop="name">事物</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>关键词：事务， 编程式事务，声明式事务、spring 事务管理、AOP 事务增强、@Transactional</p>
+<p>在分析深入分析 @Transactional 的使用之前，我们先回顾一下事务的一些基本内容。</p>
+<span id="more"></span>
+
+<h1 id="事务的基本概念"><a href="#事务的基本概念" class="headerlink" title="事务的基本概念"></a><strong>事务的基本概念</strong></h1><p>先来回顾一下事务的基本概念和特性。数据库事务 (Database Transaction) ，是指作为单个逻辑工作单元执行的一系列操作，要么完全地执行，要么完全地不执行。事务，就必须具备 ACID 特性，即原子性（Atomicity）、一致性 (Consistency)、隔离性 (Isolation) 和持久性 (Durability)。</p>
+<h1 id="编程式事务与声明式事务"><a href="#编程式事务与声明式事务" class="headerlink" title="编程式事务与声明式事务"></a><strong>编程式事务与声明式事务</strong></h1><p>Spring 与 Hibernate 的整合实现的事务管理是常用的一种功能。Hibernate 建议所有的数据库访问都应放在事务内进行，即使只进行只读操作。事务又应该尽可能短，因为长事务会导致长时间无法释放表内行级锁，从而降低系统并发的性能。 Spring 同时支持编程式事务和声明式事务。</p>
+<p>编程式事务需要在代码中显式调用 beginTransaction ()、commit ()、rollback () 等事务管理相关的方法。Spring 的声明式事务管理在底层是建立在 AOP 的基础之上的，其本质是对方法前后进行拦截，然后在目标方法开始之前创建或者加入一个事务，在执行完目标方法之后根据执行情况提交或者回滚事务。事务增强也是 AOP 的一大用武之处。</p>
+<h1 id="使用声明式事务"><a href="#使用声明式事务" class="headerlink" title="使用声明式事务"></a><strong>使用声明式事务</strong></h1><p>声明式事务最大的优点就是不需要通过编程的方式管理事务，这样就不需要在业务逻辑代码中掺杂事务管理的代码，只需在配置文件中做相关的事务规则声明，很好的分离了业务逻辑和事务管理逻辑。以 spring+jpa 整合增加声明式事务为例，下面是使用声明式事务的配置方式以及使用。</p>
+<h2 id="applicationContext-xml-配置"><a href="#applicationContext-xml-配置" class="headerlink" title="applicationContext.xml 配置"></a><strong>applicationContext.xml 配置</strong></h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 配置 entityManagerFactory 配置 --&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;entityManagerFactory&quot;</span> <span class="attr">class</span>=<span class="string">&quot;org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line">   <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;dataSource&quot;</span> <span class="attr">ref</span>=<span class="string">&quot;dataSource&quot;</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">   <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;persistenceXmlLocation&quot;</span> <span class="attr">value</span>=<span class="string">&quot;/WEB-INF/classes/persistence.xml&quot;</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">   <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;loadTimeWeaver&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line">​       <span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">&quot;org.springframework.instrument.classloading.InstrumentationLoadTimeWeaver&quot;</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">   <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 配置声明式事务管理，使用 JpaTransactionManager 作为事务管理器的实现类 –&gt;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">&lt;bean id=&quot;transactionManager&quot; class=&quot;org.springframework.orm.jpa.JpaTransactionManager&quot;&gt;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">​     &lt;property name=&quot;entityManagerFactory&quot; ref=&quot;entityManagerFactory&quot; /&gt;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">&lt;/bean&gt;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"> </span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">&lt;!-- 声明业务组件使用注解生成事务代理 --&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">tx:annotation-driven</span> <span class="attr">transaction-manager</span>=<span class="string">&quot;transactionManager&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="使用-Transactional-配置声明式事务管理"><a href="#使用-Transactional-配置声明式事务管理" class="headerlink" title="使用 @Transactional 配置声明式事务管理"></a><strong>使用 @Transactional 配置声明式事务管理</strong></h2><p>在 spirng 的配置文件中配置了事务管理和注解驱动之后，我们就可以在业务层使用 @Transactional 配置声明式事务管理了。如下</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Service</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@Transactional</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BaseService</span>&lt;<span class="title">T</span>&gt; <span class="keyword">implements</span> <span class="title">IBaseService</span>&lt;<span class="title">T</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line"><span class="meta">@Autowired</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> IBaseDao&lt;T&gt; baseDao;</span><br><span class="line"></span><br><span class="line">......</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="Transactional-深入使用"><a href="#Transactional-深入使用" class="headerlink" title="@Transactional 深入使用"></a><strong>@Transactional 深入使用</strong></h1><p>上面我们已经知道了声明式事务管理的用法了，下面我们将进一步分析 @Transactional 在各种场景下用法。</p>
+<h2 id="事务的传播行为"><a href="#事务的传播行为" class="headerlink" title="事务的传播行为"></a><strong>事务的传播行为</strong></h2><p>@Transactional 注解支持 9 个属性的设置，其中 Propagation 属性用来枚举事务的传播行为。所谓事务传播行为就是多个事务方法相互调用时，事务如何在这些方法间传播。Spring 支持 7 种事务传播行为：</p>
+<p><a target="_blank" rel="noopener" href="http://images2015.cnblogs.com/blog/783994/201606/783994-20160629124739234-1670017714.jpg"><img src="/images/%E4%BA%8B%E7%89%A9%E3%80%81-Transaction%E7%9A%84%E7%94%A8%E6%B3%95/783994-20160629124739796-10641559.jpg" alt="wps9181.tmp"></a> </p>
+<p>REQUIRED 是常用的事务传播行为，如果当前没有事务，就新建一个事务，如果已经存在一个事务中，加入到这个事务中。其它传播行为大家可另查阅。</p>
+<h2 id="多个事务方法的嵌套调用时的事务传播"><a href="#多个事务方法的嵌套调用时的事务传播" class="headerlink" title="多个事务方法的嵌套调用时的事务传播"></a><strong>多个事务方法的嵌套调用时的事务传播</strong></h2><p>有三个事务方法调用嵌套关系如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><span class="line">PayHisInfoService.update()-&gt;PayHisInfoService.save()-&gt;PayInfoService.update()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@Transactional(propagation=Propagation.REQUIRED)</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">BaseService</span>&lt;<span class="title">E</span>&gt;</span>&#123;</span><br><span class="line"></span><br><span class="line">     <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> List&lt;E&gt; <span class="title">findAll</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PayHisInfoService</span> <span class="keyword">extends</span> <span class="title">BaseService</span>&lt;<span class="title">PayHisInfo</span>&gt;</span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Resource</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> PayHisInfoDao payHisInfoDao;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Resource</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> PayInfoService payInfoService;</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">update</span><span class="params">(PayHisInfo payHisInfo,PayInfo payInfo)</span></span>&#123;</span><br><span class="line"></span><br><span class="line">   save(payHisInfo);</span><br><span class="line"></span><br><span class="line">      payInfoService.update(payInfo);</span><br><span class="line"></span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">save</span><span class="params">(PayHisInfo payHisInfo)</span></span>&#123;</span><br><span class="line"></span><br><span class="line">     <span class="keyword">return</span> payHisInfoDao.insert(payHisInfo);</span><br><span class="line"></span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PayInfoService</span> <span class="keyword">extends</span> <span class="title">BaseService</span>&lt;<span class="title">PayInfo</span>&gt;</span>&#123;</span><br><span class="line"></span><br><span class="line">   <span class="meta">@Resource</span></span><br><span class="line"></span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">transient</span> PayInfoDao payInfoDao;</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">   <span class="meta">@Override</span></span><br><span class="line"></span><br><span class="line">   <span class="meta">@Transactional(propagation=Propagation.SUPPORTS, readOnly=true)</span></span><br><span class="line"></span><br><span class="line">   <span class="function"><span class="keyword">public</span> List&lt;PayInfo&gt; <span class="title">findAll</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">return</span> payInfoDao.findAll();</span><br><span class="line"></span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">update</span><span class="params">(PayInfo payInfo)</span></span>&#123;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">return</span> payInfoDao.update(payInfo);</span><br><span class="line"></span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>当我们按照上面的调用嵌套关系执行时，结果如下</p>
+<p><img src="/images/%E4%BA%8B%E7%89%A9%E3%80%81-Transaction%E7%9A%84%E7%94%A8%E6%B3%95/783994-20160630094423937-1350472183.jpg" alt="img"></p>
+<p>从日志中我们可以看出，PayHisInfoService.update () 执行时开启了一个事务，而 PayHisInfoService.save () 方法和 PayHisInfoService.update () 方法处于同一个类中，调用时没有发生事务传播，就像已经处于 PayHisInfoService.update () 方法的事务当中一样。而当执行 PayInfoService.update () 时，提示 “Participating in existing transaction”，这说明发生了事务传播，即 PayInfoService.update () 并没有新建一个事务，而是加入到已有的 PayHisInfoService.update () 事务中。</p>
+<h2 id="多线程环境下的事务传播"><a href="#多线程环境下的事务传播" class="headerlink" title="多线程环境下的事务传播"></a><strong>多线程环境下的事务传播</strong></h2><p>现在我们将上面例子中的 PayHisInfoService.update () 用另一个线程来执行，如下</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PayHisInfoService</span> <span class="keyword">extends</span> <span class="title">BaseService</span>&lt;<span class="title">PayHisInfo</span>&gt;</span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Resource</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> PayHisInfoDao payHisInfoDao;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Resource</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> PayInfoService payInfoService;</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">update</span><span class="params">(PayHisInfo payHisInfo,PayInfo payInfo)</span></span>&#123;</span><br><span class="line"></span><br><span class="line">     save(payHisInfo);</span><br><span class="line"></span><br><span class="line">      <span class="comment">//payInfoService.update(payInfo);</span></span><br><span class="line"></span><br><span class="line">     PayInfoThread pifth = <span class="keyword">new</span> PayInfoThread(payInfoService,payInfo);</span><br><span class="line"></span><br><span class="line">     pifth.start();</span><br><span class="line"></span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">save</span><span class="params">(PayHisInfo payHisInfo)</span></span>&#123;</span><br><span class="line"></span><br><span class="line">     <span class="keyword">return</span> payHisInfoDao.insert(payHisInfo);</span><br><span class="line"></span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">   <span class="keyword">private</span> <span class="class"><span class="keyword">class</span> <span class="title">PayInfoThread</span> <span class="keyword">extends</span> <span class="title">Thread</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> PayInfoService payInfoService;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> PayInfo payInfo;</span><br><span class="line"></span><br><span class="line">    </span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">PayInfoThread</span><span class="params">(PayInfoService payInfoService,PayInfo payInfo)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">this</span>.payInfoService = payInfoService;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">this</span>.payInfo = payInfo;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">&quot;PayInfoThread updating payInfo...&quot;</span>);</span><br><span class="line"></span><br><span class="line">        payInfoService.update(payInfo);</span><br><span class="line"></span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>当我们按照上面的调用嵌套关系执行时，结果如下</p>
+<p><img src="https://images2015.cnblogs.com/blog/783994/201606/783994-20160630094424937-1217089867.jpg" alt="img"></p>
+<p>从日志结果可以看出，在执行 PayHisInfoService.update () 和 PayInfoService.update () 时分别创建了各自的事务。而 PayHisInfoService.save () 和 PayHisInfoService.update () 则在同一个线程中执行。所以 spring 的事务管理是线程安全的。</p>
+<p>在相同线程中进行相互嵌套调用的事务方法工作于相同的事务中。如果这些相互嵌套调用的方法工作在不同的线程中，不同线程下的事务方法工作在独立的事务中。</p>
+<h2 id="Transactional-的继承关系"><a href="#Transactional-的继承关系" class="headerlink" title="@Transactional 的继承关系"></a><strong>@Transactional 的继承关系</strong></h2><p>或许你已经在上面的例子中看出了，我们只在父类 BaseService 中声明了 @Transactional，子类就自然得到事务增强。注解并没有继承这种说法，但此处用 “继承关系” 来形容父类 @Transactional 和子类方法之间的关系最恰当不过了：父类 Service 声明了 @Transactional，子类继承父类，父类的声明的 @Transactional 会对子类的所有方法进行事务增强。这个还有个很实用的用法，例如测试基类继承</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">AbstractTransactionalJUnit4SpringContextTests</span><br><span class="line"></span><br><span class="line">声明 <span class="meta">@Transactional</span> 可方便进行事务测试</span><br><span class="line"></span><br><span class="line"><span class="meta">@RunWith(SpringJUnit4ClassRunner.class)</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@ContextConfiguration(&quot;/applicationContext.xml&quot;)</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@TransactionConfiguration(transactionManager = &quot;transactionManager&quot;, defaultRollback = true)</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@Transactional</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BaseTest</span> <span class="keyword">extends</span> <span class="title">AbstractTransactionalJUnit4SpringContextTests</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">​    <span class="function"><span class="keyword">public</span> Object <span class="title">getBean</span><span class="params">(String beanName)</span></span>&#123;</span><br><span class="line"></span><br><span class="line">​        <span class="keyword">return</span> applicationContext.getBean(beanName);</span><br><span class="line"></span><br><span class="line">​     &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>给 BaseTest 声明了 @Transactional 了之后，就会自动给我们自己编写的测试类中的所有测试方法进行事务增强。</p>
+<h2 id="Transactional-的优先级"><a href="#Transactional-的优先级" class="headerlink" title="@Transactional 的优先级"></a><strong>@Transactional 的优先级</strong></h2><p>如果子类的方法重写了父类的方法并且声明了 @Transactional，那么子类的事务声明会优先于父类的事务声明。</p>
+<h2 id="利用-spring-的-AOP-进行事务切面增强"><a href="#利用-spring-的-AOP-进行事务切面增强" class="headerlink" title="利用 spring 的 AOP 进行事务切面增强"></a><strong>利用 spring 的 AOP 进行事务切面增强</strong></h2><p>还是上面的列子，把父类声明的 @Transactional 去掉。在 applicationContext.xml 中配置事务增强切面，配置如下：</p>
+ <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--②使用 aop 和 tx 命名空间语法为 PayHisInfoService 所有公用方法添加事务增强 --&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">aop:config</span> <span class="attr">proxy-target-class</span>=<span class="string">&quot;true&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line">​    <span class="tag">&lt;<span class="name">aop:pointcut</span> <span class="attr">id</span>=<span class="string">&quot;serviceJdbcMethod&quot;</span></span></span><br><span class="line"><span class="tag"></span></span><br><span class="line"><span class="tag">​    <span class="attr">expression</span>=<span class="string">&quot;execution(public * com.xxx.service.PayHisInfoService.*(..))&quot;</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">​    <span class="tag">&lt;<span class="name">aop:advisor</span> <span class="attr">pointcut-ref</span>=<span class="string">&quot;serviceJdbcMethod&quot;</span> <span class="attr">advice-ref</span>=<span class="string">&quot;jdbcAdvice&quot;</span> <span class="attr">order</span>=<span class="string">&quot;0&quot;</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;/<span class="name">aop:config</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">tx:advice</span> <span class="attr">id</span>=<span class="string">&quot;jdbcAdvice&quot;</span> <span class="attr">transaction-manager</span>=<span class="string">&quot;transactionManager&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line">​    <span class="tag">&lt;<span class="name">tx:attributes</span>&gt;</span></span><br><span class="line"></span><br><span class="line">​      <span class="tag">&lt;<span class="name">tx:method</span> <span class="attr">name</span>=<span class="string">&quot;*&quot;</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">​    <span class="tag">&lt;/<span class="name">tx:attributes</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;/<span class="name">tx:advice</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>运行测试用例，结果如下：</p>
+<p><img src="/images/%E4%BA%8B%E7%89%A9%E3%80%81-Transaction%E7%9A%84%E7%94%A8%E6%B3%95/783994-20160630094425968-1112376012.jpg" alt="img"></p>
+<p>当有一条数据更新失败时，事务会自动回滚，如下：</p>
+<p><a target="_blank" rel="noopener" href="http://images2015.cnblogs.com/blog/783994/201606/783994-20160629124744499-833396908.jpg"><img src="/images/%E4%BA%8B%E7%89%A9%E3%80%81-Transaction%E7%9A%84%E7%94%A8%E6%B3%95/783994-20160629124745077-347326622.jpg" alt="wps9195.tmp"></a> </p>
+<h2 id="Transactional-方法的可见度"><a href="#Transactional-方法的可见度" class="headerlink" title="@Transactional 方法的可见度"></a><strong>@Transactional 方法的可见度</strong></h2><p>上面为了测试演示方便，我们把 @Transactional 都声明在了类上。实际上 @Transactional 可以作用于接口、接口方法、类以及类方法上。但是 Spring 小组建议不要在接口或者接口方法上使用该注解，因为这只有在使用基于接口的代理时它才会生效。另外， @Transactional 注解应该只被应用到 public 方法上，这是由 Spring AOP 的本质决定的（从上面的 Spring AOP 事务增强可以看出，就是针对方法的）。如果你在 protected、private 或者默认可见性的方法上使用 @Transactional 注解，这将被忽略，也不会抛出任何异常。</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a><strong>总结</strong></h1><p>（1）声明式事务优于编程式事务</p>
+<p>（2）事务方法的嵌套调用会产生事务传播</p>
+<p>（3）spring 的事务管理是线程安全的</p>
+<p>（4）父类的声明的 @Transactional 会对子类的所有方法进行事务增强</p>
+<p>（5）从 Spring AOP 本质看，@Transactional 注解应该只被应用到 public 方法上</p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/hjwublog/p/5626465.html">参考</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/%E4%BA%8B%E7%89%A9/" rel="tag"># 事物</a>
+          
+            <a href="/tags/Transactional/" rel="tag"># Transactional</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/11/13/redis%E7%9F%A5%E8%AF%86%E6%95%B4%E7%90%86/" rel="next" title="redis知识整理">
+                <i class="fa fa-chevron-left"></i> redis知识整理
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/11/14/%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E6%80%BB%E7%BB%93/" rel="prev" title="权限管理系统总结">
+                权限管理系统总结 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">72</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">58</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8B%E5%8A%A1%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="nav-number">1.</span> <span class="nav-text">事务的基本概念</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BC%96%E7%A8%8B%E5%BC%8F%E4%BA%8B%E5%8A%A1%E4%B8%8E%E5%A3%B0%E6%98%8E%E5%BC%8F%E4%BA%8B%E5%8A%A1"><span class="nav-number">2.</span> <span class="nav-text">编程式事务与声明式事务</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E5%A3%B0%E6%98%8E%E5%BC%8F%E4%BA%8B%E5%8A%A1"><span class="nav-number">3.</span> <span class="nav-text">使用声明式事务</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#applicationContext-xml-%E9%85%8D%E7%BD%AE"><span class="nav-number">3.1.</span> <span class="nav-text">applicationContext.xml 配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-Transactional-%E9%85%8D%E7%BD%AE%E5%A3%B0%E6%98%8E%E5%BC%8F%E4%BA%8B%E5%8A%A1%E7%AE%A1%E7%90%86"><span class="nav-number">3.2.</span> <span class="nav-text">使用 @Transactional 配置声明式事务管理</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Transactional-%E6%B7%B1%E5%85%A5%E4%BD%BF%E7%94%A8"><span class="nav-number">4.</span> <span class="nav-text">@Transactional 深入使用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8B%E5%8A%A1%E7%9A%84%E4%BC%A0%E6%92%AD%E8%A1%8C%E4%B8%BA"><span class="nav-number">4.1.</span> <span class="nav-text">事务的传播行为</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%9A%E4%B8%AA%E4%BA%8B%E5%8A%A1%E6%96%B9%E6%B3%95%E7%9A%84%E5%B5%8C%E5%A5%97%E8%B0%83%E7%94%A8%E6%97%B6%E7%9A%84%E4%BA%8B%E5%8A%A1%E4%BC%A0%E6%92%AD"><span class="nav-number">4.2.</span> <span class="nav-text">多个事务方法的嵌套调用时的事务传播</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%8E%AF%E5%A2%83%E4%B8%8B%E7%9A%84%E4%BA%8B%E5%8A%A1%E4%BC%A0%E6%92%AD"><span class="nav-number">4.3.</span> <span class="nav-text">多线程环境下的事务传播</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Transactional-%E7%9A%84%E7%BB%A7%E6%89%BF%E5%85%B3%E7%B3%BB"><span class="nav-number">4.4.</span> <span class="nav-text">@Transactional 的继承关系</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Transactional-%E7%9A%84%E4%BC%98%E5%85%88%E7%BA%A7"><span class="nav-number">4.5.</span> <span class="nav-text">@Transactional 的优先级</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%A9%E7%94%A8-spring-%E7%9A%84-AOP-%E8%BF%9B%E8%A1%8C%E4%BA%8B%E5%8A%A1%E5%88%87%E9%9D%A2%E5%A2%9E%E5%BC%BA"><span class="nav-number">4.6.</span> <span class="nav-text">利用 spring 的 AOP 进行事务切面增强</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Transactional-%E6%96%B9%E6%B3%95%E7%9A%84%E5%8F%AF%E8%A7%81%E5%BA%A6"><span class="nav-number">4.7.</span> <span class="nav-text">@Transactional 方法的可见度</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">wentz</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">共91.6k字</span>
+</div>
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

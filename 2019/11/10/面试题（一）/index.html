@@ -1,0 +1,1137 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="面试," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="在多线程环境中使用 HashMap 会有什么问题？在什么情况下使用 get () 方法会产生无限循环？">
+<meta property="og:type" content="article">
+<meta property="og:title" content="面试题（一）">
+<meta property="og:url" content="http://example.com/2019/11/10/%E9%9D%A2%E8%AF%95%E9%A2%98%EF%BC%88%E4%B8%80%EF%BC%89/index.html">
+<meta property="og:site_name" content="wentz">
+<meta property="og:description" content="在多线程环境中使用 HashMap 会有什么问题？在什么情况下使用 get () 方法会产生无限循环？">
+<meta property="og:locale">
+<meta property="article:published_time" content="2019-11-10T09:06:31.000Z">
+<meta property="article:modified_time" content="2019-11-18T07:21:44.518Z">
+<meta property="article:author" content="wentz">
+<meta property="article:tag" content="面试">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://example.com/2019/11/10/面试题（一）/"/>
+
+
+
+
+
+  <title>面试题（一） | wentz</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">wentz</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/11/10/%E9%9D%A2%E8%AF%95%E9%A2%98%EF%BC%88%E4%B8%80%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wentz">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">面试题（一）</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-11-10T17:06:31+08:00">
+                2019-11-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9D%A2%E8%AF%95%E9%A2%98/" itemprop="url" rel="index">
+                    <span itemprop="name">面试题</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <ul>
+<li><p>在多线程环境中使用 HashMap 会有什么问题？在什么情况下使用 get () 方法会产生无限循环？ </p>
+<span id="more"></span></li>
+</ul>
+<p> HashMap 本身没有什么问题，有没有问题取决于你是如何使用它的。比如，你在一个线程里初始化了一个 HashMap 然后在多个其他线程里对其进行读取，这肯定没有任何问题。有个例子就是使用 HashMap 来存储系统配置项。当有多于一个线程对 HashMap 进行修改操作的时候才会真正产生问题，比如增加、删除、更新键值对的时候。因为 put () 操作可以造成重新分配存储大小 (re-sizeing) 的动作，因此有可能造成无限循环的发生，所以这时需要使用 Hashtable 或者 ConcurrentHashMap，而后者更优。 </p>
+<ul>
+<li> 不重写 Bean 的 hashCode () 方法是否会对性能带来影响？ </li>
+</ul>
+<p> 这个问题非常好，每个人可能都会有自己的体会。按照我掌握的知识来说，如果一个计算 hash 的方法写得不好，直接的影响是，当向 HashMap 中添加元素的时候会更频繁地造成冲突，因此最终增加了耗时。但是自从 Java 8 开始，这种影响不再像前几个版本那样显著了，因为当冲突的发生超出了一定的限度之后，链表类的实现将会被替换成二叉树 (binary tree) 实现，这时你仍可以得到 O (logN) 的开销，优于链表类的 O (n)。 </p>
+<ul>
+<li> 对于一个不可修改的类，它的每个对象是不是都必须声明成 final 的？ </li>
+</ul>
+<p> 不尽然，因为你可以通过将成员声明成非 final 且 private，并且不要在除了构造函数的其他地方来修改它。不要为它们提供 setter 方法，同时不会通过任何函数泄露出对此成员的引用。需要记住的是，把对象声明成 final 仅仅保证了它不会被重新赋上另外一个值，你仍然可以通过此引用来修改引用对象的属性。这一点是关键，面试官通常喜欢听到你强调这一点。</p>
+<ul>
+<li> String 的 substring () 方法内部是如何实现的？ </li>
+</ul>
+<p> 又一个 Java 面试的好问题，你应该答出 “substring 方法通过原字符串创建了一个新的对象”，否则你的回答肯定是不能令人满意的。这个问题也经常被拿来测试应聘者对于 substring () 可能带来的内存泄漏风险是否有所了解。直到 Java 1.7 版本之前，substring 会保存一份原字符串的字符数组的引用，这意味着，如果你从 1GB 大小的字符串里截取了 5 个字符，而这 5 个字符也会阻止那 1GB 内存被回收，因为这个引用是强引用。 </p>
+<ul>
+<li> 你在写存储过程或者在 Java 里调用存储过程的时候如何来处理错误情况？ </li>
+</ul>
+<p> 这是个很棘手的 Java 面试题，答案也并不固定。我的答案是，写存储过程的时候一旦有操作失败，则一定要返回错误码。但是在调用存储过程的时候出错的话捕捉 SQLException 却是唯一能做的。 </p>
+<ul>
+<li> Executor.submit () 和 Executor.execute () 这两个方法有什么区别？ </li>
+</ul>
+<p> 此问题来自另外一篇文章，《15 个最流行的 java 多线程面试问题》，现在对熟练掌握并发技能的开发者的需求越来越大，因此这个问题也越来越引起大家的重视。答案是：前者返回一个 Future 对象，可以通过这个对象来获得工作线程执行的结果。</p>
+<p>当我们考察异常处理的时候，又会发现另外一个不同。当你使用 execute 提交的任务抛出异常时，此异常将会交由未捕捉异常处理过程来处理 (uncaught exception handler)，当你没有显式指定一个异常处理器的话，默认情况下仅仅会通过 System.err 打印出错误堆栈。当你用 submit 来提交一个任务的时候，这个任务一旦抛出异常 (无论是否是运行时异常)，那这个异常是任务返回对象的一部分。对这样一种情形，当你调用 Future.get () 方法的时候，这个方法会重新抛出这个异常，并且会使用 ExecutionException 进行包装。 </p>
+<ul>
+<li> 工厂模式和抽象工厂模式有何不同？ </li>
+</ul>
+<p> 抽象工厂模式提供了多一级的抽象。不同的工厂类都继承了同一个抽象工厂方法，但是却根据工厂的类别创建不同的对象。例如，AutomobileFactory, UserFactory, RoleFactory 都继承了 AbstractFactory，但是每个工厂类创建自己对应类型的对象。下面是工厂模式和抽象工厂模式对应的 UML 图。 </p>
+<ul>
+<li> 什么是单例模式？创建单例对象的时候是将整个方法都标记为 synchronized 好还是仅仅把创建的的语句标记为 synchronized 好？ </li>
+</ul>
+<p> 在 Java 中，单例类是指那些在整个 Java 程序中只存在一份实例的类，例如 java.lang.Runtime 就是一个单例类。在 Java 4 版本及以前创建单例会有些麻烦，但是自从 Java 5 引入了 Enum 类型之后，事情就变得简单了。可以去看看我的关于如何使用 Enum 来创建单例类的文章，同时再看看问题五来看看如何在创建单例类的时候进行双重检查。 </p>
+<ul>
+<li> 能否写一段用 Java 4 或 5 来遍历一个 HashMap 的代码？ </li>
+</ul>
+<p> 事实上，用 Java 可以有四种方式来遍历任何一个 Map，一种是使用 keySet () 方法获取所有的键，然后遍历这些键，再依次通过 get () 方法来获取对应的值。第二种方法可以使用 entrySet () 来获取键值对的集合，然后使用 for each 语句来遍历这个集合，遍历的时候获得的每个键值对已经包含了键和值。这种算是一种更优的方式，因为每轮遍历的时候同时获得了 key 和 value，无需再调用 get () 方法，get () 方法在那种如果 bucket 位置有一个巨大的链表的时候的性能开销是 O (n)。第三种方法是获取 entrySet 之后用 iterator 依次获取每个键值对。第四种方法是获得 key set 之后用 iterator 依次获取每个 key，然后再根据 key 来调用 get 方法。 </p>
+<ul>
+<li> 你在什么时候会重写 hashCode () 和 equals () 方法？ </li>
+</ul>
+<p> 当你需要根据业务逻辑来进行相等性判断、而不是根据对象相等性来判断的时候你就需要重写这两个函数了。例如，两个 Employee 对象相等的依据是它们拥有相同的 emp_id，尽管它们有可能是两个不同的 Object 对象，并且分别在不同的地方被创建。同时，如果你准备把它们当作 HashMap 中的 key 来使用的话，你也必须重写这两个方法。现在，作为 Java 中 equals-hashcode 的一个约定，当你重写 equals 的时候必须也重写 hashcode，否则你会打破诸如 Set, Map 等集合赖以正常工作的约定。你可以看看我的另外一篇博文来理解这两个方法之间的微妙区别与联系。 </p>
+<ul>
+<li> 如果不重写 hashCode 方法会有什么问题？ </li>
+</ul>
+<p> 如果不重写 equals 方法的话，equals 和 hashCode 之间的约定就会被打破：当通过 equals 方法返回相等的两个对象，他们的 hashCode 也必须一样。如果不重写 hashCode 方法的话，即使是使用 equals 方法返回值为 true 的两个对象，当它们插入同一个 map 的时候，因为 hashCode 返回不同所以仍然会被插入到两个不同的位置。这样就打破了 HashMap 的本来目的，因为 Map 本身不允许存进去两个 key 相同的值。当使用 put 方法插入一个的时候，HashMap 会先计算对象的 hashcode，然后根据它来找到存储位置 (bucket)，然后遍历此存储位置上所有的 Map.Entry 对象来查看是否与待插入对象相同。如果没有提供 hashCode 的话，这些就都做不到了。 </p>
+<ul>
+<li> 我们要同步整个 getInstance () 方法，还是只同步 getInstance () 方法中的关键部分？ </li>
+</ul>
+<p> 仅仅同步关键部分 (Critical Section)。这是因为，如果我们同步整个方法的话，每次有线程调用 getInstance () 方法的时候都会等待其他线程调用完成才行，即使在此方法中并没有执行对象的创建操作。换句话说，我们只需要同步那些创建对象的代码，而创建对象的代码只会执行一次。一旦对象创建完成之后，根本没有必要再对方法进行同步保护了。事实上，从性能上来说，对方法进行同步保护这种编码方法非常要命，因为它会使性能降低 10 到 20 倍。下面是单例模式的 UML 图。</p>
+<p>再补充一下，创建线程安全的单例对象有多种方法，你也可以顺便提一下。 </p>
+<ul>
+<li> HashMap，在调用 get () 方法的时候 equals () 和 hashCode () 方法都起了什么样的作用？ </li>
+</ul>
+<p> 这个问题算是对问题十二的补充，应聘者应该知道的是，一旦你提到了 hashCode () 方法，人们很可能要问 HashMap 是如何使用这个函数的。当你向 HashMap 插入一个 key 的时候，首先，这个对象的 hashCode () 方法会被调用，调用结果用来计算将要存储的位置 (bucket)。</p>
+<p>因为某个位置上可能以链表的方式已经包含了多个 Map.Entry 对象，所以 HashMap 会使用 equals () 方法来将此对象与所有这些 Map.Entry 所包含的 key 进行对比，以确定此 key 对象是否已经存在。 </p>
+<ul>
+<li> 在 Java 中如何避免死锁？ </li>
+</ul>
+<p> 你可以通过打破互相等待的局面来避免死锁。为了达到这一点，你需要在代码中合理地安排获取和释放锁的顺序。如果获得锁的顺序是固定的，并且获得的顺序和释放的顺序刚好相反的话，就不会产生出现死锁的条件了。 </p>
+<ul>
+<li> 创建字符串对象的时候，使用字面值和使用 new String () 构造器这两种方式有什么不同？ </li>
+</ul>
+<p> 当我们使用 new String 构造器来创建字符串的时候，字符串的值会在堆中创建，而不会加入 JVM 的字符串池中。相反，使用字面值创建的 String 对象会被放入堆的 PermGen 段中。例如： </p>
+<p> String str=new String(“Test”);</p>
+<p>这句代码创建的对象 str 不会放入字符串池中，我们需要显式调用 String.intern () 方法来将它放入字符串池中。仅仅当你使用字面值创建字符串时，Java 才会自动将它放入字符串池中，比如：String s=”Test”。顺便提一下，这里有个容易被忽视的地方，当我们将参数 “Test” 传入构造器的时候，这个参数是个字面值，因此它也会在字符串池中保存另外一份。想了解更多关于字面值字符串和字符串对象之间的差别，请看这篇文章。 </p>
+<ul>
+<li> 什么是不可修改对象 (Immutable Object)? 你能否写一个例子？ </li>
+</ul>
+<p> 不可修改对象是那些一旦被创建就不能修改的对象。对这种对象的任何改动的后果都是会创建一个新的对象，而不是在原对象本身做修改。例如 Java 中的 String 类就是不可修改的。大多数这样的类通常都是 final 类型的，因为这样可以避免自己被继承继而被覆盖方法，在覆盖的方法里，不可修改的特性就难以得到保证了。你通常也可以通过将类的成员设置成 private 但是非 final 的来获得同样的效果。</p>
+<p>另外，你同样要保证你的类不要通过任何方法暴露成员，特别是那些可修改类型的成员。同样地，当你的方法接收客户类传入的可修改对象的话，你应该使用一个复制的对象来防止客户代码来修改这个刚传入的可修改类。比如，传入 java.util.Date 对象的话，你应该自己使用 clone () 方法来获得一个副本。</p>
+<p>当你通过类函数返回一个可修改对象的时候，你也要采取类似的防护措施，返回一个类成功的副本，防止客户代码通过此引用修改了成员对象的属性。千万不要直接把你的可修改成员直接返回给客户代码。 </p>
+<ul>
+<li> 如何在不使用任何分析工具的情况下用最简单的方式计算某个方法的执行所花费的时间？ </li>
+</ul>
+<p> 在执行此方法之前和之后获取一个系统时间，取这两个时间的差值，即可得到此方法所花费的时间。</p>
+<p>需要注意的是，如果执行此方法花费的时间非常短，那么得到的时间值有可能是 0ms。这时你可以在一个计算量比较大的方法上试一下效果。</p>
+<p>long start=System.currentTimeMillis();</p>
+<p>method();</p>
+<p>long end=System.currentTimeMillis();</p>
+<p>System.out.println(“Time taken for execution is “+(end-start));</p>
+<ul>
+<li> 当你要把某个类作为 HashMap 的 key 使用的话，你需要重写这个类的哪两个方法？ </li>
+</ul>
+<p>为了使类可以在 HashMap 或 Hashtable 中作为 key 使用，必须要实现这个类自己的 equals () 和 hashCode () 方法。具体请参考问题十四。 </p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag"># 面试</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/11/10/equals%E4%B8%8E==%E7%9A%84%E5%8C%BA%E5%88%AB/" rel="next" title="equals与==的区别">
+                <i class="fa fa-chevron-left"></i> equals与==的区别
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/11/11/%E8%BF%BD%E6%BA%AF%E7%94%B3%E6%8A%A5%E7%B3%BB%E7%BB%9F%E6%80%BB%E7%BB%93/" rel="prev" title="追溯申报系统总结">
+                追溯申报系统总结 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">72</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">58</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">wentz</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">共91.6k字</span>
+</div>
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,1557 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="http," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="一、概念http 协议是指计算机通信网络中两台计算机之间进行通信所必须共同遵守的一种规定或规则，超文本传输协议 (HTTP) 是一种通信协议，它允许将超文本标记语言 (HTML) 文档从 Web 服务器传送到客户端的浏览器。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="http协议整理">
+<meta property="og:url" content="http://example.com/2019/11/12/http%E5%8D%8F%E8%AE%AE%E6%95%B4%E7%90%86/index.html">
+<meta property="og:site_name" content="wentz">
+<meta property="og:description" content="一、概念http 协议是指计算机通信网络中两台计算机之间进行通信所必须共同遵守的一种规定或规则，超文本传输协议 (HTTP) 是一种通信协议，它允许将超文本标记语言 (HTML) 文档从 Web 服务器传送到客户端的浏览器。">
+<meta property="og:locale">
+<meta property="og:image" content="http://example.com/images/http%E5%8D%8F%E8%AE%AE%E6%95%B4%E7%90%86/1573540369293.png">
+<meta property="og:image" content="http://example.com/images/http%E5%8D%8F%E8%AE%AE%E6%95%B4%E7%90%86/1573540392956.png">
+<meta property="og:image" content="http://example.com/images/http%E5%8D%8F%E8%AE%AE%E6%95%B4%E7%90%86/1573540411856.png">
+<meta property="og:image" content="http://example.com/images/http%E5%8D%8F%E8%AE%AE%E6%95%B4%E7%90%86/1573540430587.png">
+<meta property="og:image" content="http://example.com/images/http%E5%8D%8F%E8%AE%AE%E6%95%B4%E7%90%86/https.png">
+<meta property="article:published_time" content="2019-11-12T06:27:53.000Z">
+<meta property="article:modified_time" content="2019-11-18T07:33:10.472Z">
+<meta property="article:author" content="wentz">
+<meta property="article:tag" content="http">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/http%E5%8D%8F%E8%AE%AE%E6%95%B4%E7%90%86/1573540369293.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://example.com/2019/11/12/http协议整理/"/>
+
+
+
+
+
+  <title>http协议整理 | wentz</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">wentz</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/11/12/http%E5%8D%8F%E8%AE%AE%E6%95%B4%E7%90%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wentz">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">http协议整理</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-11-12T14:27:53+08:00">
+                2019-11-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/http/" itemprop="url" rel="index">
+                    <span itemprop="name">http</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="一、概念"><a href="#一、概念" class="headerlink" title="一、概念"></a>一、概念</h3><p>http 协议是指计算机通信网络中两台计算机之间进行通信所必须共同遵守的一种规定或规则，超文本传输协议 (HTTP) 是一种通信协议，它允许将超文本标记语言 (HTML) 文档从 Web 服务器传送到客户端的浏览器。</p>
+<span id="more"></span>
+
+<p>HTTP 协议，即超文本传输协议 (Hypertext transfer protocol)。是一种详细规定了浏览器和万维网 (WWW = World Wide Web) 服务器之间互相通信的规则，通过因特网传送万维网文档的数据传送协议。</p>
+<p>HTTP 协议是用于从 WWW 服务器传输超文本到本地浏览器的传送协议。它可以使浏览器更加高效，使网络传输减少。它不仅保证计算机正确快速地传输超文本文档，还确定传输文档中的哪一部分，以及哪部分内容首先显示 (如文本先于图形，通过文档结构) 等。</p>
+<p>HTTP 是一个应用层协议，由请求和响应构成，是一个标准的客户端服务器模型。HTTP 是一个无状态的协议。</p>
+<p>在 Internet 中所有的传输都是通过 TCP/IP 进行的。HTTP 协议作为 TCP/IP 模型中应用层的协议也不例外。HTTP 协议通常承载于 TCP 协议之上，有时也承载于 TLS 或 SSL 协议层之上，这个时候，就成了我们常说的 HTTPS。 如下图所示：</p>
+<p><img src="/images/http%E5%8D%8F%E8%AE%AE%E6%95%B4%E7%90%86/1573540369293.png" alt="1573540369293"></p>
+<p>HTTP 默认的端口号为 80，HTTPS 的端口号为 443。</p>
+<p>浏览网页是 HTTP 的主要应用，但是这并不代表 HTTP 就只能应用于网页的浏览。HTTP 是一种协议，只要通信的双方都遵守这个协议，HTTP 就能有用武之地。 比如咱们常用的 QQ，迅雷这些软件，都会使用 HTTP 协议 (还包括其他的协议)。</p>
+<h3 id="二、特点"><a href="#二、特点" class="headerlink" title="二、特点"></a>二、特点</h3><p>HTTP 协议永远都是客户端发起请求，服务器回送响应。这样就限制了使用 HTTP 协议，无法实现在客户端没有发起请求的时候，服务器将消息推送给客户端。(在 html5 种可以通过 websocket 来实现)</p>
+<p>HTTP 协议的主要特点可概括如下：</p>
+<p>1、支持客户 / 服务器模式。支持基本认证和安全认证。</p>
+<p>2、简单快速：客户向服务器请求服务时，只需传送请求方法和路径。请求方法常用的有 GET、HEAD、POST。每种方法规定了客户与服务器联系的类型不同。由于 HTTP 协议简单，使得 HTTP 服务器的程序规模小，因而通信速度很快。</p>
+<p>3、灵活：HTTP 允许传输任意类型的数据对象。正在传输的类型由 Content-Type 加以标记。</p>
+<p>4、HTTP 0.9 和 1.0 使用非持续连接：限制每次连接只处理一个请求，服务器处理完客户的请求，并收到客户的应答后，即断开连接。 HTTP 1.1 使用持续连接：不必为每个 web 对象创建一个新的连接，一个连接可以传送多个对象，采用这种方式可以节省传输时间。</p>
+<p>5、无状态：HTTP 协议是无状态协议。无状态是指协议对于事务处理没有记忆能力。缺少状态意味着如果后续处理需要前面的信息，则它必须重传，这样可能导致每次连接传送的数据量增大。</p>
+<p>无状态协议：</p>
+<p>协议的状态是指下一次传输可以 “记住” 这次传输信息的能力。</p>
+<p>http 是不会为了下一次连接而维护这次连接所传输的信息，为了保证服务器内存。</p>
+<p>比如客户获得一张网页之后关闭浏览器，然后再一次启动浏览器，再登陆该网站，但是服务器并不知道客户关闭了一次浏览器。</p>
+<p>由于 Web 服务器要面对很多浏览器的并发访问，为了提高 Web 服务器对并发访问的处理能力，在设计 HTTP 协议时规定 Web 服务器发送 HTTP 应答报文和文档时，不保存发出请求的 Web 浏览器进程的任何状态信息。 这有可能出现一个浏览器在短短几秒之内两次访问同一对象时，服务器进程不会因为已经给它发过应答报文而不接受第二期服务请求。由于 Web 服务器不保存发送请求的 Web 浏览器进程的任何信息， 因此 HTTP 协议属于无状态协议（Stateless Protocol）。</p>
+<p>HTTP 协议是无状态的和 Connection: keep-alive 的区别：</p>
+<p>无状态是指协议对于事务处理没有记忆能力，服务器不知道客户端是什么状态。从另一方面讲，打开一个服务器上的网页和你之前打开这个服务器上的网页之间没有任何联系。</p>
+<p>HTTP 是一个无状态的面向连接的协议，无状态不代表 HTTP 不能保持 TCP 连接，更不能代表 HTTP 使用的是 UDP 协议（无连接）。</p>
+<p>从 HTTP/1.1 起，默认都开启了 Keep-Alive，保持连接特性，简单地说，当一个网页打开完成后，客户端和服务器之间用于传输 HTTP 数据的 TCP 连接不会关闭， 如果客户端再次访问这个服务器上的网页，会继续使用这一条已经建立的连接。</p>
+<p>Keep-Alive 不会永久保持连接，它有一个保持时间，可以在不同的服务器软件（如 Apache）中设定这个时间。</p>
+<h3 id="三、工作流程"><a href="#三、工作流程" class="headerlink" title="三、工作流程"></a>三、工作流程</h3><p>一次 HTTP 操作称为一个事务，其工作过程可分为四步：</p>
+<p>1）首先客户机与服务器需要建立连接。只要单击某个超级链接，HTTP 的工作开始。(其它类似)</p>
+<p>2）建立连接后，客户机发送一个请求给服务器，请求方式的格式为：统一资源标识符（URL）、协议版本号，后边是 MIME 信息包括请求修饰符、客户机信息和可能的内容。</p>
+<p>3）服务器接到请求后，给予相应的响应信息，其格式为一个状态行，包括信息的协议版本号、一个成功或错误的代码，后边是 MIME 信息包括服务器信息、实体信息和可能的内容。</p>
+<p>4）客户端接收服务器所返回的信息通过浏览器显示在用户的显示屏上，然后客户机与服务器断开连接。</p>
+<p>如果在以上过程中的某一步出现错误，那么产生错误的信息将返回到客户端，有显示屏输出。对于用户来说，这些过程是由 HTTP 自己完成的，用户只要用鼠标点击，等待信息显示就可以了。</p>
+<p>HTTP 是基于传输层的 TCP 协议，而 TCP 是一个端到端的面向连接的协议。所谓的端到端可以理解为进程到进程之间的通信。所以 HTTP 在开始传输之前，首先需要建立 TCP 连接，而 TCP 连接的过程需要所谓的 “三次握手”。 下图所示 TCP 连接的三次握手。<img src="/images/http%E5%8D%8F%E8%AE%AE%E6%95%B4%E7%90%86/1573540392956.png" alt="1573540392956"></p>
+<p>在 TCP 三次握手之后，建立了 TCP 连接，此时 HTTP 就可以进行传输了。一个重要的概念是面向连接，既 HTTP 在传输完成之间并不断开 TCP 连接。在 HTTP1.1 中 (通过 Connection 头设置) 这是默认行为。</p>
+<p>加上 TCP 的三次握手，http 的工作流程如下：</p>
+<p>1）：浏览器向服务器发出连接请求。此为 TCP 三次握手第一步，此时为 SYN，seq:X （x=0）；</p>
+<p>2）：服务器回应了浏览器的请求，并要求确认，此时为：SYN，ACK，此时 seq：y（y 为 0），ACK：x+1（为 1）。此为三次握手的第二步；</p>
+<p>3）：浏览器回应了服务器的确认，连接成功。为：ACK，此时 seq：x+1（为 1），ACK：y+1（为 1）。此为三次握手的第三步；</p>
+<p>4）：浏览器发出一个页面 HTTP 请求；</p>
+<p>5）：服务器确认；</p>
+<p>6）：服务器发送数据；</p>
+<p>7）：客户端浏览器确认；</p>
+<p>8）：客户端发出一个图片 HTTP 请求；</p>
+<p>9）：服务器发送状态响应码 200 OK。</p>
+<h3 id="四、头域"><a href="#四、头域" class="headerlink" title="四、头域"></a>四、头域</h3><p>每个头域由一个域名，冒号（:）和域值三部分组成。域名是大小写无关的，域值前可以添加任何数量的空格符，头域可以被扩展为多行，在每行开始处，使用至少一个空格或制表符。</p>
+<p>4.1、请求信息：</p>
+<p>发出的请求信息格式如下：</p>
+<p>●请求行，例如 GET /images/logo.gif HTTP/1.1，表示从 /images 目录下请求 logo.gif 这个文件。</p>
+<p>●（请求）头，例如 Accept-Language: en</p>
+<p>●空行</p>
+<p>●可选的消息体　请求行和标题必须以 <CR><LF > 作为结尾（也就是，回车然后换行）。空行内必须只有 &lt; CR&gt;<LF > 而无其他空格。 在 HTTP/1.1 协议中，所有的请求头，除 post 外，都是可选的。</p>
+<p><img src="/images/http%E5%8D%8F%E8%AE%AE%E6%95%B4%E7%90%86/1573540411856.png" alt="1573540411856"></p>
+<p>三个部分分别是：请求行、消息报头、请求正文。</p>
+<p>4.2、请求方法</p>
+<p>HTTP/1.1 协议中共定义了八种方法（有时也叫 “动作”）来表明 Request-URI 指定的资源的不同操作方式：</p>
+<p>OPTIONS - 返回服务器针对特定资源所支持的 HTTP 请求方法。也可以利用向 Web 服务器发送 ‘*’ 的请求来测试服务器的功能性。</p>
+<p>HEAD- 向服务器索要与 GET 请求相一致的响应，只不过响应体将不会被返回。这一方法可以在不必传输整个响应内容的情况下，就可以获取包含在响应消息头中的元信息。 该方法常用于测试超链接的有效性，是否可以访问，以及最近是否更新。</p>
+<p>GET - 向特定的资源发出请求。注意：GET 方法不应当被用于产生 “副作用” 的操作中，例如在 web app. 中。其中一个原因是 GET 可能会被网络蜘蛛等随意访问。</p>
+<p>POST - 向指定资源提交数据进行处理请求（例如提交表单或者上传文件）。数据被包含在请求体中。POST 请求可能会导致新的资源的建立和 / 或已有资源的修改。</p>
+<p>PUT - 向指定资源位置上传其最新内容。</p>
+<p>DELETE - 请求服务器删除 Request-URI 所标识的资源。</p>
+<p>TRACE- 回显服务器收到的请求，主要用于测试或诊断。</p>
+<p>CONNECT - HTTP/1.1 协议中预留给能够将连接改为管道方式的代理服务器。</p>
+<p>PATCH - 用来将局部修改应用于某一资源，添加于规范 RFC5789。</p>
+<p>方法名称是区分大小写的。当某个请求所针对的资源不支持对应的请求方法的时候，服务器应当返回状态码 405（Method Not Allowed）； 当服务器不认识或者不支持对应的请求方法的时候，应当返回状态码 501（Not Implemented）。</p>
+<p>HTTP 服务器至少应该实现 GET 和 HEAD 方法，其他方法都是可选的。此外，除了上述方法，特定的 HTTP 服务器还能够扩展自定义的方法。</p>
+<p>GET 和 POST 的区别：</p>
+<p>1、GET 提交的数据会放在 URL 之后，以？分割 URL 和传输数据，参数之间以 &amp; 相连，如 EditPosts.aspx?name=test1&amp;id=123456. POST 方法是把提交的数据放在 HTTP 包的 Body 中。</p>
+<p>2、GET 提交的数据大小有限制，最多只能有 1024 字节（因为浏览器对 URL 的长度有限制），而 POST 方法提交的数据没有限制 (理论上)。</p>
+<p>3、GET 方式需要使用 Request.QueryString 来取得变量的值，而 POST 方式通过 Request.Form 来获取变量的值。</p>
+<p>4、GET 方式提交数据，会带来安全问题，比如一个登录页面，通过 GET 方式提交数据时，用户名和密码将出现在 URL 上，如果页面可以被缓存或者其他人可以访问这台机器，就可以从历史记录获得该用户的账号和密码。</p>
+<p>4.3、响应消息</p>
+<p>客户端向服务器发送一个请求，服务器以一个状态行作为响应，响应的内容包括：消息协议的版本、成功或者错误编码、服务器信息、实体元信息以及必要的实体内容。根据响应类别的类别， 服务器响应里可以含实体内容，但不是所有的响应都有实体内容。</p>
+<p>响应头第一行也称为状态行，格式如下（下图中红线标出的那行）：</p>
+<p>HTTP-Version 空格 Status-Code 空格 Reason-Phrase CRLF</p>
+<p>HTTP- Version 表示 HTTP 版本，例如为 HTTP/1.1。Status- Code 是结果代码，用三个数字表示。Reason-Phrase 是个简单的文本描述，解释 Status-Code 的具体原因。 Status-Code 用于机器自动识别，Reason-Phrase 用于人工理解。Status-Code 的第一个数字代表响应类别，可能取 5 个不同的值。后两个数字没有分类作用。 Status-Code 的第一个数字代表响应的类别，后续两位描述在该类响应下发生的具体状况，具体请参见：HTTP 状态码 。</p>
+<p>响应消息的结构：</p>
+<p><img src="/images/http%E5%8D%8F%E8%AE%AE%E6%95%B4%E7%90%86/1573540430587.png" alt="1573540430587"></p>
+<p>三个部分分别是：状态行、消息报头、响应正文。</p>
+<p>无论你何时浏览一个网页，你的电脑都会通过一个使用 HTTP 协议的服务器来获取所请求的数据。在你请求的网页显示在浏览器之前，支配网页的网站服务器会返回一个包含有状态码的 HTTP 头文件。 这个状态码提供了有关所请求网页的相关条件信息。如果一切正常，一个标准网页会收到一条诸如 200 的状态码。当然我们的目的不是去研究 200 响应码，而是去探讨那些代表出现错误信息的服务器头文件响应码， 例如表示 “未找到指定网页” 的 404 码。</p>
+<p>4.4、响应头域</p>
+<p>服务器需要传递许多附加信息，这些信息不能全放在状态行里。因此，需要另行定义响应头域，用来描述这些附加信息。响应头域主要描述服务器的信息和 Request-URI 的信息。</p>
+<p>4.5、HTTP 常见的请求头（在 HTTP/1.1 协议中，所有的请求头，除 Host 外，都是可选的）</p>
+<p>If-Modified-Since：把浏览器端缓存页面的最后修改时间发送到服务器去，服务器会把这个时间与服务器上实际文件的最后修改时间进行对比。如果时间一致，那么返回 304， 客户端就直接使用本地缓存文件。如果时间不一致，就会返回 200 和新的文件内容。客户端接到之后，会丢弃旧文件，把新文件缓存起来，并显示在浏览器中。</p>
+<p>例如：If-Modified-Since: Thu, 09 Feb 2012 09:07:57 GMT</p>
+<p>If-None-Match：If-None-Match 和 ETag 一起工作，工作原理是在 HTTP Response 中添加 ETag 信息。</p>
+<p>当用户再次请求该资源时，将在 HTTP Request 中加入 If-None-Match 信息 (ETag 的值)。 如果服务器验证资源的 ETag 没有改变（该资源没有更新），将返回一个 304 状态告诉客户端使用本地缓存文件。 否则将返回 200 状态和新的资源和 Etag.  使用这样的机制将提高网站的性能。例如: If-None-Match: “03f2b33c0bfcc1:0”。</p>
+<p>Pragma：指定 “no-cache” 值表示服务器必须返回一个刷新后的文档，即使它是代理服务器而且已经有了页面的本地拷贝；在 HTTP/1.1 版本中，它和 Cache-Control:no-cache 作用一模一样。 Pargma 只有一个用法， 例如： Pragma: no-cache</p>
+<p>注意：在 HTTP/1.0 版本中，只实现了 Pragema:no-cache, 没有实现 Cache-Control</p>
+<p>Cache-Control：指定请求和响应遵循的缓存机制。缓存指令是单向的（响应中出现的缓存指令在请求中未必会出现），且是独立的（在请求消息或响应消息中设置 Cache-Control 并不会修改另一个消息处理过程中的缓存处理过程）。 请求时的缓存指令包括 no-cache、no-store、max-age、max-stale、min-fresh、only-if-cached， 响应消息中的指令包括 public、private、no-cache、no-store、no-transform、must-revalidate、proxy-revalidate、max-age、s-maxage。</p>
+<p>Cache-Control:Public 可以被任何缓存所缓存</p>
+<p>Cache-Control:Private 内容只缓存到私有缓存中</p>
+<p>Cache-Control:no-cache 所有内容都不会被缓存</p>
+<p>Cache-Control:no-store 用于防止重要的信息被无意的发布。在请求消息中发送将使得请求和响应消息都不使用缓存。</p>
+<p>Cache-Control:max-age 指示客户机可以接收生存期不大于指定时间（以秒为单位）的响应。</p>
+<p>Cache-Control:min-fresh 指示客户机可以接收响应时间小于当前时间加上指定时间的响应。</p>
+<p>Cache-Control:max-stale 指示客户机可以接收超出超时期间的响应消息。如果指定 max-stale 消息的值，那么客户机可以接收超出超时期指定值之内的响应消息。</p>
+<p>Accept：浏览器端可以接受的 MIME 类型。例如：Accept: text/html 代表浏览器可以接受服务器回发的类型为 text/html 也就是我们常说的 html 文档， 如果服务器无法返回 text/html 类型的数据，服务器应该返回一个 406 错误 (non acceptable)。通配符 * 代表任意类型，例如 Accept: <em>/</em> 代表浏览器可以处理所有类型，(一般浏览器发给服务器都是发这个)。</p>
+<p>Accept-Encoding：浏览器申明自己可接收的编码方法，通常指定压缩方法，是否支持压缩，支持什么压缩方法（gzip，deflate）; Servlet 能够向支持 gzip 的浏览器返回经 gzip 编码的 HTML 页面。许多情形下这可以减少 5 到 10 倍的下载时间。例如： Accept-Encoding: gzip, deflate。 如果请求消息中没有设置这个域，服务器假定客户端对各种内容编码都可以接受。</p>
+<p>Accept-Language：浏览器申明自己接收的语言。语言跟字符集的区别：中文是语言，中文有多种字符集，比如 big5，gb2312，gbk 等等； 例如：Accept-Language: en-us。如果请求消息中没有设置这个报头域，服务器假定客户端对各种语言都可以接受。</p>
+<p>Accept-Charset：浏览器可接受的字符集。如果在请求消息中没有设置这个域，缺省表示任何字符集都可以接受。</p>
+<p>User-Agent：告诉 HTTP 服务器，客户端使用的操作系统和浏览器的名称和版本。</p>
+<p>例如： User-Agent: Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 5.1; Trident/4.0; CIBA; .NET CLR 2.0.50727; .NET CLR 3.0.4506.2152; .NET CLR 3.5.30729; .NET4.0C; InfoPath.2; .NET4.0E)。</p>
+<p>Content-Type：例如：Content-Type: application/x-www-form-urlencoded。</p>
+<p>Referer：包含一个 URL，用户从该 URL 代表的页面出发访问当前请求的页面。提供了 Request 的上下文信息的服务器，告诉服务器我是从哪个链接过来的，比如从我主页上链接到一个朋友那里， 他的服务器就能够从 HTTP Referer 中统计出每天有多少用户点击我主页上的链接访问他的网站。</p>
+<p>例如: Referer:<a target="_blank" rel="noopener" href="http://translate.google.cn/?hl=zh-cn&amp;tab=wT">http://translate.google.cn/?hl=zh-cn&amp;tab=wT</a></p>
+<p>Connection：</p>
+<p>例如：Connection: keep-alive 当一个网页打开完成后，客户端和服务器之间用于传输 HTTP 数据的 TCP 连接不会关闭，如果客户端再次访问这个服务器上的网页，会继续使用这一条已经建立的连接。 HTTP 1.1 默认进行持久连接。利用持久连接的优点，当页面包含多个元素时（例如 Applet，图片），显著地减少下载所需要的时间。 要实现这一点，Servlet 需要在应答中发送一个 Content-Length 头，最简单的实现方法是：先把内容写入 ByteArrayOutputStream，然后在正式写出内容之前计算它的大小。</p>
+<p>Connection: close 代表一个 Request 完成后，客户端和服务器之间用于传输 HTTP 数据的 TCP 连接会关闭，当客户端再次发送 Request，需要重新建立 TCP 连接。</p>
+<p>Host：（发送请求时，该头域是必需的）主要用于指定被请求资源的 Internet 主机和端口号，它通常从 HTTP URL 中提取出来的。HTTP/1.1 请求必须包含主机头域，否则系统会以 400 状态码返回。</p>
+<p>例如：我们在浏览器中输入：<a target="_blank" rel="noopener" href="http://www.guet.edu.cn/index.html%EF%BC%8C%E6%B5%8F%E8%A7%88%E5%99%A8%E5%8F%91%E9%80%81%E7%9A%84%E8%AF%B7%E6%B1%82%E6%B6%88%E6%81%AF%E4%B8%AD%EF%BC%8C%E5%B0%B1%E4%BC%9A%E5%8C%85%E5%90%AB">http://www.guet.edu.cn/index.html，浏览器发送的请求消息中，就会包含</a> Host 请求头域：Host：<a target="_blank" rel="noopener" href="http://www.guet.edu.cn,此处使用缺省端口号/">http://www.guet.edu.cn，此处使用缺省端口号</a> 80，若指定了端口号， 则变成：Host：指定端口号。</p>
+<p>Cookie：最重要的请求头之一，将 cookie 的值发送给 HTTP 服务器。</p>
+<p>Content-Length：表示请求消息正文的长度。例如：Content-Length: 38。</p>
+<p>Authorization：授权信息，通常出现在对服务器发送的 WWW-Authenticate 头的应答中。主要用于证明客户端有权查看某个资源。当浏览器访问一个页面时，如果收到服务器的响应代码为 401（未授权）， 可以发送一个包含 Authorization 请求报头域的请求，要求服务器对其进行验证。</p>
+<p>UA-Pixels，UA-Color，UA-OS，UA-CPU：由某些版本的 IE 浏览器所发送的非标准的请求头，表示屏幕大小、颜色深度、操作系统和 CPU 类型。</p>
+<p>From：请求发送者的 email 地址，由一些特殊的 Web 客户程序使用，浏览器不会用到它。</p>
+<p>Range：可以请求实体的一个或者多个子范围。例如，</p>
+<p>表示头 500 个字节：bytes=0-499</p>
+<p>表示第二个 500 字节：bytes=500-999</p>
+<p>表示最后 500 个字节：bytes=-500</p>
+<p>表示 500 字节以后的范围：bytes=500-</p>
+<p>第一个和最后一个字节：bytes=0-0,-1</p>
+<p>同时指定几个范围：bytes=500-600,601-999</p>
+<p>但是服务器可以忽略此请求头，如果无条件 GET 包含 Range 请求头，响应会以状态码 206（PartialContent）返回而不是以 200（OK）。</p>
+<p>4.6、HTTP 常见的响应头</p>
+<p>Allow：服务器支持哪些请求方法（如 GET、POST 等）。</p>
+<p>Date：表示消息发送的时间，时间的描述格式由 rfc822 定义。例如，Date:Mon,31Dec200104:25:57GMT。Date 描述的时间表示世界标准时，换算成本地时间，需要知道用户所在的时区。 你可以用 setDateHeader 来设置这个头以避免转换时间格式的麻烦</p>
+<p>Expires：指明应该在什么时候认为文档已经过期，从而不再缓存它，重新从服务器获取，会更新缓存。过期之前使用本地缓存。HTTP1.1 的客户端和缓存会将非法的日期格式（包括 0）看作已经过期。 eg：为了让浏览器不要缓存页面，我们也可以将 Expires 实体报头域，设置为 0。</p>
+<p>例如: Expires: Tue, 08 Feb 2022 11:35:14 GMT</p>
+<p>P3P：用于跨域设置 Cookie, 这样可以解决 iframe 跨域访问 cookie 的问题</p>
+<p>例如: P3P: CP=CURa ADMa DEVa PSAo PSDo OUR BUS UNI PUR INT DEM STA PRE COM NAV OTC NOI DSP COR</p>
+<p>Set-Cookie：非常重要的 header, 用于把 cookie 发送到客户端浏览器，每一个写入 cookie 都会生成一个 Set-Cookie。</p>
+<p>例如: Set-Cookie: sc=4c31523a; path=/; domain=.acookie.taobao.com</p>
+<p>ETag：和 If-None-Match 配合使用。</p>
+<p>Last-Modified：用于指示资源的最后修改日期和时间。Last-Modified 也可用 setDateHeader 方法来设置。</p>
+<p>Content-Type：WEB 服务器告诉浏览器自己响应的对象的类型和字符集。Servlet 默认为 text/plain，但通常需要显式地指定为 text/html。由于经常要设置 Content-Type， 因此 HttpServletResponse 提供了一个专用的方法 setContentType。可在 web.xml 文件中配置扩展名和 MIME 类型的对应关系。</p>
+<p>例如：Content-Type: text/html;charset=utf-8</p>
+<p>　　</p>
+<p>Content-Type:text/html;charset=GB2312</p>
+<p>　　</p>
+<p>Content-Type: image/jpeg</p>
+<p>媒体类型的格式为：大类 / 小类，比如 text/html。</p>
+<p>IANA (The Internet Assigned Numbers Authority，互联网数字分配机构) 定义了 8 个大类的媒体类型，分别是:</p>
+<p>application— (比如: application/vnd.ms-excel.)</p>
+<p>audio (比如: audio/mpeg.)</p>
+<p>image (比如: image/png.)</p>
+<p>message (比如，:message/http.)</p>
+<p>model (比如:model/vrml.)</p>
+<p>multipart (比如:multipart/form-data.)</p>
+<p>text (比如:text/html.)</p>
+<p>video (比如:video/quicktime.)</p>
+<p>Content-Range：用于指定整个实体中的一部分的插入位置，他也指示了整个实体的长度。在服务器向客户返回一个部分响应，它必须描述响应覆盖的范围和整个实体长度。 一般格式：Content-Range:bytes-unitSPfirst-byte-pos-last-byte-pos/entity-length。</p>
+<p>例如，传送头 500 个字节次字段的形式：Content-Range:bytes0-499/1234 如果一个 http 消息包含此节（例如，对范围请求的响 应或对一系列范围的重叠请求），Content-Range 表示传送的范围。</p>
+<p>Content-Length：指明实体正文的长度，以字节方式存储的十进制数字来表示。在数据下行的过程中，Content-Length 的方式要预先在服务器中缓存所有数据，然后所有数据再一股脑儿地发给客户端。 只有当浏览器使用持久 HTTP 连接时才需要这个数据。如果你想要利用持久连接的优势，可以把输出文档写入 ByteArrayOutputStram，完成后查看其大小， 然后把该值放入 Content-Length 头，最后通过 byteArrayStream.writeTo (response.getOutputStream () 发送内容。</p>
+<p>例如: Content-Length: 19847</p>
+<p>Content-Encoding：WEB 服务器表明自己使用了什么压缩方法（gzip，deflate）压缩响应中的对象。只有在解码之后才可以得到 Content-Type 头指定的内容类型。 利用 gzip 压缩文档能够显著地减少 HTML 文档的下载时间。Java 的 GZIPOutputStream 可以很方便地进行 gzip 压缩，但只有 Unix 上的 Netscape 和 Windows 上的 IE 4、IE 5 才支持它。 因此，Servlet 应该通过查看 Accept-Encoding 头（即 request.getHeader (“Accept-Encoding”)）检查浏览器是否支持 gzip，为支持 gzip 的浏览器返回经 gzip 压缩的 HTML 页面，为其他浏览器返回普通页面。</p>
+<p>例如：Content-Encoding：gzip</p>
+<p>Content-Language：WEB 服务器告诉浏览器自己响应的对象所用的自然语言。例如： Content-Language:da。没有设置该域则认为实体内容将提供给所有的语言阅读。</p>
+<p>Server：指明 HTTP 服务器用来处理请求的软件信息。例如：Server: Microsoft-IIS/7.5、Server：Apache-Coyote/1.1。此域能包含多个产品标识和注释，产品标识一般按照重要性排序。</p>
+<p>X-AspNet-Version：如果网站是用 ASP.NET 开发的，这个 header 用来表示 ASP.NET 的版本。</p>
+<p>例如: X-AspNet-Version: 4.0.30319</p>
+<p>X-Powered-By：表示网站是用什么技术开发的。</p>
+<p>例如： X-Powered-By: ASP.NET</p>
+<p>Connection：</p>
+<p>例如：Connection: keep-alive 当一个网页打开完成后，客户端和服务器之间用于传输 HTTP 数据的 TCP 连接不会关闭，如果客户端再次访问这个服务器上的网页，会继续使用这一条已经建立的连接。</p>
+<p>Connection: close 代表一个 Request 完成后，客户端和服务器之间用于传输 HTTP 数据的 TCP 连接会关闭，当客户端再次发送 Request，需要重新建立 TCP 连接。</p>
+<p>Location：用于重定向一个新的位置，包含新的 URL 地址。表示客户应当到哪里去提取文档。Location 通常不是直接设置的，而是通过 HttpServletResponse 的 sendRedirect 方法， 该方法同时设置状态代码为 302。Location 响应报头域常用在更换域名的时候。</p>
+<p>Refresh：表示浏览器应该在多少时间之后刷新文档，以秒计。除了刷新当前文档之外，你还可以通过 setHeader (“Refresh”, “5; URL=<a target="_blank" rel="noopener" href="http://host/path&quot;">http://host/path&quot;</a>) 让浏览器读取指定的页面。 注意这种功能通常是通过设置 HTML 页面 HEAD 区的 &lt; META HTTP-EQUIV=”Refresh” CONTENT=”5;URL=<a target="_blank" rel="noopener" href="http://host/path&quot;&gt;">http://host/path&quot;&gt;</a> 实现， 这是因为，自动刷新或重定向对于那些不能使用 CGI 或 Servlet 的 HTML 编写者十分重要。但是，对于 Servlet 来说，直接设置 Refresh 头更加方便。 注意 Refresh 的意义是 “N 秒之后刷新本页面或访问指定页面”，而不是 “每隔 N 秒刷新本页面或访问指定页面”。 因此，连续刷新要求每次都发送一个 Refresh 头，而发送 204 状态代码则可以阻止浏览器继续刷新，不管是使用 Refresh 头还是 &lt; META HTTP-EQUIV=”Refresh” …&gt;。 注意 Refresh 头不属于 HTTP 1.1 正式规范的一部分，而是一个扩展，但 Netscape 和 IE 都支持它。</p>
+<p>WWW-Authenticate：该响应报头域必须被包含在 401（未授权的）响应消息中，客户端收到 401 响应消息时候，并发送 Authorization 报头域请求服务器对其进行验证时，服务端响应报头就包含该报头域。</p>
+<p>eg：WWW-Authenticate:Basic realm=”Basic Auth Test!” // 可以看出服务器对请求资源采用的是基本验证机制。</p>
+<h3 id="五、解决-HTTP-无状态的问题"><a href="#五、解决-HTTP-无状态的问题" class="headerlink" title="五、解决 HTTP 无状态的问题"></a>五、解决 HTTP 无状态的问题</h3><p>5.1、通过 Cookies 保存状态信息</p>
+<p>通过 Cookies，服务器就可以清楚的知道两个请求是否来自同一个客户端。</p>
+<p>5.2、通过 Session 保存状态信息</p>
+<p>Session 机制是一种服务器端的机制，服务器使用一种类似于散列表的结构（也可能就是使用散列表）来保存信息。</p>
+<p>当程序需要为某个客户端的请求创建一个 session 的时候，服务器首先检查这个客户端的请求里是否已包含了一个 session 标识 - 称为 session id，如果已包含一个 session id 则说明以前已经为此客户端创建过 session， 服务器就按照 session id 把这个 session 检索出来使用（如果检索不到，可能会新建一个），如果客户端请求不包含 session id， 则为此客户端创建一个 session 并且生成一个与此 session 相关联的 session id，session id 的值应该是一个既不会重复，又不容易被找到规律以仿造的字符串，这个 session id 将被在本次响应中返回给客户端保存。</p>
+<p>Session 的实现方式：</p>
+<p>1、使用 Cookie 来实现</p>
+<p>服务器给每个 Session 分配一个唯一的 JSESSIONID，并通过 Cookie 发送给客户端。</p>
+<p>当客户端发起新的请求的时候，将在 Cookie 头中携带这个 JSESSIONID。这样服务器能够找到这个客户端对应的 Session。</p>
+<p>2、使用 URL 回写来实现</p>
+<p>URL 回写是指服务器在发送给浏览器页面的所有链接中都携带 JSESSIONID 的参数，这样客户端点击任何一个链接都会把 JSESSIONID 带会服务器。如果直接在浏览器输入服务端资源的 url 来请求该资源，那么 Session 是匹配不到的。</p>
+<p>Tomcat 对 Session 的实现，是一开始同时使用 Cookie 和 URL 回写机制，如果发现客户端支持 Cookie，就继续使用 Cookie，停止使用 URL 回写。如果发现 Cookie 被禁用，就一直使用 URL 回写。 jsp 开发处理到 Session 的时候，对页面中的链接记得使用 response.encodeURL () 。</p>
+<p>Cookie 和 Session 有以下明显的不同点：</p>
+<p>1）Cookie 将状态保存在客户端，Session 将状态保存在服务器端；</p>
+<p>2）Cookie 是服务器在本地机器上存储的小段文本并随每一个请求发送至同一个服务器。Cookie 最早在 RFC2109 中实现，后续 RFC2965 做了增强。 网络服务器用 HTTP 头向客户端发送 cookies，在客户终端，浏览器解析这些 cookie 并将它们保存为一个本地文件，它会自动将同一服务器的任何请求缚上这些 cookies。Session 并没有在 HTTP 的协议中定义；</p>
+<p>3）Session 是针对每一个用户的，变量的值保存在服务器上，用一个 sessionID 来区分是哪个用户 session 变量，这个值是通过用户的浏览器在访问的时候返回给服务器， 当客户禁用 cookie 时，这个值也可能设置为由 get 来返回给服务器；</p>
+<p>4）就安全性来说：当你访问一个使用 session 的站点，同时在自己机子上建立一个 cookie，建议在服务器端的 SESSION 机制更安全些。因为它不会任意读取客户存储的信息。</p>
+<p>5.3、通过表单变量保持状态</p>
+<p>除了 Cookies 之外，还可以使用表单变量来保持状态，比如 Asp.net 就通过一个叫 ViewState 的 Input=“hidden” 的框来保持状态，比如:</p>
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="/wEPDwUKMjA0OTM4MTAwNGRkXUfhlDv1Cs7/qhBlyZROCzlvf5U=" />
+
+<p>这个原理和 Cookies 大同小异，只是每次请求和响应所附带的信息变成了表单变量。</p>
+<p>5.4、通过 QueryString 保持状态</p>
+<p>QueryString 通过将信息保存在所请求地址的末尾来向服务器传送信息，通常和表单结合使用，一个典型的 QueryString 比如:<a target="_blank" rel="noopener" href="http://www.xxx.com/xxx.aspx?var1=value&amp;var2=value2">www.xxx.com/xxx.aspx?var1=value&amp;var2=value2</a></p>
+<p>六、缓存的实现原理</p>
+<p>WEB 缓存 (cache) 位于 Web 服务器和客户端之间。</p>
+<p>缓存会根据请求保存输出内容的副本，例如 html 页面，图片，文件，当下一个请求来到的时候：如果是相同的 URL，缓存直接使用副本响应访问请求，而不是向源服务器再次发送请求。</p>
+<p>HTTP 协议定义了相关的消息头来使 WEB 缓存尽可能好的工作。</p>
+<p>6.1、缓存的优点</p>
+<p>减少相应延迟：因为请求从缓存服务器（离客户端更近）而不是源服务器被相应，这个过程耗时更少，让 web 服务器看上去相应更快。</p>
+<p>减少网络带宽消耗：当副本被重用时会减低客户端的带宽消耗；客户可以节省带宽费用，控制带宽的需求的增长并更易于管理。</p>
+<p>6.2、客户端缓存生效的常见流程</p>
+<p>服务器收到请求时，会在 200OK 中回送该资源的 Last-Modified 和 ETag 头，客户端将该资源保存在 cache 中，并记录这两个属性。当客户端需要发送相同的请求时， 会在请求中携带 If-Modified-Since 和 If-None-Match 两个头。两个头的值分别是响应中 Last-Modified 和 ETag 头的值。服务器通过这两个头判断本地资源未发生变化，客户端不需要重新下载，返回 304 响应。</p>
+<p>6.3、Web 缓存机制</p>
+<p>HTTP/1.1 中缓存的目的是为了在很多情况下减少发送请求，同时在许多情况下可以不需要发送完整响应。前者减少了网络回路的数量；HTTP 利用一个 “过期（expiration）” 机制来为此目的。 后者减少了网络应用的带宽；HTTP 用 “验证（validation）” 机制来为此目的。</p>
+<p>HTTP 定义了 3 种缓存机制：</p>
+<p>1）Freshness：允许一个回应消息可以在源服务器不被重新检查，并且可以由服务器和客户端来控制。例如，Expires 回应头给了一个文档不可用的时间。Cache-Control 中的 max-age 标识指明了缓存的最长时间；</p>
+<p>2）Validation：用来检查以一个缓存的回应是否仍然可用。例如，如果一个回应有一个 Last-Modified 回应头，缓存能够使用 If-Modified-Since 来判断是否已改变，以便判断根据情况发送请求；</p>
+<p>3）Invalidation：在另一个请求通过缓存的时候，常常有一个副作用。例如，如果一个 URL 关联到一个缓存回应，但是其后跟着 POST、PUT 和 DELETE 的请求的话，缓存就会过期。</p>
+<h3 id="七、HTTP-应用"><a href="#七、HTTP-应用" class="headerlink" title="七、HTTP 应用"></a>七、HTTP 应用</h3><p>7.1、断点续传的实现原理</p>
+<p>HTTP 协议的 GET 方法，支持只请求某个资源的某一部分；</p>
+<p>206 Partial Content 部分内容响应；</p>
+<p>Range 请求的资源范围；</p>
+<p>Content-Range 响应的资源范围；</p>
+<p>在连接断开重连时，客户端只请求该资源未下载的部分，而不是重新请求整个资源，来实现断点续传。</p>
+<p>分块请求资源实例：</p>
+<p>Eg1：Range: bytes=306302- ：请求这个资源从 306302 个字节到末尾的部分；</p>
+<p>Eg2：Content-Range: bytes 306302-604047/604048：响应中指示携带的是该资源的第 306302-604047 的字节，该资源共 604048 个字节；</p>
+<p>客户端通过并发的请求相同资源的不同片段，来实现对某个资源的并发分块下载。从而达到快速下载的目的。目前流行的 FlashGet 和迅雷基本都是这个原理。</p>
+<p>7.2、多线程下载的原理</p>
+<p>下载工具开启多个发出 HTTP 请求的线程；</p>
+<p>每个 http 请求只请求资源文件的一部分：Content-Range: bytes 20000-40000/47000；</p>
+<p>合并每个线程下载的文件。</p>
+<p>7.3、http 代理</p>
+<p>http 代理服务器</p>
+<p>代理服务器英文全称是 Proxy Server，其功能就是代理网络用户去取得网络信息。形象的说：它是网络信息的中转站。</p>
+<p>代理服务器是介于浏览器和 Web 服务器之间的一台服务器，有了它之后，浏览器不是直接到 Web 服务器去取回网页而是向代理服务器发出请求，Request 信号会先送到代理服务器， 由代理服务器来取回浏览器所需要的信息并传送给你的浏览器。</p>
+<p>而且，大部分代理服务器都具有缓冲的功能，就好象一个大的 Cache，它有很大的存储空间，它不断将新取得数据储存到它本机的存储器上，如果浏览器所请求的数据在它本机的存储器上已经存在而且是最新的， 那么它就不重新从 Web 服务器取数据，而直接将存储器上的数据传送给用户的浏览器，这样就能显著提高浏览速度和效率。更重要的是：Proxy Server (代理服务器) 是 Internet 链路级网关所提供的一种重要的安全功能， 它的工作主要在开放系统互联 (OSI) 模型的对话层。</p>
+<p>http 代理服务器的主要功能：</p>
+<p>1）突破自身 IP 访问限制，访问国外站点。如：教育网、169 网等网络用户可以通过代理访问国外网站；</p>
+<p>2）访问一些单位或团体内部资源，如某大学 FTP (前提是该代理地址在该资源的允许访问范围之内)，使用教育网内地址段免费代理服务器，就可以用于对教育 网开放的各类 FTP 下载上传，以及各类资料查询共享等服务；</p>
+<p>3）突破中国电信的 IP 封锁：中国电信用户有很多网站是被限制访问的，这种限制是人为的，不同 Serve 对地址的封锁是不同的。所以不能访问时可以换一个国外的代理服务器试试；</p>
+<p>4）提高访问速度：通常代理服务器都设置一个较大的硬盘缓冲区，当有外界的信息通过时，同时也将其保存到缓冲区中，当其他用户再访问相同的信息时，则直接由缓冲区中取出信息，传给用户，以提高访问速度；</p>
+<p>5）隐藏真实 IP：上网者也可以通过这种方法隐藏自己的 IP，免受攻击。</p>
+<p>对于客户端浏览器而言，http 代理服务器相当于服务器。</p>
+<p>而对于 Web 服务器而言，http 代理服务器又担当了客户端的角色。</p>
+<p>7.4、虚拟主机</p>
+<p>虚拟主机：是在网络服务器上划分出一定的磁盘空间供用户放置站点、应用组件等，提供必要的站点功能与数据存放、传输功能。</p>
+<p>所谓虚拟主机，也叫 “网站空间” 就是把一台运行在互联网上的服务器划分成多个 “虚拟” 的服务器，每一个虚拟主机都具有独立的域名和完整的 Internet 服务器（支持 WWW、FTP、E-mail 等）功能。 一台服务器上的不同虚拟主机是各自独立的，并由用户自行管理。但一台服务器主机只能够支持一定数量的虚拟主机，当超过这个数量时，用户将会感到性能急剧下降。</p>
+<p>虚拟主机的实现原理</p>
+<p>虚拟主机是用同一个 WEB 服务器，为不同域名网站提供服务的技术。Apache、Tomcat 等均可通过配置实现这个功能。</p>
+<p>相关的 HTTP 消息头：Host。</p>
+<p>例如：Host: <a target="_blank" rel="noopener" href="http://www.baidu.com/">www.baidu.com</a></p>
+<p>客户端发送 HTTP 请求的时候，会携带 Host 头，Host 头记录的是客户端输入的域名。这样服务器可以根据 Host 头确认客户要访问的是哪一个域名。</p>
+<h3 id="八、HTTP-认证方式"><a href="#八、HTTP-认证方式" class="headerlink" title="八、HTTP 认证方式"></a>八、HTTP 认证方式</h3><p>HTTP 请求报头： Authorization</p>
+<p>HTTP 响应报头： WWW-Authenticate</p>
+<p>HTTP 认证是基于质询 / 回应 (challenge/response) 的认证模式。</p>
+<p>8.1 基本认证 basic authentication（HTTP1.0 提出的认证方法）</p>
+<p>基本认证是一种用来允许 Web 浏览器或其他客户端程序在请求时提供用户名和口令形式的身份凭证的一种登录验证方式。</p>
+<p>把 “用户名 + 冒号 + 密码” 用 BASE64 算法加密后的字符串放在 http request 中的 header Authorization 中发送给服务端。</p>
+<p>客户端对于每一个 realm，通过提供用户名和密码来进行认证的方式。</p>
+<p>包含密码的明文传递。</p>
+<p>当浏览器访问使用基本认证的网站的时候， 浏览器会提示你输入用户名和密码。</p>
+<p>基本认证步骤：</p>
+<p>1、客户端访问一个受 http 基本认证保护的资源。</p>
+<p>2、服务器返回 401 状态，要求客户端提供用户名和密码进行认证。（验证失败的时候，响应头会加上 WWW-Authenticate: Basic realm=”请求域”。）</p>
+<p>401 Unauthorized</p>
+<p>WWW-Authenticate： Basic realm=”WallyWorld”</p>
+<p>3、客户端将输入的用户名密码用 Base64 进行编码后，采用非加密的明文方式传送给服务器。</p>
+<p>Authorization: Basic xxxxxxxxxx.</p>
+<p>4、服务器将 Authorization 头中的用户名密码解码并取出，进行验证，如果认证成功，则返回相应的资源。如果认证失败，则仍返回 401 状态，要求重新进行认证。</p>
+<p>特记事项：</p>
+<p>1、Http 是无状态的，同一个客户端对同一个 realm 内资源的每一个访问会被要求进行认证。</p>
+<p>2、客户端通常会缓存用户名和密码，并和 authentication realm 一起保存，所以，一般不需要你重新输入用户名和密码。</p>
+<p>3、以非加密的明文方式传输，虽然转换成了不易被人直接识别的字符串，但是无法防止用户名密码被恶意盗用。虽然用肉眼看不出来，但用程序很容易解密。</p>
+<p>优点：</p>
+<p>基本认证的一个优点是基本上所有流行的网页浏览器都支持基本认证。基本认证很少在可公开访问的互联网网站上使用，有时候会在小的私有系统中使用（如路由器 网页管理接口）。后来的机制 HTTP 摘要认证是为替代基本认证而开发的，允许密钥以相对安全的方式在不安全的通道上传输。</p>
+<p>程序员和系统管理员有时会在可信网络环境中使用基本认证，使用 Telnet 或其他明文网络协议工具手动地测试 Web 服务器。这是一个麻烦的过程，但是网络上传输的 内容是人可读的，以便进行诊断。</p>
+<p>缺点：</p>
+<p>虽然基本认证非常容易实现，但该方案建立在以下的假设的基础上，即：客户端和服务器主机之间的连接是安全可信的。特别是，如果没有使用 SSL/TLS 这样的传输 层安全的协议，那么以明文传输的密钥和口令很容易被拦截。该方案也同样没有对服务器返回的信息提供保护。</p>
+<p>现存的浏览器保存认证信息直到标签页或浏览器被关闭，或者用户清除历史记录。HTTP 没有为服务器提供一种方法指示客户端丢弃这些被缓存的密钥。这意味着服务 器端在用户不关闭浏览器的情况下，并没有一种有效的方法来让用户登出。</p>
+<p>一个例子：</p>
+<p>这一个典型的 HTTP 客户端和 HTTP 服务器的对话，服务器安装在同一台计算机上（localhost），包含以下步骤：</p>
+<p>客户端请求一个需要身份认证的页面，但是没有提供用户名和口令。这通常是用户在地址栏输入一个 URL，或是打开了一个指向该页面的链接。服务端响应一个 401 应 答码，并提供一个认证域。接到应答后，客户端显示该认证域（通常是所访问的计算机或系统的描述）给用户并提示输入用户名和口令。此时用户可以选择确定或取 消。用户输入了用户名和口令后，客户端软件会在原先的请求上增加认证消息头（值是 base64encode (username+”:”+password)），然后重新发送再次尝试。 在本例中，服务器接受了该认证屏幕并返回了页面。如果用户凭据非法或无效，服务器可能再次返回 401 应答码，客户端可以再次提示用户输入口令。</p>
+<p>注意：客户端有可能不需要用户交互，在第一次请求中就发送认证消息头。</p>
+<blockquote>
+<p>客户端请求（没有认证信息）：</p>
+<p>GET /private/index.html HTTP/1.0</p>
+<p>Host: localhost</p>
+<p>（跟随一个换行，以回车（CR）加换行（LF）的形式）</p>
+</blockquote>
+<blockquote>
+<p>服务端应答：</p>
+<p>HTTP/1.0 401 Authorization Required</p>
+<p>Server: HTTPd/1.0</p>
+<p>Date: Sat, 27 Nov 2004 10:18:15 GMT</p>
+<p>WWW-Authenticate: Basic realm=”Secure Area”</p>
+<p>Content-Type: text/html</p>
+<p>Content-Length: 311</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.01 Transitional//EN&quot;</span><br><span class="line"> &quot;http://www.w3.org/TR/1999/REC-html401-19991224/loose.dtd&quot;&gt;</span><br><span class="line">&lt;HTML&gt;</span><br><span class="line">  &lt;HEAD&gt;</span><br><span class="line">    &lt;TITLE&gt;Error&lt;/TITLE&gt;</span><br><span class="line">    &lt;META HTTP-EQUIV=&quot;Content-Type&quot; CONTENT=&quot;text/html; charset=ISO-8859-1&quot;&gt;</span><br><span class="line">  &lt;/HEAD&gt;</span><br><span class="line">  &lt;BODY&gt;&lt;H1&gt;401 Unauthorized.&lt;/H1&gt;&lt;/BODY&gt;</span><br><span class="line">&lt;/HTML&gt;</span><br><span class="line">						</span><br><span class="line">					</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<p>客户端的请求（用户名 “”Aladdin”，口令，password “open sesame”）：</p>
+<p>GET /private/index.html HTTP/1.0</p>
+<p>Host: localhost</p>
+<p>Authorization: Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ==</p>
+<p>（跟随一个空行，如上所述）</p>
+</blockquote>
+<blockquote>
+<p>服务端的应答：</p>
+<p>HTTP/1.0 200 OK</p>
+<p>Server: HTTPd/1.0</p>
+<p>Date: Sat, 27 Nov 2004 10:19:07 GMT</p>
+<p>Content-Type: text/html</p>
+<p>Content-Length: 10476</p>
+<p>（跟随一个空行，随后是需凭据页的 HTML 文本）。</p>
+</blockquote>
+<p>HTTP OAuth 认证</p>
+<p>OAuth 对于 Http 来说，就是放在 Authorization header 中的不是用户名密码， 而是一个 token。微软的 Skydrive 就是使用这样的方式。</p>
+<p>8.2、摘要认证 digest authentication（HTTP1.1 提出的基本认证的替代方法）</p>
+<p>这个认证可以看做是基本认证的增强版本，不包含密码的明文传递。</p>
+<p>引入了一系列安全增强的选项；“保护质量”(qop)、随机数计数器由客户端增加、以及客户生成的随机数。</p>
+<p>在 HTTP 摘要认证中使用 MD5 加密是为了达成 “不可逆的”，也就是说，当输出已知的时候，确定原始的输入应该是相当困难的。如果密码本身太过简单，也许可以</p>
+<p>通过尝试所有可能的输入来找到对应的输出（穷举攻击），甚至可以通过字典或者适当的查找表加快查找速度。</p>
+<p>示例及说明</p>
+<p>下面的例子仅仅涵盖了 “auth” 保护质量的代码，因为在撰写期间，所知道的只有 Opera 和 Konqueror 网页浏览器支持 “auth-int”（带完整性保护的认证）。</p>
+<p>典型的认证过程包括如下步骤：</p>
+<p>客户端请求一个需要认证的页面，但是不提供用户名和密码。通常这是由于用户简单的输入了一个地址或者在页面中点击了某个超链接。</p>
+<p>服务器返回 401 “Unauthorized” 响应代码，并提供认证域 (realm)，以及一个随机生成的、只使用一次的数值，称为密码随机数 nonce。</p>
+<p>此时，浏览器会向用户提示认证域 (realm)（通常是所访问的计算机或系统的描述），并且提示用户名和密码。用户此时可以选择取消。</p>
+<p>一旦提供了用户名和密码，客户端会重新发送同样的请求，但是添加了一个认证头包括了响应代码。</p>
+<p>注意：客户端可能已经拥有了用户名和密码，因此不需要提示用户，比如以前存储在浏览器里的。</p>
+<blockquote>
+<p>客户端请求 (无认证)：</p>
+<p>GET /dir/index.html HTTP/1.0</p>
+<p>Host: localhost</p>
+<p>(跟随一个新行，形式为一个回车再跟一个换行）</p>
+</blockquote>
+<blockquote>
+<p>服务器响应：</p>
+<p>HTTP/1.0 401 Unauthorized</p>
+<p>Server: HTTPd/0.9</p>
+<p>Date: Sun, 10 Apr 2005 20:26:47 GMT</p>
+<p>WWW-Authenticate: Digest realm=”<a href="mailto:&#x74;&#101;&#x73;&#x74;&#114;&#101;&#x61;&#x6c;&#109;&#x40;&#x68;&#111;&#x73;&#x74;&#x2e;&#99;&#111;&#x6d;">&#x74;&#101;&#x73;&#x74;&#114;&#101;&#x61;&#x6c;&#109;&#x40;&#x68;&#111;&#x73;&#x74;&#x2e;&#99;&#111;&#x6d;</a>“, // 认证域 qop=”auth,auth-int”, // 保护质量 nonce=”dcd98b7102dd2f0e8b11d0f600bfb0c093”, // 服务器密码随机数 opaque=”5ccc069c403ebaf9f0171e9517f40e41”</p>
+<p>Content-Type: text/html</p>
+<p>Content-Length: 311</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.01 Transitional//EN&quot;</span><br><span class="line"> &quot;http://www.w3.org/TR/1999/REC-html401-19991224/loose.dtd&quot;&gt;</span><br><span class="line">&lt;HTML&gt;</span><br><span class="line">  &lt;HEAD&gt;</span><br><span class="line">    &lt;TITLE&gt;Error&lt;/TITLE&gt;</span><br><span class="line">    &lt;META HTTP-EQUIV=&quot;Content-Type&quot; CONTENT=&quot;text/html; charset=ISO-8859-1&quot;&gt;</span><br><span class="line">  &lt;/HEAD&gt;</span><br><span class="line">  &lt;BODY&gt;&lt;H1&gt;401 Unauthorized.&lt;/H1&gt;&lt;/BODY&gt;</span><br><span class="line">&lt;/HTML&gt;</span><br><span class="line">						</span><br><span class="line">					</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<p>客户端请求 (用户名 “Mufasa”, 密码 “Circle Of Life”)：</p>
+<p>GET /dir/index.html HTTP/1.0</p>
+<p>Host: localhost</p>
+<p>Authorization: Digest username=”Mufasa”, realm=”<a href="mailto:&#x74;&#101;&#x73;&#x74;&#114;&#101;&#x61;&#108;&#x6d;&#x40;&#x68;&#x6f;&#115;&#116;&#x2e;&#x63;&#111;&#x6d;">&#x74;&#101;&#x73;&#x74;&#114;&#101;&#x61;&#108;&#x6d;&#x40;&#x68;&#x6f;&#115;&#116;&#x2e;&#x63;&#111;&#x6d;</a>“, nonce=”dcd98b7102dd2f0e8b11d0f600bfb0c093”, uri=”/dir/index.html”, qop=auth, nc=00000001, // 请求计数 cnonce=”0a4f113b”, // 客户端密码随机数 response=”6629fae49393a05397450978507c4ef1”, opaque=”5ccc069c403ebaf9f0171e9517f40e41”</p>
+<p>(跟随一个新行，形式如前所述)。</p>
+</blockquote>
+<blockquote>
+<p>服务器响应：</p>
+<p>HTTP/1.0 200 OK</p>
+<p>Server: HTTPd/0.9</p>
+<p>Date: Sun, 10 Apr 2005 20:27:03 GMT</p>
+<p>Content-Type: text/html</p>
+<p>Content-Length: 7984</p>
+<p>(随后是一个空行，然后是所请求受限制的 HTML 页面)</p>
+</blockquote>
+<p>response 值由三步计算而成。当多个数值合并的时候，使用冒号作为分割符：</p>
+<p>1、对用户名、认证域 (realm) 以及密码的合并值计算 MD5 哈希值，结果称为 HA1。</p>
+<p>2、对 HTTP 方法以及 URI 的摘要的合并值计算 MD5 哈希值，例如，”GET” 和 “/dir/index.html”，结果称为 HA2。</p>
+<p>3、对 HA1、服务器密码随机数 (nonce)、请求计数 (nc)、客户端密码随机数 (cnonce)、保护质量 (qop) 以及 HA2 的合并值计算 MD5 哈希值。结果即为客户端提供的 response 值。</p>
+<p>因为服务器拥有与客户端同样的信息，因此服务器可以进行同样的计算，以验证客户端提交的 response 值的正确性。在上面给出的例子中，结果是如下计算的。</p>
+<p>（MD5 () 表示用于计算 MD5 哈希值的函数；“\” 表示接下一行；引号并不参与计算）</p>
+<p>HA1 = MD5( “Mufasa:<a href="mailto:&#116;&#x65;&#115;&#116;&#114;&#x65;&#x61;&#108;&#109;&#64;&#x68;&#x6f;&#115;&#116;&#x2e;&#x63;&#x6f;&#109;">&#116;&#x65;&#115;&#116;&#114;&#x65;&#x61;&#108;&#109;&#64;&#x68;&#x6f;&#115;&#116;&#x2e;&#x63;&#x6f;&#109;</a>:Circle Of Life” ) = 939e7578ed9e3c518a452acee763bce9</p>
+<p>HA2 = MD5( “GET:/dir/index.html” ) = 39aff3a2bab6126f332b942af96d3366</p>
+<p>Response = MD5( “939e7578ed9e3c518a452acee763bce9:\ dcd98b7102dd2f0e8b11d0f600bfb0c093:\ 00000001:0a4f113b:auth:\ 39aff3a2bab6126f332b942af96d3366” ) = 6629fae49393a05397450978507c4ef1</p>
+<p>此时客户端可以提交一个新的请求，重复使用服务器密码随机数 (nonce)（服务器仅在每次 “401” 响应后发行新的 nonce），但是提供新的客户端密码随机数 (cnonce)。 在后续的请求中，十六进制请求计数器 (nc) 必须比前一次使用的时候要大，否则攻击者可以简单的使用同样的认证信息重放老的请求。由服务器来确保在每个发出的密码随机数 nonce 时， 计数器是在增加的，并拒绝掉任何错误的请求。显然，改变 HTTP 方法和 / 或计数器数值都会导致不同的 response 值。</p>
+<p>服务器应当记住最近所生成的服务器密码随机数 nonce 的值。也可以在发行每一个密码随机数 nonce 后，记住过一段时间让它们过期。如果客户端使用了一个过期的值，服务器应该响应 “401” 状态号， 并且在认证头中添加 stale=TRUE，表明客户端应当使用新提供的服务器密码随机数 nonce 重发请求，而不必提示用户其它用户名和口令。</p>
+<p>服务器不需要保存任何过期的密码随机数，它可以简单的认为所有不认识的数值都是过期的。服务器也可以只允许每一个服务器密码随机数 nonce 使用一次，当然， 这样就会迫使客户端在发送每个请求的时候重复认证过程。需要注意的是，在生成后立刻过期服务器密码随机数 nonce 是不行的，因为客户端将没有任何机会来使用这个 nonce。</p>
+<p>PS：以上只介绍了两种比较基础的，还有其他的一些认证方式就不在这里一一说明了。</p>
+<h3 id="九、HTTPS-传输协议原理"><a href="#九、HTTPS-传输协议原理" class="headerlink" title="九、HTTPS 传输协议原理"></a>九、HTTPS 传输协议原理</h3><p>HTTPS（全称：Hypertext Transfer Protocol over Secure Socket Layer），是以安全为目标的 HTTP 通道，简单讲是 HTTP 的安全版。 即 HTTP 下加入 SSL 层，HTTPS 的安全基础是 SSL，因此加密的详细内容请看 SSL。</p>
+<p>9.1、两种基本的加解密算法类型</p>
+<p>对称加密：密钥只有一个，加密解密为同一个密码，且加解密速度快，典型的对称加密算法有 DES、AES 等。</p>
+<p>非对称加密：密钥成对出现（且根据公钥无法推知私钥，根据私钥也无法推知公钥），加密解密使用不同密钥（公钥加密需要私钥解密，私钥加密需要公钥解密），相对对称加密速度较慢，典型的非对称加密算法有 RSA、DSA 等。</p>
+<p>9.2、HTTPS 通信过程</p>
+<p><img src="/images/http%E5%8D%8F%E8%AE%AE%E6%95%B4%E7%90%86/https.png" alt="HTTPS通信过程"></p>
+<p>9.3、HTTPS 通信的优点</p>
+<p>客户端产生的密钥只有客户端和服务器端能得到；</p>
+<p>加密的数据只有客户端和服务器端才能得到明文；</p>
+<p>客户端到服务端的通信是安全的。</p>
+<h3 id="十、http-的状态响应码"><a href="#十、http-的状态响应码" class="headerlink" title="十、http 的状态响应码"></a>十、http 的状态响应码</h3><p>1**(信息类)：表示接收到请求并且继续处理</p>
+<p>100—— 客户必须继续发出请求</p>
+<p>101—— 客户要求服务器根据请求转换 HTTP 协议版本</p>
+<p>2**(响应成功)：表示动作被成功接收、理解和接受</p>
+<p>200—— 表明该请求被成功地完成，所请求的资源发送回客户端</p>
+<p>201—— 提示知道新文件的 URL</p>
+<p>202—— 接受和处理、但处理未完成</p>
+<p>203—— 返回信息不确定或不完整</p>
+<p>204—— 请求收到，但返回信息为空</p>
+<p>205—— 服务器完成了请求，用户代理必须复位当前已经浏览过的文件</p>
+<p>206—— 服务器已经完成了部分用户的 GET 请求</p>
+<p>3**(重定向类)：为了完成指定的动作，必须接受进一步处理</p>
+<p>300—— 请求的资源可在多处得到</p>
+<p>301—— 本网页被永久性转移到另一个 URL</p>
+<p>302—— 请求的网页被转移到一个新的地址，但客户访问仍继续通过原始 URL 地址，重定向，新的 URL 会在 response 中的 Location 中返回，浏览器将会使用新的 URL 发出新的 Request。</p>
+<p>303—— 建议客户访问其他 URL 或访问方式</p>
+<p>304—— 自从上次请求后，请求的网页未修改过，服务器返回此响应时，不会返回网页内容，代表上次的文档已经被缓存了，还可以继续使用</p>
+<p>305—— 请求的资源必须从服务器指定的地址得到</p>
+<p>306—— 前一版本 HTTP 中使用的代码，现行版本中不再使用</p>
+<p>307—— 申明请求的资源临时性删除</p>
+<p>4**(客户端错误类)：请求包含错误语法或不能正确执行</p>
+<p>400—— 客户端请求有语法错误，不能被服务器所理解</p>
+<p>401—— 请求未经授权，这个状态代码必须和 WWW-Authenticate 报头域一起使用</p>
+<p>HTTP 401.1 - 未授权：登录失败</p>
+<p>　　</p>
+<p>HTTP 401.2 - 未授权：服务器配置问题导致登录失败</p>
+<p>　　</p>
+<p>HTTP 401.3 - ACL 禁止访问资源</p>
+<p>　　</p>
+<p>HTTP 401.4 - 未授权：授权被筛选器拒绝</p>
+<p>HTTP 401.5 - 未授权：ISAPI 或 CGI 授权失败</p>
+<p>402—— 保留有效 ChargeTo 头响应</p>
+<p>403—— 禁止访问，服务器收到请求，但是拒绝提供服务</p>
+<p>HTTP 403.1 禁止访问：禁止可执行访问</p>
+<p>　　</p>
+<p>HTTP 403.2 - 禁止访问：禁止读访问</p>
+<p>　　</p>
+<p>HTTP 403.3 - 禁止访问：禁止写访问</p>
+<p>　　</p>
+<p>HTTP 403.4 - 禁止访问：要求 SSL</p>
+<p>　　</p>
+<p>HTTP 403.5 - 禁止访问：要求 SSL 128</p>
+<p>　　</p>
+<p>HTTP 403.6 - 禁止访问：IP 地址被拒绝</p>
+<p>　　</p>
+<p>HTTP 403.7 - 禁止访问：要求客户证书</p>
+<p>　　</p>
+<p>HTTP 403.8 - 禁止访问：禁止站点访问</p>
+<p>　　</p>
+<p>HTTP 403.9 - 禁止访问：连接的用户过多</p>
+<p>　　</p>
+<p>HTTP 403.10 - 禁止访问：配置无效</p>
+<p>　　</p>
+<p>HTTP 403.11 - 禁止访问：密码更改</p>
+<p>　　</p>
+<p>HTTP 403.12 - 禁止访问：映射器拒绝访问</p>
+<p>　　</p>
+<p>HTTP 403.13 - 禁止访问：客户证书已被吊销</p>
+<p>　　</p>
+<p>HTTP 403.15 - 禁止访问：客户访问许可过多</p>
+<p>　　</p>
+<p>HTTP 403.16 - 禁止访问：客户证书不可信或者无效</p>
+<p>HTTP 403.17 - 禁止访问：客户证书已经到期或者尚未生效</p>
+<p>404—— 一个 404 错误表明可连接服务器，但服务器无法取得所请求的网页，请求资源不存在。eg：输入了错误的 URL</p>
+<p>405—— 用户在 Request-Line 字段定义的方法不允许</p>
+<p>406—— 根据用户发送的 Accept 拖，请求资源不可访问</p>
+<p>407—— 类似 401，用户必须首先在代理服务器上得到授权</p>
+<p>408—— 客户端没有在用户指定的饿时间内完成请求</p>
+<p>409—— 对当前资源状态，请求不能完成</p>
+<p>410—— 服务器上不再有此资源且无进一步的参考地址</p>
+<p>411—— 服务器拒绝用户定义的 Content-Length 属性请求</p>
+<p>412—— 一个或多个请求头字段在当前请求中错误</p>
+<p>413—— 请求的资源大于服务器允许的大小</p>
+<p>414—— 请求的资源 URL 长于服务器允许的长度</p>
+<p>415—— 请求资源不支持请求项目格式</p>
+<p>416—— 请求中包含 Range 请求头字段，在当前请求资源范围内没有 range 指示值，请求也不包含 If-Range 请求头字段</p>
+<p>417—— 服务器不满足请求 Expect 头字段指定的期望值，如果是代理服务器，可能是下一级服务器不能满足请求长。</p>
+<p>5**(服务端错误类)：服务器不能正确执行一个正确的请求</p>
+<p>HTTP 500 - 服务器遇到错误，无法完成请求</p>
+<p>　　</p>
+<p>HTTP 500.100 - 内部服务器错误 - ASP 错误</p>
+<p>　　</p>
+<p>HTTP 500-11 服务器关闭</p>
+<p>　　</p>
+<p>HTTP 500-12 应用程序重新启动</p>
+<p>　　</p>
+<p>HTTP 500-13 - 服务器太忙</p>
+<p>　　</p>
+<p>HTTP 500-14 - 应用程序无效</p>
+<p>　　</p>
+<p>HTTP 500-15 - 不允许请求 global.asa</p>
+<p>　　</p>
+<p>Error 501 - 未实现</p>
+<p>HTTP 502 - 网关错误</p>
+<p>HTTP 503：由于超载或停机维护，服务器目前无法使用，一段时间后可能恢复正常</p>
+<p><a target="_blank" rel="noopener" href="https://futuresuperstar.github.io/html/http">参考</a></p>
+<h2 id="http、html-和浏览器篇"><a href="#http、html-和浏览器篇" class="headerlink" title="http、html 和浏览器篇 ***"></a><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/jYlcp4kyrD5XBXeMM7YX7Q">http、html 和浏览器篇</a> ***</h2>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/http/" rel="tag"># http</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/11/12/session%E4%B8%8Ecookie%E7%8A%B6%E6%80%81%E4%BC%A0%E9%80%92/" rel="next" title="session与cookie状态传递">
+                <i class="fa fa-chevron-left"></i> session与cookie状态传递
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/11/12/Form%E8%A1%A8%E5%8D%95%E6%8F%90%E4%BA%A4%E6%96%B9%E5%BC%8F/" rel="prev" title="Form表单提交方式">
+                Form表单提交方式 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">72</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">58</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E6%A6%82%E5%BF%B5"><span class="nav-number">1.</span> <span class="nav-text">一、概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E7%89%B9%E7%82%B9"><span class="nav-number">2.</span> <span class="nav-text">二、特点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B"><span class="nav-number">3.</span> <span class="nav-text">三、工作流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E5%A4%B4%E5%9F%9F"><span class="nav-number">4.</span> <span class="nav-text">四、头域</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E8%A7%A3%E5%86%B3-HTTP-%E6%97%A0%E7%8A%B6%E6%80%81%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">5.</span> <span class="nav-text">五、解决 HTTP 无状态的问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%83%E3%80%81HTTP-%E5%BA%94%E7%94%A8"><span class="nav-number">6.</span> <span class="nav-text">七、HTTP 应用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%AB%E3%80%81HTTP-%E8%AE%A4%E8%AF%81%E6%96%B9%E5%BC%8F"><span class="nav-number">7.</span> <span class="nav-text">八、HTTP 认证方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B9%9D%E3%80%81HTTPS-%E4%BC%A0%E8%BE%93%E5%8D%8F%E8%AE%AE%E5%8E%9F%E7%90%86"><span class="nav-number">8.</span> <span class="nav-text">九、HTTPS 传输协议原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%81%E3%80%81http-%E7%9A%84%E7%8A%B6%E6%80%81%E5%93%8D%E5%BA%94%E7%A0%81"><span class="nav-number">9.</span> <span class="nav-text">十、http 的状态响应码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#http%E3%80%81html-%E5%92%8C%E6%B5%8F%E8%A7%88%E5%99%A8%E7%AF%87"><span class="nav-number"></span> <span class="nav-text">http、html 和浏览器篇 ***</span></a></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">wentz</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">共91.6k字</span>
+</div>
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

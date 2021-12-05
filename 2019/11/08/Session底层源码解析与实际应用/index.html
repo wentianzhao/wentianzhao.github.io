@@ -1,0 +1,1213 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="session,面试," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="# 简介">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Session底层源码解析与实际应用">
+<meta property="og:url" content="http://example.com/2019/11/08/Session%E5%BA%95%E5%B1%82%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90%E4%B8%8E%E5%AE%9E%E9%99%85%E5%BA%94%E7%94%A8/index.html">
+<meta property="og:site_name" content="wentz">
+<meta property="og:description" content="# 简介">
+<meta property="og:locale">
+<meta property="og:image" content="http://example.com/images/Session%E5%BA%95%E5%B1%82%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90%E4%B8%8E%E5%AE%9E%E9%99%85%E5%BA%94%E7%94%A8/640.webp">
+<meta property="og:image" content="http://example.com/images/Session%E5%BA%95%E5%B1%82%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90%E4%B8%8E%E5%AE%9E%E9%99%85%E5%BA%94%E7%94%A8/1573176692611.png">
+<meta property="og:image" content="http://example.com/images/Session%E5%BA%95%E5%B1%82%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90%E4%B8%8E%E5%AE%9E%E9%99%85%E5%BA%94%E7%94%A8/1573177099764.png">
+<meta property="og:image" content="http://example.com/images/Session%E5%BA%95%E5%B1%82%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90%E4%B8%8E%E5%AE%9E%E9%99%85%E5%BA%94%E7%94%A8/1573177421842.png">
+<meta property="article:published_time" content="2019-11-07T22:56:20.000Z">
+<meta property="article:modified_time" content="2019-11-18T07:28:51.356Z">
+<meta property="article:author" content="wentz">
+<meta property="article:tag" content="session">
+<meta property="article:tag" content="面试">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/Session%E5%BA%95%E5%B1%82%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90%E4%B8%8E%E5%AE%9E%E9%99%85%E5%BA%94%E7%94%A8/640.webp">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://example.com/2019/11/08/Session底层源码解析与实际应用/"/>
+
+
+
+
+
+  <title>Session底层源码解析与实际应用 | wentz</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">wentz</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/11/08/Session%E5%BA%95%E5%B1%82%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90%E4%B8%8E%E5%AE%9E%E9%99%85%E5%BA%94%E7%94%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wentz">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Session底层源码解析与实际应用</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-11-08T06:56:20+08:00">
+                2019-11-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/session/" itemprop="url" rel="index">
+                    <span itemprop="name">session</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="简介"><a href="#简介" class="headerlink" title="# 简介"></a><strong># 简介</strong></h3><span id="more"></span>
+
+<p><img src="/images/Session%E5%BA%95%E5%B1%82%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90%E4%B8%8E%E5%AE%9E%E9%99%85%E5%BA%94%E7%94%A8/640.webp" alt="img"></p>
+<p>session（会话），其实是一个容易让人误解的词。它总跟 web 系统的会话挂钩，利用 session，javaweb 项目实现了登录状态的控制。坊间流传，关闭浏览器，就是关闭了 web 系统的会话。</p>
+<p>其实浏览器对于会话有自己的定义，而 web 系统对于会话也有自己的定义。在 tomcat 中，session 通常是指实现了 HttpSession 接口的实现类。并且不存在关闭浏览器就会关闭 tomcat 的 HttpSession 这种状况。</p>
+<p>session 本身并不难，如果只是做登录校验之类的功能，并不需要深入了解，但难的是 session 和 cookie 的结合使用，在不同情况下浏览器对 cookie 的控制行为所涉及到的诸多细节，我搜查了很多资料，查看过 tomcat 源码，亦是没有找到全面的概述。</p>
+<p>当然我并未看过、也不知道去哪里看比较全面的关于浏览器对 cookie 的控制资料，如果有知道的大神，还望留言链接。本文题目，之所以说是探讨，而不是了解或者介绍，因为我自己也卡在了某个点上，由于时间关系，我不能花太多时间去研究，但又不忍心就此放弃，所以先记录下来，日后有机会再研究，这期间如有大神指点，也许能让我茅塞顿开。</p>
+<h3 id="Session-本质"><a href="#Session-本质" class="headerlink" title="# Session 本质"></a><strong># Session 本质</strong></h3><p>我用的是 javaweb 项目，因此这里的 session 特指 HttpSession。先来看下 tomcat 源码中对 session 的设计，在 org.apache.catalina.session 包下，有如下设计。</p>
+<p>![img](/images/说说你对 Session 的理解？/640-1573167483597.webp)</p>
+<p>平时所用到的 HttpSession 的实现类就是这个 standardSession。但是所获取的 HttpSession 实例确是外观类 StandardSessionFacade，其屏蔽了许多方法，但也增强了安全性。</p>
+<p>HttpSession 提供了一些方法，来控制 session 或者获取 session 的状态，如获取 session 的 id，获取 session 的创建时间，设置 session 的 attribute，使 session 失效等。值得一提的是 session 的 attribute 其实是一个线程安全的 hashMap。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/**     * The collection of user data attributes associated with this Session.     */    protected ConcurrentMap&lt;String, Object&gt; attributes = new ConcurrentHashMap&lt;&gt;();</span><br></pre></td></tr></table></figure>
+
+<p>但是，创建 session、根据 id 获取 session 的方法并不在这里，而是在一个管理器中，其设计如下。</p>
+<p>![img](/images/说说你对 Session 的理解？/640-1573167483598.webp)</p>
+<p>ManagerBase 是实现了 Manager 接口的抽象类，实现了管理 session 的功能。其实现子类 PersistentManagerBase 拓展了将 session 持久化的功能。但是这里不需要讲到其子类。</p>
+<p>看 ManagerBase 中的一段代码。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line">    * The set of currently active Sessions for this Manager, keyed by</span><br><span class="line">    * session identifier.</span><br><span class="line">    */</span><br><span class="line">   protected Map&lt;String, Session&gt; sessions = new ConcurrentHashMap&lt;&gt;();</span><br></pre></td></tr></table></figure>
+
+<p>由此可知，所谓的 session，其实就是一个用线程安全的 hashMap 存储起来的实现了 Session 接口的 standardSession 对象，在 hashmap 中以其 id 为 key，自身为 value。</p>
+<p>再看获取 session 的方法，一目了然。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> Session <span class="title">findSession</span><span class="params">(String id)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">      <span class="keyword">if</span> (id == <span class="keyword">null</span>) &#123;</span><br><span class="line">          <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">return</span> sessions.get(id);</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<p>最重要的是看其 createSession 方法。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Session <span class="title">createSession</span><span class="params">(String sessionId)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> ((maxActiveSessions &gt;= <span class="number">0</span>) &amp;&amp;</span><br><span class="line">                (getActiveSessions() &gt;= maxActiveSessions)) &#123;</span><br><span class="line">            rejectedSessions++;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> TooManyActiveSessionsException(</span><br><span class="line">                    sm.getString(<span class="string">&quot;managerBase.createSession.ise&quot;</span>),</span><br><span class="line">                    maxActiveSessions);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Recycle or create a Session instance</span></span><br><span class="line">        Session session = createEmptySession();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Initialize the properties of the new session and return it</span></span><br><span class="line">        session.setNew(<span class="keyword">true</span>);</span><br><span class="line">        session.setValid(<span class="keyword">true</span>);</span><br><span class="line">        session.setCreationTime(System.currentTimeMillis());</span><br><span class="line">        session.setMaxInactiveInterval(getContext().getSessionTimeout() * <span class="number">60</span>);</span><br><span class="line">        String id = sessionId;</span><br><span class="line">        <span class="keyword">if</span> (id == <span class="keyword">null</span>) &#123;</span><br><span class="line">            id = generateSessionId();</span><br><span class="line">        &#125;</span><br><span class="line">        session.setId(id);</span><br><span class="line">        sessionCounter++;</span><br><span class="line"></span><br><span class="line">        SessionTiming timing = <span class="keyword">new</span> SessionTiming(session.getCreationTime(), <span class="number">0</span>);</span><br><span class="line">        <span class="keyword">synchronized</span> (sessionCreationTiming) &#123;</span><br><span class="line">            sessionCreationTiming.add(timing);</span><br><span class="line">            sessionCreationTiming.poll();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> session;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>这个方法是在什么时候调用的呢？当浏览器访问系统时，request 会解析请求中携带的 jssesionid，用它去找到存在于应用中的 session，但是如果没有找到，那么就会调用 session 的创建方法，并且生成一个新的 jssessionid，返回 session。</p>
+<ul>
+<li>客户端第一次请求服务器，cookie 中不存在与 url 相对应的 sessionid。所以 request headers 的 cookie 头里不包含 sessionid 的内容，甚至不包含 cookie 请求头；</li>
+<li>服务端调用 request.getSession (); , 没有 sessionid 自然无法取得相应的 session 信息，立即创建新的 session；</li>
+<li>新创建的 session 信息被服务端存储下来，sessionid 被添加到 response 的 set-cookie 响应头，并返回给客户端；</li>
+<li>客户端接收到 response 报文的 cookie 内容，并将其保存在本地；</li>
+<li>客户端再一次请求服务器，浏览器将根据 url，解析出相应的 sessionid，并添加到 cookie 请求头，发送给服务器；</li>
+<li>服务端调用 request.getSession (); , 根据 sessionid 从 session 存储里获得相应的 session 信息，然后进一步操作，再响应给客户端。</li>
+</ul>
+<p>总而言之，session 是存在于线程安全的 map 中的值，可以通过 id 找到，也可以使用 invalidate 方法销毁，但绝不会是浏览器关闭，就能对它进行销毁的。</p>
+<h3 id="Cookie-简介"><a href="#Cookie-简介" class="headerlink" title="# Cookie 简介"></a><strong># Cookie 简介</strong></h3><p>提到 session，那么 cookie 是不得不说的。至于 cookie 是什么，我就不多说了，大家都懂。直接看其内容吧。</p>
+<p>![img](/images/说说你对 Session 的理解？/640-1573167483598.webp)</p>
+<p>这是一次 http 请求中（<a target="_blank" rel="noopener" href="http://localhost:8080/test1%EF%BC%89%EF%BC%8C%E5%8C%85%E5%90%AB%E7%9A%84%E8%AF%B7%E6%B1%82%E5%92%8C%E5%93%8D%E5%BA%94%E4%BF%A1%E6%81%AF%EF%BC%8C%E6%98%AF%E5%AF%B9%E4%B8%80%E4%B8%AA%E7%B3%BB%E7%BB%9F%E7%9A%84%E5%88%9D%E6%AC%A1%E8%AE%BF%E9%97%AE%EF%BC%8C%E7%94%A8%E7%9A%84%E8%B0%B7%E6%AD%8C%E6%B5%8F%E8%A7%88%E5%99%A8%E3%80%82">http://localhost:8080/test1），包含的请求和响应信息，是对一个系统的初次访问，用的谷歌浏览器。</a></p>
+<p>请求头中，包含的 Cookie 信息，并没有上文提到的 jsessionid, 那是因为这是对系统的初次访问，系统还没生成 session。但是访问之后，系统就会生成一个 session，而且，会在响应流中设置响应头 Set-Cookie，其值为 JESSIONID=xxx。这样浏览器对 localhost:8080 和 cookie 的联系就有了记忆，浏览器会将其存储起来，可在调试工具中看到。</p>
+<p>![img](/images/说说你对 Session 的理解？/640-1573167483630.webp)</p>
+<p>那么再次访问 <a target="_blank" rel="noopener" href="http://localhost:8080/test1">http://localhost:8080/test1</a>, 浏览器会主动在请求头添加包括 jsession 的 cookie 信息。</p>
+<p>![img](/images/说说你对 Session 的理解？/640-1573167483665.webp)</p>
+<p>系统根据这个 jsessionid 找到 session，也就不会在响应头中添加 Set-Cookie 信息。</p>
+<p>这里说一下 cookie 中的两个重要属性。</p>
+<ul>
+<li>domain 表示的是 cookie 所在的域，默认为请求的地址，如网址为 <a target="_blank" rel="noopener" href="http://www.test.com/test/test.aspx%EF%BC%8C%E9%82%A3%E4%B9%88">www.test.com/test/test.aspx，那么</a> domain 默认为 <a target="_blank" rel="noopener" href="http://www.test.com.而跨域访问,如域/">www.test.com。而跨域访问，如域</a> A 为 t1.test.com，域 B 为 t2.test.com，<strong>那么在域 A 生产一个令域 A 和域 B 都能访问的 cookie 就要将该 cookie 的 domain 设置为.test.com</strong>；如果要在域 A 生产一个令域 A 不能访问而域 B 能访问的 cookie 就要将该 cookie 的 domain 设置为 t2.test.com。</li>
+</ul>
+<p><strong>目前开发项目解决方案：</strong></p>
+<ol>
+<li><strong>cookie</strong>里确实设置的domain是***.com类似后缀结尾的，相关系统的也就是其他子系统的后缀，这样在访问子系统是cookie就是共享的了。</li>
+</ol>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">systemSecondUrl</span>=<span class="string">.smda.sh.cn</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Session%E5%BA%95%E5%B1%82%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90%E4%B8%8E%E5%AE%9E%E9%99%85%E5%BA%94%E7%94%A8/1573176692611.png" alt="1573176692611"></p>
+<ol start="2">
+<li><p>跳转子系统过程</p>
+<p><img src="/images/Session%E5%BA%95%E5%B1%82%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90%E4%B8%8E%E5%AE%9E%E9%99%85%E5%BA%94%E7%94%A8/1573177099764.png" alt="1573177099764"></p>
+</li>
+<li><p>在跳转过来后，怎么获取当前用户的呢？其实这里首先会被shiro拦截器拦截，</p>
+<p><img src="/images/Session%E5%BA%95%E5%B1%82%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90%E4%B8%8E%E5%AE%9E%E9%99%85%E5%BA%94%E7%94%A8/1573177421842.png" alt="1573177421842"></p>
+</li>
+<li><p>子系统从cookie中获取当前用户</p>
+</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">Cookie[] cookies = request.getCookies();</span><br><span class="line">            String userId = <span class="string">&quot;&quot;</span>;</span><br><span class="line">            String userInfo = <span class="string">&quot;&quot;</span>;</span><br><span class="line">            String loginUrl = <span class="keyword">this</span>.loginUrl;</span><br><span class="line">            <span class="keyword">if</span>(session.getAttribute(SysConstant.CURRENT_USER)==<span class="keyword">null</span>)&#123;</span><br><span class="line">                <span class="comment">// 如果cookie为空，直接返回登录页面</span></span><br><span class="line">                <span class="keyword">if</span>(cookies == <span class="keyword">null</span>)&#123;</span><br><span class="line">                    response.sendRedirect(loginUrl);</span><br><span class="line">                    <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">                &#125;</span><br><span class="line">               	<span class="comment">// 从cookie中获取当</span></span><br><span class="line">                <span class="keyword">for</span> (Cookie cookie : cookies) &#123;</span><br><span class="line">                    <span class="keyword">if</span>(SysConstant.COOKIE_USER_ID.equals(cookie.getName())</span><br><span class="line">                            &amp;&amp; StringUtils.isNotBlank(cookie.getValue()))&#123;</span><br><span class="line">                        userId = cookie.getValue();</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">if</span>(SysConstant.COOKIE_USER_INFO.equals(cookie.getName())</span><br><span class="line">                            &amp;&amp; StringUtils.isNotBlank(cookie.getValue()))&#123;</span><br><span class="line">                        userInfo = cookie.getValue();</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="comment">//获取缓存是否存在</span></span><br><span class="line">                <span class="keyword">if</span>(StringUtils.isBlank(userInfo)</span><br><span class="line">                        || StringUtils.isBlank(userId))&#123;</span><br><span class="line">                    <span class="keyword">if</span>(session.getAttribute(SysConstant.CURRENT_USER)!=<span class="keyword">null</span>)&#123;</span><br><span class="line">                        <span class="keyword">try</span> &#123;</span><br><span class="line">                            session.invalidate(); <span class="comment">//（???）</span></span><br><span class="line">                        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                    response.sendRedirect(loginUrl);</span><br><span class="line">                    <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="comment">//shiro解密</span></span><br><span class="line">                String userInfoStr = ShfdaConfusionUtil.deconfuse(userInfo);</span><br><span class="line">                String[] userInfos = userInfoStr.split(<span class="string">&quot;\\|\\|\\|&quot;</span>);</span><br><span class="line">                <span class="keyword">if</span>(userInfos !=<span class="keyword">null</span></span><br><span class="line">                        &amp;&amp; userInfos.length &gt;= <span class="number">2</span>)&#123;</span><br><span class="line">                    UsernamePasswordToken token = <span class="keyword">new</span> UsernamePasswordToken(userInfos[<span class="number">0</span>], userInfos[<span class="number">1</span>],<span class="keyword">false</span>);</span><br><span class="line">                    Subject currentUser = SecurityUtils.getSubject();</span><br><span class="line">                    currentUser.login(token);</span><br><span class="line">                    <span class="keyword">if</span>(currentUser.isAuthenticated())&#123;</span><br><span class="line">                        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                response.sendRedirect(loginUrl);</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                <span class="keyword">return</span>  <span class="keyword">true</span>;</span><br><span class="line">            &#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里子系统只做校验，校验通过后，在shiro中校验当前用户名密码是否正确，设置当前用户登录，直接调到到链接登录。</p>
+<p>校验代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserRealm</span> <span class="keyword">extends</span> <span class="title">AuthorizingRealm</span> </span>&#123;</span><br><span class="line">	<span class="keyword">private</span> Logger log = LoggerFactory.getLogger(UserRealm.class);</span><br><span class="line">	<span class="keyword">private</span> QxglSignUtil qxglApiUtil;</span><br><span class="line">		<span class="comment">/**</span></span><br><span class="line"><span class="comment">	     * 为当前登录的Subject授予角色和权限</span></span><br><span class="line"><span class="comment">	     * <span class="doctag">@see</span> 经测试:本例中该方法的调用时机为需授权资源被访问时</span></span><br><span class="line"><span class="comment">	     * <span class="doctag">@see</span> 经测试:并且每次访问需授权资源时都会执行该方法中的逻辑,这表明本例中默认并未启用AuthorizationCache</span></span><br><span class="line"><span class="comment">	     * <span class="doctag">@see</span> 个人感觉若使用了Spring3.1开始提供的ConcurrentMapCache支持,则可灵活决定是否启用AuthorizationCache</span></span><br><span class="line"><span class="comment">	     * <span class="doctag">@see</span> 比如说这里从数据库获取权限信息时,先去访问Spring3.1提供的缓存,而不使用Shior提供的AuthorizationCache</span></span><br><span class="line"><span class="comment">	     */</span></span><br><span class="line">	    <span class="meta">@Override</span></span><br><span class="line">	    <span class="function"><span class="keyword">protected</span> AuthorizationInfo <span class="title">doGetAuthorizationInfo</span><span class="params">(PrincipalCollection principals)</span></span>&#123;</span><br><span class="line">	    	Subject currentUser = SecurityUtils.getSubject();</span><br><span class="line">	    	User user = (User)currentUser.getSession().getAttribute(SysConstant.CURRENT_USER);</span><br><span class="line">	    	List&lt;String&gt; shirorolespermis = <span class="keyword">new</span> ArrayList&lt;String&gt;();</span><br><span class="line">		    <span class="keyword">if</span>(user !=<span class="keyword">null</span>)&#123;</span><br><span class="line">		    	log.info(<span class="string">&quot;doGetAuthorizationInfo================start--&quot;</span>+user.getUserName());</span><br><span class="line">		    	log.info(<span class="string">&quot;doGetAuthorizationInfo================start--&quot;</span>+user.getPassword());</span><br><span class="line">		    	<span class="comment">//获取权限</span></span><br><span class="line">		    	ResponseShfdaPermission rsp = <span class="keyword">null</span>;</span><br><span class="line">				<span class="keyword">try</span> &#123;</span><br><span class="line">					qxglApiUtil = SysParameter.getInstance().getQxglApiUtil();</span><br><span class="line">					rsp = qxglApiUtil.getUserPermissions(user.getUserId(),</span><br><span class="line">							user.getUserName(), user.getPassword());</span><br><span class="line">				&#125; <span class="keyword">catch</span> (ApiServiceException e) &#123;</span><br><span class="line">					e.printStackTrace();</span><br><span class="line">				&#125;</span><br><span class="line">		    	<span class="keyword">if</span>(rsp != <span class="keyword">null</span> &amp;&amp; rsp.getShfdaPermissions() != <span class="keyword">null</span> &amp;&amp; rsp.getShfdaPermissions().size()&gt;<span class="number">0</span>)&#123;</span><br><span class="line">			    	<span class="keyword">for</span>(ShfdaPermission sp: rsp.getShfdaPermissions())&#123;</span><br><span class="line">			    		<span class="keyword">if</span>(StringUtils.isNotBlank(sp.getPerValue()))&#123;</span><br><span class="line">			    			shirorolespermis.add(sp.getPerValue());</span><br><span class="line">			    		&#125;</span><br><span class="line">			        &#125;</span><br><span class="line">		    	&#125;</span><br><span class="line">		    	SimpleAuthorizationInfo simpleAuthorInfo = <span class="keyword">new</span> SimpleAuthorizationInfo();</span><br><span class="line">		    	simpleAuthorInfo.addStringPermissions(shirorolespermis);</span><br><span class="line">		    	<span class="keyword">return</span> simpleAuthorInfo;</span><br><span class="line">		    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">		    	 <span class="keyword">throw</span> <span class="keyword">new</span> AuthorizationException();</span><br><span class="line">		    &#125;</span><br><span class="line">	    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	    <span class="comment">/**</span></span><br><span class="line"><span class="comment">	     * 验证当前登录的Subject</span></span><br><span class="line"><span class="comment">	     * <span class="doctag">@see</span> 经测试:本例中该方法的调用时机为LoginController.login()方法中执行Subject.login()时</span></span><br><span class="line"><span class="comment">	     */</span></span><br><span class="line">	    <span class="meta">@Override</span></span><br><span class="line">	    <span class="function"><span class="keyword">protected</span> AuthenticationInfo <span class="title">doGetAuthenticationInfo</span><span class="params">(AuthenticationToken authcToken)</span> <span class="keyword">throws</span> AuthenticationException </span>&#123;</span><br><span class="line">	    	UsernamePasswordToken token = (UsernamePasswordToken)authcToken;</span><br><span class="line">	        ShfdaUser shfdaUser = <span class="keyword">null</span>;</span><br><span class="line">	        qxglApiUtil = SysParameter.getInstance().getQxglApiUtil();</span><br><span class="line">	        <span class="keyword">try</span>&#123;</span><br><span class="line">	        	shfdaUser = qxglApiUtil.getUserInAllViewByUserName(token.getUsername(),</span><br><span class="line">	        			token.getUsername(),<span class="keyword">new</span> String(token.getPassword()));</span><br><span class="line">	        &#125;<span class="keyword">catch</span>(Exception ex)&#123;</span><br><span class="line">	        	ex.printStackTrace();</span><br><span class="line">	        	<span class="keyword">throw</span> <span class="keyword">new</span> UnknownAccountException();<span class="comment">//没找到帐号</span></span><br><span class="line">	        &#125;</span><br><span class="line">	        <span class="keyword">if</span>(!<span class="string">&quot;0&quot;</span>.equals(shfdaUser.getReturnCode())) &#123;</span><br><span class="line">	            <span class="keyword">throw</span> <span class="keyword">new</span> UnknownAccountException();<span class="comment">//没找到帐号</span></span><br><span class="line">	        &#125;</span><br><span class="line">	        AuthenticationInfo authcInfo = <span class="keyword">new</span> SimpleAuthenticationInfo(shfdaUser.getUserName(), shfdaUser.getPassword(), <span class="keyword">this</span>.getName());</span><br><span class="line">	        <span class="keyword">if</span>(!shfdaUser.isHasRole())&#123;</span><br><span class="line">	        	<span class="keyword">throw</span> <span class="keyword">new</span> AuthorizationException();</span><br><span class="line">	        &#125;</span><br><span class="line">	        User user = <span class="keyword">new</span> User();</span><br><span class="line">	        <span class="keyword">if</span>(<span class="string">&quot;SHFDA&quot;</span>.equals(shfdaUser.getUserCategory()))&#123;</span><br><span class="line">	        	JSONObject userJson = <span class="keyword">null</span>;</span><br><span class="line">				<span class="keyword">try</span> &#123;</span><br><span class="line">					userJson = qxglApiUtil.getUserJsonByUserId(shfdaUser.getUserId(),</span><br><span class="line">							shfdaUser.getUserName(), shfdaUser.getPassword());</span><br><span class="line">					user = User.fromJson(userJson);</span><br><span class="line">					<span class="comment">//用户 市局处室、监管部门</span></span><br><span class="line">					<span class="keyword">if</span>(ShfdaUser.USER_TYPE_SJCS_DEPART_IDS.contains(user.getDepartId()))&#123;</span><br><span class="line">						user.setUserType(ShfdaUser.USER_TYPE_SJCS);</span><br><span class="line">					&#125;<span class="keyword">else</span> <span class="keyword">if</span>(ShfdaUser.USER_TYPE_ZSDW_ORG_IDS.contains(user.getOrgId()))&#123;</span><br><span class="line">						user.setUserType(ShfdaUser.USER_TYPE_ZSDW);</span><br><span class="line">					&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">						user.setUserType(ShfdaUser.USER_TYPE_SCJ);</span><br><span class="line">					&#125;</span><br><span class="line">					<span class="keyword">if</span>(StringUtils.isNotBlank(user.getOrgId()))&#123;</span><br><span class="line">						ShfdaOrg shfdaOrg= qxglApiUtil.getOrgByOrgId(user.getOrgId(), shfdaUser.getUserName(), shfdaUser.getPassword());</span><br><span class="line">						<span class="keyword">if</span>(shfdaOrg!=<span class="keyword">null</span>)&#123;</span><br><span class="line">							user.setRegionId(shfdaOrg.getRegionId());</span><br><span class="line">						&#125;</span><br><span class="line">					&#125;</span><br><span class="line">		        	user.setUserCategory(<span class="string">&quot;SHFDA&quot;</span>);</span><br><span class="line">				&#125; <span class="keyword">catch</span> (ApiServiceException e) &#123;</span><br><span class="line">					e.printStackTrace();</span><br><span class="line">					<span class="keyword">throw</span> <span class="keyword">new</span> AuthorizationException();</span><br><span class="line">				&#125;</span><br><span class="line">	        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">	        	user.setUserId(shfdaUser.getUserId());</span><br><span class="line">                YlqxEnpSdk ylqxEnp = <span class="keyword">null</span>;</span><br><span class="line">                QxscEnpSdk qxscEnp = <span class="keyword">null</span>;</span><br><span class="line">                EnpUser enpUser = <span class="keyword">null</span>;</span><br><span class="line">                DsfptSdk dsfptSdk = <span class="keyword">null</span>;</span><br><span class="line">                QyglApiUtil qyglApiUtil = SysParameter.getInstance().getQyglApiUtil();</span><br><span class="line">                QxscApiUtil qxscApiUtil = SysParameter.getInstance().getQxscApiUtil();</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    enpUser = qxglApiUtil.getEnpUserById(shfdaUser.getUserId(),</span><br><span class="line">                            shfdaUser.getUserName(), shfdaUser.getPassword());</span><br><span class="line">                    <span class="keyword">if</span>(enpUser == <span class="keyword">null</span>)&#123;</span><br><span class="line">                        <span class="comment">//没找到帐号</span></span><br><span class="line">                        <span class="keyword">throw</span> <span class="keyword">new</span> UnknownAccountException();</span><br><span class="line">                    &#125;</span><br><span class="line">                    ylqxEnp = qyglApiUtil.getSimpleEnpById(shfdaUser.getUserId(),</span><br><span class="line">                            shfdaUser.getUserName(), shfdaUser.getPassword());</span><br><span class="line">                    qxscEnp = qxscApiUtil.getSimpleById(shfdaUser.getUserId(),</span><br><span class="line">                            shfdaUser.getUserName(), shfdaUser.getPassword());</span><br><span class="line">					dsfptSdk = qyglApiUtil.getSimpleByEnpPkId(shfdaUser.getUserId(),</span><br><span class="line">							shfdaUser.getUserName(), shfdaUser.getPassword());</span><br><span class="line">					<span class="keyword">if</span>(ylqxEnp != <span class="keyword">null</span> &amp;&amp; StringUtils.isNotBlank(ylqxEnp.getEnpPkId()))&#123;</span><br><span class="line">                        user.setRegionId(ylqxEnp.getRegionCode());</span><br><span class="line">                        user.setOrgId(ylqxEnp.getOrgId());</span><br><span class="line">						user.setDepartId(ylqxEnp.getSupervision());</span><br><span class="line">                    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(qxscEnp != <span class="keyword">null</span> &amp;&amp; StringUtils.isNotBlank(qxscEnp.getEnpPkId()))&#123;</span><br><span class="line">                        user.setRegionId(qxscEnp.getRegionCode());</span><br><span class="line">                        user.setOrgId(qxscEnp.getOrgId());</span><br><span class="line">                    &#125;<span class="keyword">else</span> <span class="keyword">if</span>( !(dsfptSdk != <span class="keyword">null</span> &amp;&amp; StringUtils.isNotBlank(dsfptSdk.getEnpPkId())))&#123;</span><br><span class="line">                        <span class="keyword">throw</span> <span class="keyword">new</span> EnpNotExistException();</span><br><span class="line">                    &#125;</span><br><span class="line">                    user.setEnp(ylqxEnp);</span><br><span class="line">                    user.setQxscEnp(qxscEnp);</span><br><span class="line">					user.setDsfptSdk(dsfptSdk);</span><br><span class="line">                    user.setUserName(shfdaUser.getUserName());</span><br><span class="line">                    user.setPassword(shfdaUser.getPassword());</span><br><span class="line">                    user.setUserCategory(<span class="string">&quot;ENP&quot;</span>);</span><br><span class="line">                    user.setContact(enpUser.getContact());</span><br><span class="line">                    user.setEmail(enpUser.getEmail());</span><br><span class="line">                    user.setStatus(enpUser.getStatus());</span><br><span class="line">                    user.setIsModifPwd(enpUser.getIsModifyPwd());</span><br><span class="line">                    user.setTel(enpUser.getTel());</span><br><span class="line">                &#125; <span class="keyword">catch</span> (ApiServiceException e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                    <span class="keyword">throw</span> <span class="keyword">new</span> AuthorizationException();</span><br><span class="line">                &#125;</span><br><span class="line">	        &#125;</span><br><span class="line">	        <span class="keyword">this</span>.setSession(SysConstant.CURRENT_USER, user);</span><br><span class="line">	        <span class="keyword">return</span> authcInfo;</span><br><span class="line">	    &#125;</span><br><span class="line">	    <span class="comment">/**</span></span><br><span class="line"><span class="comment">	     * 将一些数据放到ShiroSession中,以便于其它地方使用</span></span><br><span class="line"><span class="comment">	     * <span class="doctag">@see</span> 比如Controller,使用时直接用HttpSession.getAttribute(key)就可以取到</span></span><br><span class="line"><span class="comment">	     */</span></span><br><span class="line">	    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">setSession</span><span class="params">(Object key, Object value)</span></span>&#123;</span><br><span class="line">	        Subject currentUser = SecurityUtils.getSubject();</span><br><span class="line">	        <span class="keyword">if</span>(<span class="keyword">null</span> != currentUser)&#123;</span><br><span class="line">	            Session session = currentUser.getSession();</span><br><span class="line">	            <span class="keyword">if</span>(<span class="keyword">null</span> != session)&#123;</span><br><span class="line">	                session.setAttribute(key, value);</span><br><span class="line">	            &#125;</span><br><span class="line">	        &#125;</span><br><span class="line">	    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<ol start="5">
+<li>父级系统登录时设置,设置用户信息到cookie中（userId，userInfo）</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">currentUser.login(token);</span><br><span class="line">     	<span class="keyword">if</span>(currentUser.isAuthenticated())&#123; </span><br><span class="line">         	js.put(<span class="string">&quot;returnCode&quot;</span>, <span class="string">&quot;0&quot;</span>);</span><br><span class="line">          	js.put(<span class="string">&quot;returnMessage&quot;</span>, <span class="string">&quot;登录成功&quot;</span>);</span><br><span class="line">          	loginLog.setRemark(<span class="string">&quot;登录成功&quot;</span>);</span><br><span class="line">          	loginLog.setLogType(<span class="number">0</span>);</span><br><span class="line">          	<span class="keyword">if</span>(session.getAttribute(SysConstant.CURRENT_USER)!=<span class="keyword">null</span>)&#123;</span><br><span class="line">         		 User currUser = (User)session.getAttribute(SysConstant.CURRENT_USER);</span><br><span class="line">         		 String userInfo = ShfdaConfusionUtil.getLoginStr(username,pwd);</span><br><span class="line">         		 Cookie cookie = <span class="keyword">new</span> Cookie(<span class="string">&quot;USER_ID&quot;</span>, currUser.getUserId());</span><br><span class="line">         		 cookie.setPath(<span class="string">&quot;/&quot;</span>);</span><br><span class="line">         		 <span class="keyword">if</span>(StringUtils.isNotBlank(propertiesConfig.systemSecondUrl))&#123;</span><br><span class="line">         			 cookie.setDomain(propertiesConfig.systemSecondUrl);</span><br><span class="line">         		 &#125;</span><br><span class="line">         		 response.addCookie(cookie);</span><br><span class="line">         		 cookie = <span class="keyword">new</span> Cookie(<span class="string">&quot;USER_INFO&quot;</span>, userInfo);</span><br><span class="line">         		 cookie.setPath(<span class="string">&quot;/&quot;</span>);</span><br><span class="line">         		 <span class="keyword">if</span>(StringUtils.isNotBlank(propertiesConfig.systemSecondUrl))&#123;</span><br><span class="line">         			 cookie.setDomain(propertiesConfig.systemSecondUrl);</span><br><span class="line">         		 &#125;</span><br><span class="line">             	 response.addCookie(cookie);</span><br><span class="line">		cookie = <span class="keyword">new</span> Cookie(<span class="string">&quot;USER_RANGE&quot;</span>, currUser.getInfoQueryRange());</span><br><span class="line">		cookie.setPath(<span class="string">&quot;/&quot;</span>);</span><br><span class="line">		<span class="keyword">if</span>(StringUtils.isNotBlank(propertiesConfig.systemSecondUrl))&#123;</span><br><span class="line">			cookie.setDomain(propertiesConfig.systemSecondUrl);</span><br><span class="line">		&#125;</span><br><span class="line">		response.addCookie(cookie);</span><br><span class="line">		<span class="comment">//获取全部权限</span></span><br><span class="line">		JSONObject json= qxglApiUtil.getAllPerssion( <span class="string">&quot;ADMIN_INNER&quot;</span>, <span class="string">&quot;ADMIN_INNER&quot;</span>);</span><br><span class="line">		JSONArray array=json.getJSONArray(<span class="string">&quot;jsonArray&quot;</span>);</span><br><span class="line">		JSONObject jsonPermission=<span class="keyword">null</span>;</span><br><span class="line">		List&lt;ShfdaPermission&gt; allPermissions=<span class="keyword">new</span> ArrayList&lt;ShfdaPermission&gt;();</span><br><span class="line">		String url = <span class="string">&quot;&quot;</span>;</span><br><span class="line">		List&lt;String&gt; allURL = <span class="keyword">new</span> ArrayList&lt;String&gt;();</span><br><span class="line">		<span class="comment">//将json数组格式化成权限类型</span></span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;array.size();i++)&#123;</span><br><span class="line">			jsonPermission=array.getJSONObject(i);</span><br><span class="line">			allPermissions.add(ShfdaPermission.fromJson(jsonPermission));</span><br><span class="line">			url = allPermissions.get(i).getUrl();</span><br><span class="line">			<span class="keyword">if</span>(url!=<span class="keyword">null</span> &amp;&amp; !<span class="string">&quot;&quot;</span>.equals(url))&#123;</span><br><span class="line">				allURL.add(url);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		session.setAttribute(<span class="string">&quot;allURL&quot;</span>, allURL);</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="6">
+<li>子系统单点登录功能，其实是和登录方法是一样的</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RequestMapping(value=&quot;/nssologin&quot;,method=&#123;RequestMethod.POST,RequestMethod.GET&#125;,produces=&#123;MediaType.APPLICATION_JSON_VALUE&#125;)</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> String <span class="title">nssologin</span><span class="params">(<span class="meta">@RequestParam(&quot;loginStr&quot;)</span> String loginStr, HttpSession session, HttpServletResponse response)</span></span>&#123;</span><br><span class="line">       <span class="keyword">try</span> &#123;</span><br><span class="line">           String[] userInfos = SsoUtil.getUserInfo(loginStr);</span><br><span class="line">           String userName = userInfos[<span class="number">0</span>];</span><br><span class="line">           qxglApiUtil = SysParameter.getInstance().getQxglApiUtil();</span><br><span class="line">           ShfdaUser user = qxglApiUtil.getUserByUserName(userName,<span class="string">&quot;ADMIN_INNER&quot;</span>,<span class="string">&quot;ADMIN_INNER&quot;</span>);</span><br><span class="line">           UsernamePasswordToken token = <span class="keyword">new</span> UsernamePasswordToken(user.getUserName(),</span><br><span class="line">                   user.getPassword(),<span class="keyword">false</span>);</span><br><span class="line">           Subject currentUser = SecurityUtils.getSubject();</span><br><span class="line">           currentUser.login(token);</span><br><span class="line">           <span class="keyword">if</span>(currentUser.isAuthenticated())&#123;</span><br><span class="line">               ServletContext application = session.getServletContext();</span><br><span class="line">               application.setAttribute(userName,session.getId());</span><br><span class="line">               <span class="keyword">if</span>(session.getAttribute(SysConstant.CURRENT_USER)!=<span class="keyword">null</span>)&#123;</span><br><span class="line">                   ShfdaUser currUser = getCurrentUser(session);</span><br><span class="line">                   String userInfo = ShfdaConfusionUtil.getLoginStr(userName,user.getPassword());</span><br><span class="line">                   Cookie cookie = <span class="keyword">new</span> Cookie(<span class="string">&quot;USER_ID&quot;</span>, currUser.getUserId());</span><br><span class="line">                   cookie.setPath(<span class="string">&quot;/&quot;</span>);</span><br><span class="line">                   <span class="keyword">if</span>(StringUtils.isNotBlank(propertiesConfig.systemSecondUrl))&#123;</span><br><span class="line">                       cookie.setDomain(propertiesConfig.systemSecondUrl);</span><br><span class="line">                   &#125;</span><br><span class="line">                   response.addCookie(cookie);</span><br><span class="line">                   cookie = <span class="keyword">new</span> Cookie(<span class="string">&quot;USER_INFO&quot;</span>, userInfo);</span><br><span class="line">                   cookie.setPath(<span class="string">&quot;/&quot;</span>);</span><br><span class="line">                   <span class="keyword">if</span>(StringUtils.isNotBlank(propertiesConfig.systemSecondUrl))&#123;</span><br><span class="line">                       cookie.setDomain(propertiesConfig.systemSecondUrl);</span><br><span class="line">                   &#125;</span><br><span class="line">                   response.addCookie(cookie);</span><br><span class="line">                   <span class="comment">//清除错误次数缓存</span></span><br><span class="line">                   qxglApiUtil.clearLoginErrorCountCache(userName, currUser.getUserName(), currUser.getPassword());</span><br><span class="line">               &#125;</span><br><span class="line">           &#125;</span><br><span class="line">       &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">           e.printStackTrace();</span><br><span class="line">           <span class="keyword">return</span> <span class="string">&quot;redirect:/login&quot;</span>;</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="keyword">return</span> <span class="string">&quot;redirect:/&quot;</span>;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li>path 表示 cookie 所在的目录，默认为 /，就是根目录。在同一个服务器上有目录如下：/test/,/test/cd/,/test/dd/，现设一个 cookie1 的 path 为 /test/，cookie2 的 path 为 /test/cd/，那么 test 下的所有页面都可以访问到 cookie1，而 /test/ 和 /test/dd/ 的子页面不能访问 cookie2。这是因为 cookie 能让其 path 路径下的页面访问。</li>
+</ul>
+<h3 id="疑点"><a href="#疑点" class="headerlink" title="# 疑点"></a><strong># 疑点</strong></h3><p>下面，就该说下我的疑点了。</p>
+<h4 id="情况-1"><a href="#情况-1" class="headerlink" title="情况 1"></a><strong>情况 1</strong></h4><p>但是当我在 8081 的一个方法中，重定向到 8080 的一个路径时，发现了奇怪的现象。</p>
+<p>8081 系统的方法如下。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@GetMapping(&quot;/test&quot;)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">get1</span><span class="params">(HttpServletRequest request, HttpServletResponse response)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        HttpSession session = request.getSession();</span><br><span class="line">        String id = session.getId();</span><br><span class="line">        System.out.println(id);</span><br><span class="line">        response.sendRedirect(<span class="string">&quot;http://localhost:8080/test1&quot;</span>);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>8080 系统的被重定向路径如下。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@GetMapping(&quot;/test1&quot;)</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">get11</span><span class="params">(HttpServletRequest request, HttpServletResponse response)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">       HttpSession session = request.getSession();</span><br><span class="line">       String id = session.getId();</span><br><span class="line">       System.out.println(id);</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<p>1、初次访问 localhost:8081/test 得到两次请求的信息，一次是重定向的，一次是 8080 的。</p>
+<p>![img](/images/说说你对 Session 的理解？/640-1573167483698.webp)</p>
+<p>这说明对 8081 系统的初次访问，是没有发送 jsessionid 信息的，而 8081 系统生成了一个 id 为 CAAB6AED34716A0394705BDE8CAC0042 的 session 并设置到了响应头，再次访问 8081 时理应会带上这么一个 id。</p>
+<p>2、</p>
+<p>![img](/images/说说你对 Session 的理解？/640-1573167483702.webp)</p>
+<p>这个对 8080 系统的请求中带有 jsessionid 为 CAAB6AED34716A0394705BDE8CAC0042 的 cookie 信息，要知道，我们对 8080 的访问也是初次的，那么为什么会带上 jsessionid 呢？而且这个 jsessionid 明显是在 8081 系统中生成并设置到响应头的的 jsessionid。这个现象我用谷歌和 edge 浏览器分别尝试过，都是这样。那么是不是说明，浏览器把这个重定向到 localhost:8080 的请求当成是同域的请求了 。</p>
+<p>暂且放下这个疑惑，继续往下验证。由于这个请求是对 8080 的系统的访问，由于是初次访问，系统根本没有 id 为 CAAB6AED34716A0394705BDE8CAC0042 的 session，因此只好生成一个新的 session，在响应头中增加 Set-Cookie。</p>
+<p>3、<br>再次访问 localhost:8081/test，这时根据上文说的，“再次访问 8081 时理应会带上这么一个 id”，也就是在 cookie 中带上 JSESSION=CAAB6AED34716A0394705BDE8CAC0042, 但是，我发现它带的却是在系统 8080 中生成的 BA0D2C939ADEC087C0A5F0C9B3354891 ！！！</p>
+<p>这就导致了 8081 找不到 session 又再次生成了一个新的 session，循环往复，每次对 8081 的访问都会产生新的 session。而这情况，我觉得很明显，是浏览器把对 8081 的访问当成是于 8080 同源的了。</p>
+<p>基于此推论，我模拟了另一种实验情况，去掉重定向的功能：</p>
+<h4 id="情况-2"><a href="#情况-2" class="headerlink" title="情况 2"></a><strong>情况 2</strong></h4><h4 id="在本地开两个-web-服务，端口分别是-8080-8081。"><a href="#在本地开两个-web-服务，端口分别是-8080-8081。" class="headerlink" title="在本地开两个 web 服务，端口分别是 8080,8081。"></a>在本地开两个 web 服务，端口分别是 8080,8081。</h4><p>localhost:8081/test</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@GetMapping(&quot;/test&quot;)</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">get1</span><span class="params">(HttpServletRequest request, HttpServletResponse response)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">       HttpSession session = request.getSession();</span><br><span class="line">       String id = session.getId();</span><br><span class="line">       System.out.println(id);</span><br><span class="line"></span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<p>localhost:8080/test1</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@GetMapping(&quot;/test1&quot;)</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">get11</span><span class="params">(HttpServletRequest request, HttpServletResponse response)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">      HttpSession session = request.getSession();</span><br><span class="line">      String id = session.getId();</span><br><span class="line">      System.out.println(id);</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="1、第一次访问-8081-test"><a href="#1、第一次访问-8081-test" class="headerlink" title="1、第一次访问 8081/test"></a>1、第一次访问 8081/test</h4><p>![img](/images/说说你对 Session 的理解？/640-1573167483742.webp)</p>
+<p>没有 cookie，服务器设置 set-cookie，正常。</p>
+<h4 id="2、第二次访问-8081-test"><a href="#2、第二次访问-8081-test" class="headerlink" title="2、第二次访问 8081/test"></a>2、第二次访问 8081/test</h4><p>![img](/images/说说你对 Session 的理解？/640-1573167483777.webp)</p>
+<p>cookie 与上次的 set-cookie 一致，正常。</p>
+<h4 id="3、第一次访问-8080-test1"><a href="#3、第一次访问-8080-test1" class="headerlink" title="3、第一次访问 8080/test1"></a>3、第一次访问 8080/test1</h4><p>![img](/images/说说你对 Session 的理解？/640-1573167483779.webp)</p>
+<p>浏览器把 8081/test 的 cookie 发过去了。8080 的服务器找不到这个 jsessionid，又重新设置了 jsessionid，等到再次访问 8081/test 时，大家也能猜到会发生什么了吧。</p>
+<h3 id="推论"><a href="#推论" class="headerlink" title="# 推论"></a><strong># 推论</strong></h3><p>至此，我斗胆推论，浏览器会对同一 ip 不同端口的服务访问认定是可以进行 cookie 共享的，两个 cookie 的 domain 是一致的。而这种 cookie 的截图也一定程度上印证了我的想法。</p>
+<p>![img](/images/说说你对 Session 的理解？/640-1573167483816.webp)</p>
+<p>cookie 的 domain 似乎只认定域名，无关端口。</p>
+<p>但是根据浏览器的同源策略，同域名不同端口的访问也应该是跨域的啊。除非浏览器的域跟 cookie 的 domain 在概念上是有区别的，对于这点，我没找到确切的官方资料，但网上大神是这么说的。</p>
+<h3 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h3><p>基于上面的未查阅官方资料而做出的不严谨的推论，我想，只要完全避免同域的情况就可以避开这个问题。于是我把 8081 和 8080 系统分别部署在两个机器上。由于不同 ip，这样无论如何，两个 cookie 都不会是同 domain 的了。果然，结果是没有问题的。</p>
+<h3 id="不足"><a href="#不足" class="headerlink" title="不足"></a>不足</h3><p>虽然这个解决方案避开了同域的问题，但是没有彻底解决，毕竟同域的系统相互之间的访问也是有必要的，为此希望能获得更多的建议或者资料，补充这方面知识的不足，让我彻底解决这个问题。</p>
+<p>这里，东哥来做个总结吧，文中的作者卡在了同源策略和跨域的问题，本文描述的的问题是属于跨域的问题。</p>
+<p>同源指的是协议、域名、端口都相同（可通过题图来理解此概念）。浏览器之所以要制定同源策略，其目的便是防止页面加载来源不明的脚本，而被黑客操作。</p>
+<p>而跨域指的是域名不同，跟端口没有关系。比如常用的 JSONP 技术，便是利用了 <script> 标签的跨域能力来访问跨域数据。</p>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/ffVhvQinqaGyyVfeL9Cbzg">参考</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/session/" rel="tag"># session</a>
+          
+            <a href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag"># 面试</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/11/07/%E9%9D%A2%E8%AF%95%E5%87%86%E5%A4%87%E9%98%B6%E6%AE%B5%E6%80%BB%E7%BB%93/" rel="next" title="面试准备阶段总结">
+                <i class="fa fa-chevron-left"></i> 面试准备阶段总结
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/11/08/Http-%E5%8D%8F%E8%AE%AE/" rel="prev" title="Http 协议">
+                Http 协议 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">72</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">58</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B"><span class="nav-number">1.</span> <span class="nav-text"># 简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Session-%E6%9C%AC%E8%B4%A8"><span class="nav-number">2.</span> <span class="nav-text"># Session 本质</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Cookie-%E7%AE%80%E4%BB%8B"><span class="nav-number">3.</span> <span class="nav-text"># Cookie 简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%96%91%E7%82%B9"><span class="nav-number">4.</span> <span class="nav-text"># 疑点</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%83%85%E5%86%B5-1"><span class="nav-number">4.1.</span> <span class="nav-text">情况 1</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%83%85%E5%86%B5-2"><span class="nav-number">4.2.</span> <span class="nav-text">情况 2</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9C%A8%E6%9C%AC%E5%9C%B0%E5%BC%80%E4%B8%A4%E4%B8%AA-web-%E6%9C%8D%E5%8A%A1%EF%BC%8C%E7%AB%AF%E5%8F%A3%E5%88%86%E5%88%AB%E6%98%AF-8080-8081%E3%80%82"><span class="nav-number">4.3.</span> <span class="nav-text">在本地开两个 web 服务，端口分别是 8080,8081。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1%E3%80%81%E7%AC%AC%E4%B8%80%E6%AC%A1%E8%AE%BF%E9%97%AE-8081-test"><span class="nav-number">4.4.</span> <span class="nav-text">1、第一次访问 8081&#x2F;test</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2%E3%80%81%E7%AC%AC%E4%BA%8C%E6%AC%A1%E8%AE%BF%E9%97%AE-8081-test"><span class="nav-number">4.5.</span> <span class="nav-text">2、第二次访问 8081&#x2F;test</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3%E3%80%81%E7%AC%AC%E4%B8%80%E6%AC%A1%E8%AE%BF%E9%97%AE-8080-test1"><span class="nav-number">4.6.</span> <span class="nav-text">3、第一次访问 8080&#x2F;test1</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8E%A8%E8%AE%BA"><span class="nav-number">5.</span> <span class="nav-text"># 推论</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="nav-number">6.</span> <span class="nav-text">解决方案</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8D%E8%B6%B3"><span class="nav-number">7.</span> <span class="nav-text">不足</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">wentz</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">共91.6k字</span>
+</div>
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

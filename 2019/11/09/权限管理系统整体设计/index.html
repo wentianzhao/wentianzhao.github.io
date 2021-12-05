@@ -1,0 +1,1132 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="权限管理," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="** 前言**目前在公司负责权限这块，所以对权限这块的设计比较熟悉，公司采用微服务架构，权限系统自然就独立出来了，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="权限管理系统整体设计">
+<meta property="og:url" content="http://example.com/2019/11/09/%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E6%95%B4%E4%BD%93%E8%AE%BE%E8%AE%A1/index.html">
+<meta property="og:site_name" content="wentz">
+<meta property="og:description" content="** 前言**目前在公司负责权限这块，所以对权限这块的设计比较熟悉，公司采用微服务架构，权限系统自然就独立出来了，">
+<meta property="og:locale">
+<meta property="og:image" content="http://example.com/images/%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E6%95%B4%E4%BD%93%E8%AE%BE%E8%AE%A1/640-1573273382313.webp">
+<meta property="og:image" content="http://example.com/images/%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E6%95%B4%E4%BD%93%E8%AE%BE%E8%AE%A1/640-1573273382322.webp">
+<meta property="og:image" content="http://example.com/images/%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E6%95%B4%E4%BD%93%E8%AE%BE%E8%AE%A1/640-1573273382336.webp">
+<meta property="og:image" content="http://example.com/images/%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E6%95%B4%E4%BD%93%E8%AE%BE%E8%AE%A1/640-1573273382348.webp">
+<meta property="og:image" content="http://example.com/images/%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E6%95%B4%E4%BD%93%E8%AE%BE%E8%AE%A1/640-1573273382367.webp">
+<meta property="og:image" content="http://example.com/images/%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E6%95%B4%E4%BD%93%E8%AE%BE%E8%AE%A1/640-1573273382370.webp">
+<meta property="og:image" content="http://example.com/images/%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E6%95%B4%E4%BD%93%E8%AE%BE%E8%AE%A1/640-1573273382381.webp">
+<meta property="article:published_time" content="2019-11-09T04:21:57.000Z">
+<meta property="article:modified_time" content="2019-11-18T07:21:28.046Z">
+<meta property="article:author" content="wentz">
+<meta property="article:tag" content="权限管理">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E6%95%B4%E4%BD%93%E8%AE%BE%E8%AE%A1/640-1573273382313.webp">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://example.com/2019/11/09/权限管理系统整体设计/"/>
+
+
+
+
+
+  <title>权限管理系统整体设计 | wentz</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">wentz</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/11/09/%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E6%95%B4%E4%BD%93%E8%AE%BE%E8%AE%A1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wentz">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">权限管理系统整体设计</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-11-09T12:21:57+08:00">
+                2019-11-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86/" itemprop="url" rel="index">
+                    <span itemprop="name">权限管理</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="前言"><a href="#前言" class="headerlink" title="** 前言**"></a>** 前言**</h3><p>目前在公司负责权限这块，所以对权限这块的设计比较熟悉，公司采用微服务架构，权限系统自然就独立出来了，</p>
+<span id="more"></span>
+
+<p>其他业务系统包括商品中心，订单中心，用户中心，仓库系统，小程序，多个 APP 等十几个系统和终端。</p>
+<h3 id="权限模型"><a href="#权限模型" class="headerlink" title="** 权限模型**"></a>** 权限模型**</h3><p>迄今为止最为普及的权限设计模型是 RBAC 模型，基于角色的访问控制（Role-Based Access Control)。</p>
+<h4 id="1、-RBAC0-模型"><a href="#1、-RBAC0-模型" class="headerlink" title="1、 RBAC0 模型"></a>1、 RBAC0 模型</h4><p>RBAC0 模型如下:</p>
+<p><img src="/images/%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E6%95%B4%E4%BD%93%E8%AE%BE%E8%AE%A1/640-1573273382313.webp" alt="img"></p>
+<p>这是权限最基础也是最核心的模型，它包括用户 / 角色 / 权限，其中用户和角色是多对多的关系，角色和权限也是多对多的关系。</p>
+<p>用户是发起操作的主体，按类型分可分为 2B 和 2C 用户，可以是后台管理系统的用户，可以是 OA 系统的内部员工，也可以是面向 C 端的用户，比如阿里云的用户。<br>角色起到了桥梁的作用，连接了用户和权限的关系，每个角色可以关联多个权限，同时一个用户关联多个角色，那么这个用户就有了多个角色的多个权限。有人会问了为什么用户不直接关联权限呢？</p>
+<p>在用户基数小的系统，比如 20 个人的小系统，管理员可以直接把用户和权限关联，工作量并不大，选择一个用户勾选下需要的权限就完事了。但是在实际企业系统中，用户基数比较大，其中很多人的权限都是一样的，就是个普通访问权限，如果管理员给 100 人甚至更多授权，工作量巨大。这就引入了 “角色 (Role)” 概念，一个角色可以与多个用户关联，管理员只需要把该角色赋予用户，那么用户就有了该角色下的所有权限，这样设计既提升了效率，也有很大的拓展性。<br>权限是用户可以访问的资源，包括页面权限、操作权限、数据权限。</p>
+<p>页面权限：即用户登录系统可以看到的页面，由菜单来控制，菜单包括一级菜单和二级菜单，只要用户有一级和二级菜单的权限，那么用户就可以访问页面</p>
+<p>操作权限： 即页面的功能按钮，包括查看、新增、修改、删除、审核等，用户点击删除按钮时，后台会校验用户角色下的所有权限是否包含该删除权限，如果是，就可以进行下一步操作，反之提示无权限。有的系统要求 “可见即可操作”，意思是如果页面上能够看到操作按钮，那么用户就可以操作，要实现此需求，这里就需要前端来配合，前端开发把用户的权限信息缓存，在页面判断用户是否包含此权限，如果有，就显示该按钮，如果没有，就隐藏该按钮。某种程度上提升了用户体验，但是在实际场景可自行选择是否需要这样做。</p>
+<p>数据权限：数据权限就是用户在同一页面看到的数据是不同的，比如财务部只能看到其部门下的用户数据，采购部只看采购部的数据，在一些大型的公司，全国有很多城市和分公司，比如杭州用户登录系统只能看到杭州的数据，上海用户只能看到上海的数据，解决方案一般是把数据和具体的组织架构关联起来，举个例子，再给用户授权的时候，用户选择某个角色同时绑定组织如财务部或者合肥分公司，那么该用户就有了该角色下财务部或合肥分公司下的的数据权限。<br><img src="/images/%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E6%95%B4%E4%BD%93%E8%AE%BE%E8%AE%A1/640-1573273382322.webp" alt="img"></p>
+<p>以上是 RBAC 的核心设计及模型分析，此模型也叫做 RBAC0，而基于核心概念之上，RBAC 还提供了扩展模式。包括 RBAC1、RBAC2、RBAC3 模型。</p>
+<p>下面介绍这三种类型</p>
+<h4 id="2、RBAC1-模型"><a href="#2、RBAC1-模型" class="headerlink" title="2、RBAC1 模型"></a>2、RBAC1 模型</h4><p><img src="/images/%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E6%95%B4%E4%BD%93%E8%AE%BE%E8%AE%A1/640-1573273382336.webp" alt="img"></p>
+<p>此模型引入了角色继承 (Hierarchical Role) 概念，即角色具有上下级的关系，角色间的继承关系可分为一般继承关系和受限继承关系。一般继承关系仅要求角色继承关系是一个绝对偏序关系，允许角色间的多继承。而受限继承关系则进一步要求角色继承关系是一个树结构，实现角色间的单继承。这种设计可以给角色分组和分层，一定程度简化了权限管理工作。</p>
+<h4 id="3、-RBAC2-模型"><a href="#3、-RBAC2-模型" class="headerlink" title="3、 RBAC2 模型"></a>3、 RBAC2 模型</h4><p>基于核心模型的基础上，进行了角色的约束控制，RBAC2 模型中添加了责任分离关系，其规定了权限被赋予角色时，或角色被赋予用户时，以及当用户在某一时刻激活一个角色时所应遵循的强制性规则。责任分离包括静态责任分离和动态责任分离。</p>
+<p>主要包括以下约束:</p>
+<p>互斥角色：同一用户只能分配到一组互斥角色集合中至多一个角色，支持责任分离的原则。互斥角色是指各自权限互相制约的两个角色。比如财务部有会计和审核员两个角色，他们是互斥角色，那么用户不能同时拥有这两个角色，体现了职责分离原则。</p>
+<p>基数约束：一个角色被分配的用户数量受限；一个用户可拥有的角色数目受限；同样一个角色对应的访问权限数目也应受限，以控制高级权限在系统中的分配</p>
+<p>先决条件角色：即用户想获得某上级角色，必须先获得其下一级的角色。</p>
+<h4 id="4、RBAC3-模型"><a href="#4、RBAC3-模型" class="headerlink" title="4、RBAC3 模型"></a>4、RBAC3 模型</h4><p>即最全面的权限管理，它是基于 RBAC0, 将 RBAC1 和 RBAC2 进行了整合</p>
+<h4 id="5、用户组"><a href="#5、用户组" class="headerlink" title="5、用户组"></a>5、用户组</h4><p>当平台用户基数增大，角色类型增多时，而且有一部分人具有相同的属性，比如财务部的所有员工，如果直接给用户分配角色，管理员的工作量就会很大，如果把相同属性的用户归类到某用户组，那么管理员直接给用户组分配角色，用户组里的每个用户即可拥有该角色，以后其他用户加入用户组后，即可自动获取用户组的所有角色，退出用户组，同时也撤销了用户组下的角色，无须管理员手动管理角色。<br>根据用户组是否有上下级关系，可以分为有上下级的用户组和普通用户组。</p>
+<p>具有上下级关系的用户组：最典型的例子就是部门和职位，可能多数人没有把部门职位和用户组关联起来吧。当然用户组是可以拓展的，部门和职位常用于内部的管理系统，如果是面向 C 端的系统，比如淘宝网的商家，商家自身也有一套组织架构，比如采购部，销售部，客服部，后勤部等，有些人拥有客服权限，有些人拥有上架权限等等，所以用户组是可以拓展的。</p>
+<p>普通用户组：即没有上下级关系，和组织架构，职位都没有关系，也就是说可以跨部门，跨职位，举个例子，某电商后台管理系统，有拼团活动管理角色，我们可以设置一个拼团用户组，该组可以包括研发部的后台开发人员，运营部的运营人员，采购部的人员等等。</p>
+<p>每个公司都会涉及到到组织和职位，下面就重点介绍这两个。</p>
+<h4 id="5-1-组织"><a href="#5-1-组织" class="headerlink" title="5.1 组织"></a>5.1 组织</h4><p>常见的组织架构如下图:<br><img src="/images/%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E6%95%B4%E4%BD%93%E8%AE%BE%E8%AE%A1/640-1573273382348.webp" alt="img"></p>
+<p>我们可以把组织与角色进行关联，用户加入组织后，就会自动获得该组织的全部角色，无须管理员手动授予，大大减少工作量，同时用户在调岗时，只需调整组织，角色即可批量调整。组织的另外一个作用是控制数据权限，把角色关联到组织，那么该角色只能看到该组织下的数据权限。</p>
+<h4 id="5-2-职位"><a href="#5-2-职位" class="headerlink" title="5.2 职位"></a>5.2 职位</h4><p>假设财务部的职位如下图:</p>
+<p><img src="/images/%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E6%95%B4%E4%BD%93%E8%AE%BE%E8%AE%A1/640-1573273382367.webp" alt="img"></p>
+<p>每个组织部门下都会有多个职位，比如财务部有总监，会计，出纳等职位，虽然都在同一部门，但是每个职位的权限是不同的，职位高的拥有更多的权限。总监拥有所有权限，会计和出纳拥有部分权限。特殊情况下，一个人可能身兼多职。</p>
+<h4 id="6、含有组织-职位-用户组的模型"><a href="#6、含有组织-职位-用户组的模型" class="headerlink" title="6、含有组织 / 职位 / 用户组的模型"></a>6、含有组织 / 职位 / 用户组的模型</h4><p>根据以上场景，新的权限模型就可以设计出来了，如下图:<br><img src="/images/%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E6%95%B4%E4%BD%93%E8%AE%BE%E8%AE%A1/640-1573273382370.webp" alt="img"><br>根据系统的复杂度不同，其中的多对多关系和一对一关系可能会有变化。</p>
+<p>在单系统且用户类型单一的情况下，用户和组织是一对一关系，组织和职位是一对多关系，用户和职位是一对一关系，组织和角色是一对一关系，职位和角色是一对一关系，用户和用户组是多对对关系，用户组和角色是一对一关系，当然这些关系也可以根据具体业务进行调整。模型设计并不是死的，如果小系统不需要用户组，这块是可以去掉的。</p>
+<p>分布式系统且用户类型单一的情况下，到这里权限系统就会变得很复杂，这里就要引入了一个 “系统” 概念，此时系统架构是个分布式系统，权限系统独立出来，负责所有的系统的权限控制，其他业务系统比如商品中心，订单中心，用户中心，每个系统都有自己的角色和权限，那么权限系统就可以配置其他系统的角色和权限。</p>
+<p>分布式系统且用户类型多个的情况下，比如淘宝网，它的用户类型包括内部用户、商家、普通用户、内部用户登录多个后台管理系统，商家登录商家中心，这些做权限控制，如果你作为架构师，该如何来设计呢？大神可以在评论区留言交流哦！</p>
+<h3 id="授权流程"><a href="#授权流程" class="headerlink" title="** 授权流程**"></a>** 授权流程**</h3><p>授权即给用户授予角色，按流程可分为手动授权和审批授权。权限中心可同时配置这两种，可提高授权的灵活性。</p>
+<p>手动授权：管理员登录权限中心为用户授权，根据在哪个页面授权分为两种方式：给用户添加角色，给角色添加用户。</p>
+<p>给用户添加角色就是在用户管理页面，点击某个用户去授予角色，可以一次为用户添加多个角色；给角色添加用户就是在角色管理页面，点击某个角色，选择多个用户，实现了给批量用户授予角色的目的。</p>
+<p>审批授权：即用户申请某个职位角色，那么用户通过 OA 流程申请该角色，然后由上级审批，该用户即可拥有该角色，不需要系统管理员手动授予。</p>
+<h3 id="表结构"><a href="#表结构" class="headerlink" title="** 表结构**"></a>** 表结构**</h3><p>有了上述的权限模型，设计表结构就不难了，下面是多系统下的表结构，简单设计下，主要提供思路。</p>
+<p><img src="/images/%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E6%95%B4%E4%BD%93%E8%AE%BE%E8%AE%A1/640-1573273382381.webp" alt="img"></p>
+<h3 id="权限框架"><a href="#权限框架" class="headerlink" title="** 权限框架**"></a>** 权限框架**</h3><p><strong>Apache Shrio</strong></p>
+<p><strong>Spring Security</strong></p>
+<p>在项目中可以采用其中一种框架，它们的优缺点以及如何使用会在后面的文章中详细介绍。</p>
+<h3 id="结语"><a href="#结语" class="headerlink" title="** 结语**"></a>** 结语**</h3><p>权限系统可以说是整个系统中最基础，同时也可以很复杂的，在实际项目中，会遇到多个系统，多个用户类型，多个使用场景，这就需要具体问题具体分析，但最核心的 RBAC 模型是不变的，我们可以在其基础上进行扩展来满足需求。</p>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/7sWwq6Ou8YqrXyE19V7LZQ">参考</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86/" rel="tag"># 权限管理</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/11/08/cookie%E5%89%8D%E5%90%8E%E7%AB%AF%E4%BC%A0%E9%80%92%E8%BF%87%E7%A8%8B/" rel="next" title="cookie前后端传递过程">
+                <i class="fa fa-chevron-left"></i> cookie前后端传递过程
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/11/09/shiro%E5%B8%B8%E8%A7%81%E9%9D%A2%E8%AF%95%E9%A2%98/" rel="prev" title="shiro常见面试题">
+                shiro常见面试题 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">72</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">58</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">** 前言**</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9D%83%E9%99%90%E6%A8%A1%E5%9E%8B"><span class="nav-number">2.</span> <span class="nav-text">** 权限模型**</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1%E3%80%81-RBAC0-%E6%A8%A1%E5%9E%8B"><span class="nav-number">2.1.</span> <span class="nav-text">1、 RBAC0 模型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2%E3%80%81RBAC1-%E6%A8%A1%E5%9E%8B"><span class="nav-number">2.2.</span> <span class="nav-text">2、RBAC1 模型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3%E3%80%81-RBAC2-%E6%A8%A1%E5%9E%8B"><span class="nav-number">2.3.</span> <span class="nav-text">3、 RBAC2 模型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4%E3%80%81RBAC3-%E6%A8%A1%E5%9E%8B"><span class="nav-number">2.4.</span> <span class="nav-text">4、RBAC3 模型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5%E3%80%81%E7%94%A8%E6%88%B7%E7%BB%84"><span class="nav-number">2.5.</span> <span class="nav-text">5、用户组</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-1-%E7%BB%84%E7%BB%87"><span class="nav-number">2.6.</span> <span class="nav-text">5.1 组织</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-2-%E8%81%8C%E4%BD%8D"><span class="nav-number">2.7.</span> <span class="nav-text">5.2 职位</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6%E3%80%81%E5%90%AB%E6%9C%89%E7%BB%84%E7%BB%87-%E8%81%8C%E4%BD%8D-%E7%94%A8%E6%88%B7%E7%BB%84%E7%9A%84%E6%A8%A1%E5%9E%8B"><span class="nav-number">2.8.</span> <span class="nav-text">6、含有组织 &#x2F; 职位 &#x2F; 用户组的模型</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8E%88%E6%9D%83%E6%B5%81%E7%A8%8B"><span class="nav-number">3.</span> <span class="nav-text">** 授权流程**</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A1%A8%E7%BB%93%E6%9E%84"><span class="nav-number">4.</span> <span class="nav-text">** 表结构**</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9D%83%E9%99%90%E6%A1%86%E6%9E%B6"><span class="nav-number">5.</span> <span class="nav-text">** 权限框架**</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%93%E8%AF%AD"><span class="nav-number">6.</span> <span class="nav-text">** 结语**</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">wentz</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">共91.6k字</span>
+</div>
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

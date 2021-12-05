@@ -1,0 +1,1212 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="gateway网关,接口权限管理," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="项目描述：功能设计及开发流程：  添加表： 应用信息表：（参考system表，添加系统给生成的key，应用管理企业名称）">
+<meta property="og:type" content="article">
+<meta property="og:title" content="gateway网关总结">
+<meta property="og:url" content="http://example.com/2019/11/15/gateway%E7%BD%91%E5%85%B3%E6%80%BB%E7%BB%93/index.html">
+<meta property="og:site_name" content="wentz">
+<meta property="og:description" content="项目描述：功能设计及开发流程：  添加表： 应用信息表：（参考system表，添加系统给生成的key，应用管理企业名称）">
+<meta property="og:locale">
+<meta property="og:image" content="http://example.com/images/gateway%E7%BD%91%E5%85%B3%E6%80%BB%E7%BB%93/1573786564259.png">
+<meta property="og:image" content="http://example.com/images/gateway%E7%BD%91%E5%85%B3%E6%80%BB%E7%BB%93/1573786456671.png">
+<meta property="og:image" content="http://example.com/images/gateway%E7%BD%91%E5%85%B3%E6%80%BB%E7%BB%93/1573786486443.png">
+<meta property="article:published_time" content="2019-11-15T02:00:33.000Z">
+<meta property="article:modified_time" content="2019-11-18T07:36:31.234Z">
+<meta property="article:author" content="wentz">
+<meta property="article:tag" content="gateway网关">
+<meta property="article:tag" content="接口权限管理">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/gateway%E7%BD%91%E5%85%B3%E6%80%BB%E7%BB%93/1573786564259.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://example.com/2019/11/15/gateway网关总结/"/>
+
+
+
+
+
+  <title>gateway网关总结 | wentz</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">wentz</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/11/15/gateway%E7%BD%91%E5%85%B3%E6%80%BB%E7%BB%93/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wentz">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">gateway网关总结</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-11-15T10:00:33+08:00">
+                2019-11-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%A1%B9%E7%9B%AE%E6%80%BB%E7%BB%93/" itemprop="url" rel="index">
+                    <span itemprop="name">项目总结</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%A1%B9%E7%9B%AE%E6%80%BB%E7%BB%93/spring-cloud/" itemprop="url" rel="index">
+                    <span itemprop="name">spring cloud</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="项目描述："><a href="#项目描述：" class="headerlink" title="项目描述："></a>项目描述：</h3><p>功能设计及开发流程：</p>
+<ul>
+<li><p>添加表：</p>
+<p>应用信息表：（参考system表，添加系统给生成的key，应用管理企业名称）</p>
+<span id="more"></span>
+
+<p>系统接口信息表：（系统编码，接口名/xxx，系统地址）</p>
+<p>应用系统接口对应表（应用名，接口id，接口名，系统名）</p>
+</li>
+<li><p>流程：</p>
+<ol>
+<li>会给不同的企业分配一个key，企业调用接口时把key、系统编码，时间戳，密钥放header传过来</li>
+<li>由网关（spring cloud gateway）接收，拦截后从权限管理获取token，匹配加密对不对，之后再获取该应用能调用的所有接口，网关获取后保存到缓存中，方便下次调用，如果两步鉴定正确，再把接口分配到所属系统</li>
+</ol>
+</li>
+<li><p>开发流程：</p>
+<ol>
+<li>建表</li>
+<li>权限管理中添加应用管理，（查询条件：应用编码，应用名称，）功能：生成key，添加系统接口权限（要能够根据系统查询），</li>
+<li>开发网关系统进行鉴权</li>
+<li>系统间调用，需要加一个共用sdk，方便授权其他系统调用</li>
+</ol>
+</li>
+<li><p>好处：</p>
+<ol>
+<li><p>接口级控制，能够对不同系统调用本企业系统接口的调用进行控制，方便进行授权管理；</p>
+</li>
+<li><p>统一第三方系统调用入口，由gateway获取后分发；</p>
+</li>
+<li><p>能够记录接口调用日志，记录不同企业系统间的调用，</p>
+</li>
+</ol>
+</li>
+</ul>
+<h3 id="职责描述："><a href="#职责描述：" class="headerlink" title="职责描述："></a>职责描述：</h3><ul>
+<li>开发系统权限管理功能，给系统赋接口权限；</li>
+<li>开发spring cloud gateway，通过使用feign调用权限管理接口，获取应用权限，保存到redis中，降低接口调用时间；</li>
+<li>开发SDK包，集成接口加密规则，方便第三方系统调用；</li>
+<li>调整业务系统通过gateway调用权限管理系统接口，已应用到线上生产环境；</li>
+</ul>
+<h3 id="技术描述："><a href="#技术描述：" class="headerlink" title="技术描述："></a>技术描述：</h3><p>项目使用spring cloud gateway框架开发，集成spring cloud feign进行系统接口调用，前期有集成Eurake服务，进行第三方接口调用时的系统接口权限验证，通过jar包方式部署，目前已有三个业务系统调用，整体运行正常。</p>
+<p><strong>接口加密规则：</strong></p>
+<p><img src="/images/gateway%E7%BD%91%E5%85%B3%E6%80%BB%E7%BB%93/1573786564259.png" alt="1573786564259"></p>
+<p><strong>（见页面附录）</strong></p>
+<h3 id="系统页面："><a href="#系统页面：" class="headerlink" title="系统页面："></a>系统页面：</h3><p><img src="/images/gateway%E7%BD%91%E5%85%B3%E6%80%BB%E7%BB%93/1573786456671.png" alt="1573786456671"></p>
+<p><img src="/images/gateway%E7%BD%91%E5%85%B3%E6%80%BB%E7%BB%93/1573786486443.png" alt="1573786486443"></p>
+<p>附录：</p>
+<h3 id="1-概述"><a href="#1-概述" class="headerlink" title="1   概述"></a>1   概述</h3><p>检查管理系统V4.0（以下简称证后监管系统）提供获取化妆品经营企业检查信息、药品零售企业检查信息、医疗机构信息等Open API接口，提供相关企业的检查信息供第三方系统使用。</p>
+<h4 id="1-1-Open-API-说明"><a href="#1-1-Open-API-说明" class="headerlink" title="1.1 Open API 说明"></a>1.1 Open API 说明</h4><p>Open API 提供外部应用系统通过主动调用的方式进行访问，当你的应用调用开放平台接口时，需使用 HTTPS 协议、JSON 数据格式、UTF8 编码。</p>
+<p>系统管理员可通过证后监管系统对需要对接的外部应用系统进行授权和发放相关密钥信息，通过密钥可以生成每次调用接口的签名sign,密钥不会在请求调用中传输，请妥善保存。</p>
+<p> sign是用来验证相关系统访问证后监管系统合法性的凭证，当外部系统调用证后监管系统接口时，证后监管系统会根据提交的AppId校验访问的合法性以及所对应的权限并返回相应的结果。</p>
+<h4 id="1-2-访问频次控制说明"><a href="#1-2-访问频次控制说明" class="headerlink" title="1.2 访问频次控制说明"></a>1.2 访问频次控制说明</h4><p>Open API 的访问频次不能超过 1000次/每分钟。</p>
+<h3 id="2-请求说明"><a href="#2-请求说明" class="headerlink" title="2   请求说明"></a>2   请求说明</h3><p>证后监管系统提供正式环境地址，需申请AppId和AppSecret，调用开放平台的任何接口都需要携带sign和AppId。请求响应格式目前仅支持json。所有请求需签名，签名算法目前仅支持MD5，具体签名规则在2.4中描述。</p>
+<h4 id="2-1-接口地址"><a href="#2-1-接口地址" class="headerlink" title="2.1 接口地址"></a>2.1 接口地址</h4><p>正式环境：XXX </p>
+<h4 id="2-2-公共请求头（Header）"><a href="#2-2-公共请求头（Header）" class="headerlink" title="2.2 公共请求头（Header）"></a>2.2 公共请求头（Header）</h4><table>
+<thead>
+<tr>
+<th><strong>参数</strong></th>
+<th><strong>类型</strong></th>
+<th><strong>是否必填</strong></th>
+<th><strong>描述</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>appId</td>
+<td>String</td>
+<td>是</td>
+<td>证后监管系统分配给开发者的应用ID</td>
+</tr>
+<tr>
+<td>timestamp</td>
+<td>String</td>
+<td>是</td>
+<td>时间戳，格式为yyyy-MM-dd  HH:mm:ss，时区为GMT+8，例如：2019-07-01  12:00:00。允许客户端请求最大时间误差为10分钟。</td>
+</tr>
+<tr>
+<td>sign</td>
+<td>String</td>
+<td>是</td>
+<td>API输入参数签名结果，签名算法参照下面的介绍</td>
+</tr>
+</tbody></table>
+<h4 id="2-3-公共响应参数"><a href="#2-3-公共响应参数" class="headerlink" title="2.3 公共响应参数"></a>2.3 公共响应参数</h4><table>
+<thead>
+<tr>
+<th><strong>参数</strong></th>
+<th><strong>类型</strong></th>
+<th><strong>是否必填</strong></th>
+<th><strong>描述</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>returnCode</td>
+<td>String</td>
+<td>是</td>
+<td>“0”表示正常返回，“1”查看returnMessage信息，“-1”服务器异常</td>
+</tr>
+<tr>
+<td>returnMessage</td>
+<td>String</td>
+<td>是</td>
+<td>业务提示信息</td>
+</tr>
+<tr>
+<td>returnDate</td>
+<td>String</td>
+<td>否</td>
+<td>具体接口返回数据</td>
+</tr>
+</tbody></table>
+<h4 id="2-4-签名算法"><a href="#2-4-签名算法" class="headerlink" title="2.4 签名算法"></a>2.4 签名算法</h4><p>为了防止API调用过程中被黑客恶意篡改，调用任何一个API都需要携带签名，证后监管会根据请求参数，对签名进行验证，签名不合法的请求将会被拒绝。目前仅支持MD5算法，签名大体过程如下：</p>
+<p>·     对所有API请求参数（包括公共参数和业务参数，但除去sign参数），根据参数名称的<a target="_blank" rel="noopener" href="http://www.asciima.com/">ASCII</a>码表的顺序排序。如：foo:1, bar:2, foo_bar:3, foobar:4排序后的顺序是bar:2, foo:1, foo_bar:3, foobar:4。</p>
+<p>·     将排序好的参数名和参数值拼装在一起，根据上面的示例得到的结果为：bar2foo1foo_bar3foobar4。</p>
+<p>·     把拼装好的字符串采用utf-8编码，使用签名算法对编码后的字节流进行摘要。如果使用MD5算法，则需要在拼装的字符串前后加上app的secret后，再进行摘要，如：md5(secret+bar2foo1foo_bar3foobar4+secret)。</p>
+<p>·     将摘要得到的字节流结果使用十六进制表示，如：hex(“helloworld”.getBytes(“utf-8”)) = “68656C6C6F776F726C64”</p>
+<h4 id="拦截器代码："><a href="#拦截器代码：" class="headerlink" title="拦截器代码："></a><strong>拦截器代码：</strong></h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.boornet.gateway.filter;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.alibaba.fastjson.JSONObject;</span><br><span class="line"><span class="keyword">import</span> com.boor.sdk.util.ShfdaConfusionUtil;</span><br><span class="line"><span class="keyword">import</span> com.boornet.gateway.model.ApiHeaderResponse;</span><br><span class="line"><span class="keyword">import</span> com.boornet.gateway.model.ApiLog;</span><br><span class="line"><span class="keyword">import</span> com.boornet.gateway.service.QxglService;</span><br><span class="line"><span class="keyword">import</span> com.boornet.gateway.util.SignUtils;</span><br><span class="line"><span class="keyword">import</span> org.joda.time.DateTime;</span><br><span class="line"><span class="keyword">import</span> org.joda.time.Minutes;</span><br><span class="line"><span class="keyword">import</span> org.joda.time.format.DateTimeFormat;</span><br><span class="line"><span class="keyword">import</span> org.joda.time.format.DateTimeFormatter;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.cloud.gateway.filter.GatewayFilterChain;</span><br><span class="line"><span class="keyword">import</span> org.springframework.cloud.gateway.filter.GlobalFilter;</span><br><span class="line"><span class="keyword">import</span> org.springframework.core.Ordered;</span><br><span class="line"><span class="keyword">import</span> org.springframework.core.io.buffer.DataBuffer;</span><br><span class="line"><span class="keyword">import</span> org.springframework.http.HttpHeaders;</span><br><span class="line"><span class="keyword">import</span> org.springframework.http.server.reactive.ServerHttpRequest;</span><br><span class="line"><span class="keyword">import</span> org.springframework.http.server.reactive.ServerHttpResponse;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Component;</span><br><span class="line"><span class="keyword">import</span> org.springframework.util.CollectionUtils;</span><br><span class="line"><span class="keyword">import</span> org.springframework.util.MultiValueMap;</span><br><span class="line"><span class="keyword">import</span> org.springframework.util.StringUtils;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.server.ServerWebExchange;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.util.UriComponentsBuilder;</span><br><span class="line"><span class="keyword">import</span> reactor.core.publisher.Mono;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.net.URI;</span><br><span class="line"><span class="keyword">import</span> java.nio.charset.StandardCharsets;</span><br><span class="line"><span class="keyword">import</span> java.util.Date;</span><br><span class="line"><span class="keyword">import</span> java.util.HashMap;</span><br><span class="line"><span class="keyword">import</span> java.util.Map;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Author</span>: 文天兆</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Description</span> //TODO 应用权限验证</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Date</span> 2019/8/28 17:56</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Program</span>: shfda-server</span></span><br><span class="line"><span class="comment"> **/</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AppAuthFilter</span> <span class="keyword">implements</span> <span class="title">GlobalFilter</span>, <span class="title">Ordered</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String AUTHORIZE_APPID = <span class="string">&quot;appId&quot;</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String AUTHORIZE_TIME_STAMP = <span class="string">&quot;timeStamp&quot;</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String AUTHORIZE_APPSECRET = <span class="string">&quot;appSecret&quot;</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String AUTHORIZE_SIGN = <span class="string">&quot;sign&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/*@Setter</span></span><br><span class="line"><span class="comment">    @Value(&quot;#&#123;&#x27;$&#123;filter.ignore&#125;&#x27;.split(&#x27;,&#x27;)&#125;&quot;)</span></span><br><span class="line"><span class="comment">    private List&lt;String&gt; ignoreLists = new ArrayList();*/</span></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> QxglService qxglService;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Mono&lt;Void&gt; <span class="title">filter</span><span class="params">(ServerWebExchange exchange, GatewayFilterChain chain)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        URI uri = exchange.getRequest().getURI();</span><br><span class="line">        ApiLog apiLog = <span class="keyword">new</span> ApiLog();</span><br><span class="line">        apiLog.setUrlPath(uri.toString());</span><br><span class="line">        apiLog.setAppIp(uri.getHost());</span><br><span class="line">        apiLog.setCreateTime(<span class="keyword">new</span> Date());</span><br><span class="line">        <span class="keyword">if</span> (uri.toString().contains(<span class="string">&quot;qyglServer&quot;</span>)) &#123;</span><br><span class="line">            apiLog.setRemark(<span class="string">&quot;拦截未校验！&quot;</span>);</span><br><span class="line">            qxglService.saveApiLog(apiLog);</span><br><span class="line">            <span class="keyword">return</span> chain.filter(exchange);</span><br><span class="line">        &#125;</span><br><span class="line">        ServerHttpRequest request = exchange.getRequest();</span><br><span class="line">        ServerHttpResponse response = exchange.getResponse();</span><br><span class="line">        MultiValueMap&lt;String, String&gt; queryParams = request.getQueryParams();</span><br><span class="line">        <span class="comment">//Header中参数不能为空</span></span><br><span class="line">        HttpHeaders headers = request.getHeaders();</span><br><span class="line">        String appId = headers.getFirst(AUTHORIZE_APPID);</span><br><span class="line">        String headSign = headers.getFirst(AUTHORIZE_SIGN);</span><br><span class="line">        String timaStamp = headers.getFirst(AUTHORIZE_TIME_STAMP);</span><br><span class="line">        ApiHeaderResponse headerResponse = ApiHeaderResponse.builder()</span><br><span class="line">                .appId(appId)</span><br><span class="line">                .timeStamp(timaStamp)</span><br><span class="line">                .sign(headSign)</span><br><span class="line">                .build();</span><br><span class="line">        String msg = headerResponse.checkFields();</span><br><span class="line">        apiLog.setSysCode(appId);</span><br><span class="line">        <span class="keyword">if</span> (org.apache.commons.lang3.StringUtils.isNotBlank(msg)) &#123;</span><br><span class="line">            apiLog.setRemark(<span class="string">&quot;Header中参数不能为空，校验失败！&quot;</span>);</span><br><span class="line">            qxglService.saveApiLog(apiLog);</span><br><span class="line">            response.getHeaders().add(<span class="string">&quot;Content-Type&quot;</span>, <span class="string">&quot;text/plain;charset=UTF-8&quot;</span>);</span><br><span class="line">            <span class="keyword">return</span> response.writeWith(Mono.just(getResponseMsg(response, <span class="string">&quot;Header中参数不能为空！！&quot;</span>)));</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//timeStamp时间校验，十分钟有效</span></span><br><span class="line">        DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern(<span class="string">&quot;yyyy-MM-dd HH:mm:ss&quot;</span>);</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            DateTime dateTime = dateTimeFormatter.parseDateTime(timaStamp);</span><br><span class="line">            DateTime currentDateTime = <span class="keyword">new</span> DateTime();</span><br><span class="line">            <span class="keyword">int</span> minutes = Minutes.minutesBetween(currentDateTime, dateTime).getMinutes();</span><br><span class="line">            <span class="keyword">if</span> (minutes &gt; <span class="number">10</span> || minutes &lt; -<span class="number">10</span>) &#123;</span><br><span class="line">                apiLog.setRemark(<span class="string">&quot;timeStamp超时，校验失败！&quot;</span>);</span><br><span class="line">                qxglService.saveApiLog(apiLog);</span><br><span class="line">                response.getHeaders().add(<span class="string">&quot;Content-Type&quot;</span>, <span class="string">&quot;text/plain;charset=UTF-8&quot;</span>);</span><br><span class="line">                <span class="keyword">return</span> response.writeWith(Mono.just(getResponseMsg(response, <span class="string">&quot;timeStamp超时！！&quot;</span>)));</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">            apiLog.setRemark(<span class="string">&quot;timeStamp格式错误，校验失败！&quot;</span>);</span><br><span class="line">            qxglService.saveApiLog(apiLog);</span><br><span class="line">            response.getHeaders().add(<span class="string">&quot;Content-Type&quot;</span>, <span class="string">&quot;text/plain;charset=UTF-8&quot;</span>);</span><br><span class="line">            <span class="keyword">return</span> response.writeWith(Mono.just(getResponseMsg(response, <span class="string">&quot;timeStamp格式错误！！&quot;</span>)));</span><br><span class="line">        &#125;</span><br><span class="line">        String sysSecret = qxglService.getappSecret(appId);</span><br><span class="line">        <span class="keyword">if</span> (sysSecret == <span class="keyword">null</span>) &#123;</span><br><span class="line">            apiLog.setRemark(<span class="string">&quot;应用无权限，校验失败！&quot;</span>);</span><br><span class="line">            qxglService.saveApiLog(apiLog);</span><br><span class="line">            response.getHeaders().add(<span class="string">&quot;Content-Type&quot;</span>, <span class="string">&quot;text/plain;charset=UTF-8&quot;</span>);</span><br><span class="line">            <span class="keyword">return</span> response.writeWith(Mono.just(getResponseMsg(response, <span class="string">&quot;应用无权限！！&quot;</span>)));</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//校验签名，参数为空不校验</span></span><br><span class="line">        <span class="keyword">if</span> (!queryParams.isEmpty()) &#123;</span><br><span class="line">            Map&lt;String, String&gt; singleMap = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">            queryParams.toSingleValueMap().forEach((key, val) -&gt; singleMap.put(key, val));</span><br><span class="line">            singleMap.put(<span class="string">&quot;sign&quot;</span>, headSign);</span><br><span class="line">            <span class="keyword">if</span> (!SignUtils.checkSign(singleMap, appId, sysSecret)) &#123;</span><br><span class="line">                apiLog.setRemark(<span class="string">&quot;签名校验失败，校验失败！&quot;</span>);</span><br><span class="line">                qxglService.saveApiLog(apiLog);</span><br><span class="line">                response.getHeaders().add(<span class="string">&quot;Content-Type&quot;</span>, <span class="string">&quot;text/plain;charset=UTF-8&quot;</span>);</span><br><span class="line">                <span class="keyword">return</span> response.writeWith(Mono.just(getResponseMsg(response, <span class="string">&quot;签名校验失败！！&quot;</span>)));</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//校验接口权限</span></span><br><span class="line">        String path = uri.getPath();</span><br><span class="line">        <span class="keyword">if</span> (!qxglService.isHaveApi(appId, path)) &#123;</span><br><span class="line">            apiLog.setRemark(<span class="string">&quot;没有此接口权限，校验失败！&quot;</span>);</span><br><span class="line">            qxglService.saveApiLog(apiLog);</span><br><span class="line">            response.getHeaders().add(<span class="string">&quot;Content-Type&quot;</span>, <span class="string">&quot;text/plain;charset=UTF-8&quot;</span>);</span><br><span class="line">            <span class="keyword">return</span> response.writeWith(Mono.just(getResponseMsg(response, <span class="string">&quot;没有此接口权限，请向管理员申请！！&quot;</span>)));</span><br><span class="line">        &#125;</span><br><span class="line">        apiLog.setRemark(<span class="string">&quot;校验通过！&quot;</span>);</span><br><span class="line">        qxglService.saveApiLog(apiLog);</span><br><span class="line">        <span class="keyword">if</span> (uri.toString().contains(<span class="string">&quot;/zhjg/&quot;</span>) || uri.toString().contains(<span class="string">&quot;/zcbg/&quot;</span>) || uri.toString().contains(<span class="string">&quot;/zssb/&quot;</span>)) &#123;</span><br><span class="line">            <span class="keyword">return</span> chain.filter(exchange);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//添加权限管理系统权限验证参数</span></span><br><span class="line">        StringBuilder query = <span class="keyword">new</span> StringBuilder();</span><br><span class="line">        String originalQuery = uri.getRawQuery();</span><br><span class="line">        <span class="keyword">if</span> (uri.toString().contains(<span class="string">&quot;/qxglServer/&quot;</span>)) &#123;</span><br><span class="line">            <span class="keyword">if</span> (StringUtils.hasText(originalQuery)) &#123;</span><br><span class="line">                query.append(originalQuery);</span><br><span class="line">                <span class="keyword">if</span> (originalQuery.charAt(originalQuery.length() - <span class="number">1</span>) != <span class="string">&#x27;&amp;&#x27;</span>) &#123;</span><br><span class="line">                    query.append(<span class="string">&#x27;&amp;&#x27;</span>);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            query.append(<span class="string">&quot;sysCode=&quot;</span> + appId + <span class="string">&quot;&amp;userToken=&quot;</span>).append(ShfdaConfusionUtil.getLoginStr(<span class="string">&quot;ADMIN_INNER&quot;</span>, <span class="string">&quot;ADMIN_INNER&quot;</span>));</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> chain.filter(exchange);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            URI newUri = UriComponentsBuilder.fromUri(uri)</span><br><span class="line">                    .replaceQuery(query.toString())</span><br><span class="line">                    .build(<span class="keyword">true</span>)</span><br><span class="line">                    .toUri();</span><br><span class="line">            ServerHttpRequest request1 = exchange.getRequest().mutate()</span><br><span class="line">                    .uri(newUri)</span><br><span class="line">                    .build();</span><br><span class="line">            <span class="keyword">return</span> chain.filter(exchange.mutate().request(request1).build());</span><br><span class="line">        &#125; <span class="keyword">catch</span> (RuntimeException ex) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalStateException(<span class="string">&quot;Invalid URI query: \&quot;&quot;</span> + query.toString() + <span class="string">&quot;\&quot;&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getOrder</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> -<span class="number">2</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 返回信息</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> response</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> msg</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> DataBuffer <span class="title">getResponseMsg</span><span class="params">(ServerHttpResponse response, String msg)</span> </span>&#123;</span><br><span class="line">        JSONObject message = <span class="keyword">new</span> JSONObject();</span><br><span class="line">        message.put(<span class="string">&quot;returnCode&quot;</span>, -<span class="number">1</span>);</span><br><span class="line">        message.put(<span class="string">&quot;returnMsg&quot;</span>, msg);</span><br><span class="line">        <span class="keyword">byte</span>[] bits = message.toJSONString().getBytes(StandardCharsets.UTF_8);</span><br><span class="line">        <span class="keyword">return</span> response.bufferFactory().wrap(bits);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 判读是否在忽略列表中</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="comment">/*private boolean inIgnore() &#123;</span></span><br><span class="line"><span class="comment">        if (CollectionUtils.isEmpty(ignoreLists)) &#123;</span></span><br><span class="line"><span class="comment">            return false;</span></span><br><span class="line"><span class="comment">        &#125;</span></span><br><span class="line"><span class="comment">        //   if()</span></span><br><span class="line"><span class="comment">        return true;</span></span><br><span class="line"><span class="comment">    &#125;*/</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/gateway%E7%BD%91%E5%85%B3/" rel="tag"># gateway网关</a>
+          
+            <a href="/tags/%E6%8E%A5%E5%8F%A3%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86/" rel="tag"># 接口权限管理</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/11/14/%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E6%80%BB%E7%BB%93/" rel="next" title="权限管理系统总结">
+                <i class="fa fa-chevron-left"></i> 权限管理系统总结
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/11/15/%E4%B8%8A%E6%B5%B7%E8%8D%AF%E5%BA%97APP%E5%BC%80%E5%8F%91%E6%80%BB%E7%BB%93/" rel="prev" title="上海药店APP开发总结">
+                上海药店APP开发总结 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">72</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">58</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E6%8F%8F%E8%BF%B0%EF%BC%9A"><span class="nav-number">1.</span> <span class="nav-text">项目描述：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%81%8C%E8%B4%A3%E6%8F%8F%E8%BF%B0%EF%BC%9A"><span class="nav-number">2.</span> <span class="nav-text">职责描述：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8A%80%E6%9C%AF%E6%8F%8F%E8%BF%B0%EF%BC%9A"><span class="nav-number">3.</span> <span class="nav-text">技术描述：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B3%BB%E7%BB%9F%E9%A1%B5%E9%9D%A2%EF%BC%9A"><span class="nav-number">4.</span> <span class="nav-text">系统页面：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E6%A6%82%E8%BF%B0"><span class="nav-number">5.</span> <span class="nav-text">1   概述</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-Open-API-%E8%AF%B4%E6%98%8E"><span class="nav-number">5.1.</span> <span class="nav-text">1.1 Open API 说明</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-%E8%AE%BF%E9%97%AE%E9%A2%91%E6%AC%A1%E6%8E%A7%E5%88%B6%E8%AF%B4%E6%98%8E"><span class="nav-number">5.2.</span> <span class="nav-text">1.2 访问频次控制说明</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E8%AF%B7%E6%B1%82%E8%AF%B4%E6%98%8E"><span class="nav-number">6.</span> <span class="nav-text">2   请求说明</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-%E6%8E%A5%E5%8F%A3%E5%9C%B0%E5%9D%80"><span class="nav-number">6.1.</span> <span class="nav-text">2.1 接口地址</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-%E5%85%AC%E5%85%B1%E8%AF%B7%E6%B1%82%E5%A4%B4%EF%BC%88Header%EF%BC%89"><span class="nav-number">6.2.</span> <span class="nav-text">2.2 公共请求头（Header）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-%E5%85%AC%E5%85%B1%E5%93%8D%E5%BA%94%E5%8F%82%E6%95%B0"><span class="nav-number">6.3.</span> <span class="nav-text">2.3 公共响应参数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-4-%E7%AD%BE%E5%90%8D%E7%AE%97%E6%B3%95"><span class="nav-number">6.4.</span> <span class="nav-text">2.4 签名算法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8B%A6%E6%88%AA%E5%99%A8%E4%BB%A3%E7%A0%81%EF%BC%9A"><span class="nav-number">6.5.</span> <span class="nav-text">拦截器代码：</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">wentz</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">共91.6k字</span>
+</div>
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

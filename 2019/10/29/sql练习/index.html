@@ -1,0 +1,1233 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="sql," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="一、常见sql学习">
+<meta property="og:type" content="article">
+<meta property="og:title" content="sql练习">
+<meta property="og:url" content="http://example.com/2019/10/29/sql%E7%BB%83%E4%B9%A0/index.html">
+<meta property="og:site_name" content="wentz">
+<meta property="og:description" content="一、常见sql学习">
+<meta property="og:locale">
+<meta property="og:image" content="http://example.com/images/sql%E7%BB%83%E4%B9%A0/1572353035276.png">
+<meta property="og:image" content="http://example.com/images/sql%E7%BB%83%E4%B9%A0/1572353303779.png">
+<meta property="og:image" content="http://example.com/images/sql%E7%BB%83%E4%B9%A0/1572354172543.png">
+<meta property="og:image" content="http://example.com/images/sql%E7%BB%83%E4%B9%A0/v2-74404bfe16150f5a9f4a473297e1e079_hd.jpg">
+<meta property="og:image" content="http://example.com/images/sql%E7%BB%83%E4%B9%A0/1572354768646.png">
+<meta property="og:image" content="http://example.com/images/sql%E7%BB%83%E4%B9%A0/1572355005805.png">
+<meta property="og:image" content="http://example.com/images/sql%E7%BB%83%E4%B9%A0/1572355013320.png">
+<meta property="article:published_time" content="2019-10-29T12:40:00.000Z">
+<meta property="article:modified_time" content="2019-11-18T07:26:12.889Z">
+<meta property="article:author" content="wentz">
+<meta property="article:tag" content="sql">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/sql%E7%BB%83%E4%B9%A0/1572353035276.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://example.com/2019/10/29/sql练习/"/>
+
+
+
+
+
+  <title>sql练习 | wentz</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">wentz</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/10/29/sql%E7%BB%83%E4%B9%A0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wentz">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">sql练习</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-29T20:40:00+08:00">
+                2019-10-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/mysql/" itemprop="url" rel="index">
+                    <span itemprop="name">mysql</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="一、常见sql学习"><a href="#一、常见sql学习" class="headerlink" title="一、常见sql学习"></a>一、常见sql学习</h2><span id="more"></span>
+
+<h3 id="1、表联结关系"><a href="#1、表联结关系" class="headerlink" title="1、表联结关系"></a>1、表联结关系</h3><p><img src="/images/sql%E7%BB%83%E4%B9%A0/1572353035276.png" alt="1572353035276"></p>
+<h3 id="2、建表及插入数据"><a href="#2、建表及插入数据" class="headerlink" title="2、建表及插入数据"></a>2、建表及插入数据</h3><ol>
+<li><p>建表语句</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> Persons</span><br><span class="line">(</span><br><span class="line">Id_P <span class="type">int</span>,</span><br><span class="line">LastName <span class="type">varchar</span>(<span class="number">255</span>),</span><br><span class="line">FirstName <span class="type">varchar</span>(<span class="number">255</span>),</span><br><span class="line">Address <span class="type">varchar</span>(<span class="number">255</span>),</span><br><span class="line">City <span class="type">varchar</span>(<span class="number">255</span>)</span><br><span class="line">)</span><br></pre></td></tr></table></figure></li>
+<li><p> data_type 常见数据类型：</p>
+</li>
+</ol>
+<p>   <img src="/images/sql%E7%BB%83%E4%B9%A0/1572353303779.png" alt="1572353303779"></p>
+<ol start="3">
+<li>插入数据</li>
+</ol>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> course(课程号,课程名称,教师号)</span><br><span class="line"><span class="keyword">values</span>(<span class="string">&#x27;0001&#x27;</span> , <span class="string">&#x27;语文&#x27;</span> , <span class="string">&#x27;0002&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+<h3 id="3、简单查询"><a href="#3、简单查询" class="headerlink" title="3、简单查询"></a>3、简单查询</h3><p><img src="/images/sql%E7%BB%83%E4%B9%A0/1572354172543.png" alt="1572354172543"></p>
+<p> <img src="/images/sql%E7%BB%83%E4%B9%A0/v2-74404bfe16150f5a9f4a473297e1e079_hd.jpg" alt="img"> </p>
+<h3 id="4、汇总分析"><a href="#4、汇总分析" class="headerlink" title="4、汇总分析"></a>4、汇总分析</h3><ol>
+<li>面试题：查询课程编号为“0002”的总成绩</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">*</span><br><span class="line">分析思路</span><br><span class="line">select 查询结果 [总成绩:汇总函数sum]</span><br><span class="line">from 从哪张表中查找数据[成绩表score]</span><br><span class="line">where 查询条件 [课程号是0002]</span><br><span class="line">*/</span><br><span class="line">select sum(成绩)</span><br><span class="line">from score</span><br><span class="line">where 课程号 = &#x27;0002&#x27;;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>查询选了课程的学生人数</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">这个题目翻译成大白话就是：查询有多少人选了课程</span><br><span class="line">select 学号，成绩表里学号有重复值需要去掉</span><br><span class="line">from 从课程表查找score;</span><br><span class="line">*/</span><br><span class="line">select count(distinct 学号) as 学生人数 </span><br><span class="line">from score;</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li> 查询各科成绩最高和最低的分 </li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">/*</span><br><span class="line">分析思路</span><br><span class="line">select 查询结果 [课程ID：是课程号的别名,最高分：max(成绩) ,最低分：min(成绩)]</span><br><span class="line">from 从哪张表中查找数据 [成绩表score]</span><br><span class="line">where 查询条件 [没有]</span><br><span class="line">group by 分组 [各科成绩：也就是每门课程的成绩，需要按课程号分组];</span><br><span class="line">*/</span><br><span class="line">select 课程号,max(成绩) as 最高分,min(成绩) as 最低分</span><br><span class="line">from score</span><br><span class="line">group by 课程号;</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li> 查询每门课程被选修的学生数 </li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">/*</span><br><span class="line">分析思路</span><br><span class="line">select 查询结果 [课程号，选修该课程的学生数：汇总函数count]</span><br><span class="line">from 从哪张表中查找数据 [成绩表score]</span><br><span class="line">where 查询条件 [没有]</span><br><span class="line">group by 分组 [每门课程：按课程号分组];</span><br><span class="line">*/</span><br><span class="line">select 课程号, count(学号)</span><br><span class="line">from score</span><br><span class="line">group by 课程号;</span><br></pre></td></tr></table></figure>
+
+<ol start="5">
+<li> 查询男生、女生人数 </li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">/*</span><br><span class="line">分析思路</span><br><span class="line">select 查询结果 [性别，对应性别的人数：汇总函数count]</span><br><span class="line">from 从哪张表中查找数据 [性别在学生表中，所以查找的是学生表student]</span><br><span class="line">where 查询条件 [没有]</span><br><span class="line">group by 分组 [男生、女生人数：按性别分组]</span><br><span class="line">having 对分组结果指定条件 [没有]</span><br><span class="line">order by 对查询结果排序[没有];</span><br><span class="line">*/</span><br><span class="line">select 性别,count(*)</span><br><span class="line">from student</span><br><span class="line">group by 性别;</span><br></pre></td></tr></table></figure>
+
+<ol start="6">
+<li> 查询平均成绩大于60分学生的学号和平均成绩 </li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">/* </span><br><span class="line">题目翻译成大白话：</span><br><span class="line">平均成绩：展开来说就是计算每个学生的平均成绩</span><br><span class="line">这里涉及到“每个”就是要分组了</span><br><span class="line">平均成绩大于60分，就是对分组结果指定条件</span><br><span class="line"></span><br><span class="line">分析思路</span><br><span class="line">select 查询结果 [学号，平均成绩：汇总函数avg(成绩)]</span><br><span class="line">from 从哪张表中查找数据 [成绩在成绩表中，所以查找的是成绩表score]</span><br><span class="line">where 查询条件 [没有]</span><br><span class="line">group by 分组 [平均成绩：先按学号分组，再计算平均成绩]</span><br><span class="line">having 对分组结果指定条件 [平均成绩大于60分]</span><br><span class="line">*/</span><br><span class="line">select 学号, avg(成绩)</span><br><span class="line">from score</span><br><span class="line">group by 学号</span><br><span class="line">having avg(成绩)&gt;60;</span><br></pre></td></tr></table></figure>
+
+<ol start="7">
+<li> 查询至少选修两门课程的学生学号 </li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">/* </span><br><span class="line">翻译成大白话：</span><br><span class="line">第1步，需要先计算出每个学生选修的课程数据，需要按学号分组</span><br><span class="line">第2步，至少选修两门课程：也就是每个学生选修课程数目&gt;=2，对分组结果指定条件</span><br><span class="line"></span><br><span class="line">分析思路</span><br><span class="line">select 查询结果 [学号,每个学生选修课程数目：汇总函数count]</span><br><span class="line">from 从哪张表中查找数据 [课程的学生学号：课程表score]</span><br><span class="line">where 查询条件 [至少选修两门课程：需要先计算出每个学生选修了多少门课，需要用分组，所以这里没有where子句]</span><br><span class="line">group by 分组 [每个学生选修课程数目：按课程号分组，然后用汇总函数count计算出选修了多少门课]</span><br><span class="line">having 对分组结果指定条件 [至少选修两门课程：每个学生选修课程数目&gt;=2]</span><br><span class="line">*/</span><br><span class="line">select 学号, count(课程号) as 选修课程数目</span><br><span class="line">from score</span><br><span class="line">group by 学号</span><br><span class="line">having count(课程号)&gt;=2;</span><br></pre></td></tr></table></figure>
+
+<ol start="8">
+<li> 查询同名同性学生名单并统计同名人数 </li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">/* </span><br><span class="line">翻译成大白话，问题解析：</span><br><span class="line">1）查找出姓名相同的学生有谁，每个姓名相同学生的人数</span><br><span class="line">查询结果：姓名,人数</span><br><span class="line">条件：怎么算姓名相同？按姓名分组后人数大于等于2，因为同名的人数大于等于2</span><br><span class="line">分析思路</span><br><span class="line">select 查询结果 [姓名,人数：汇总函数count(*)]</span><br><span class="line">from 从哪张表中查找数据 [学生表student]</span><br><span class="line">where 查询条件 [没有]</span><br><span class="line">group by 分组 [姓名相同：按姓名分组]</span><br><span class="line">having 对分组结果指定条件 [姓名相同：count(*)&gt;=2]</span><br><span class="line">order by 对查询结果排序[没有];</span><br><span class="line">*/</span><br><span class="line"></span><br><span class="line">select 姓名,count(*) as 人数</span><br><span class="line">from student</span><br><span class="line">group by 姓名</span><br><span class="line">having count(*)&gt;=2;</span><br></pre></td></tr></table></figure>
+
+<ol start="9">
+<li> 查询不及格的课程并按课程号从大到小排列 </li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">/* </span><br><span class="line">分析思路</span><br><span class="line">select 查询结果 [课程号]</span><br><span class="line">from 从哪张表中查找数据 [成绩表score]</span><br><span class="line">where 查询条件 [不及格：成绩 &lt;60]</span><br><span class="line">group by 分组 [没有]</span><br><span class="line">having 对分组结果指定条件 [没有]</span><br><span class="line">order by 对查询结果排序[课程号从大到小排列：降序desc];</span><br><span class="line">*/</span><br><span class="line">select 课程号</span><br><span class="line">from score </span><br><span class="line">where 成绩&lt;60</span><br><span class="line">order by 课程号 desc;</span><br></pre></td></tr></table></figure>
+
+<ol start="10">
+<li> 查询每门课程的平均成绩，结果按平均成绩升序排序，平均成绩相同时，按课程号降序排列 </li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">/* </span><br><span class="line">分析思路</span><br><span class="line">select 查询结果 [课程号,平均成绩：汇总函数avg(成绩)]</span><br><span class="line">from 从哪张表中查找数据 [成绩表score]</span><br><span class="line">where 查询条件 [没有]</span><br><span class="line">group by 分组 [每门课程：按课程号分组]</span><br><span class="line">having 对分组结果指定条件 [没有]</span><br><span class="line">order by 对查询结果排序[按平均成绩升序排序:asc，平均成绩相同时，按课程号降序排列:desc];</span><br><span class="line">*/</span><br><span class="line">select 课程号, avg(成绩) as 平均成绩</span><br><span class="line">from score</span><br><span class="line">group by 课程号</span><br><span class="line">order by 平均成绩 asc,课程号 desc;</span><br></pre></td></tr></table></figure>
+
+<ol start="11">
+<li> 检索课程编号为“0004”且分数小于60的学生学号，结果按按分数降序排列 </li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">/* </span><br><span class="line">分析思路</span><br><span class="line">select 查询结果 []</span><br><span class="line">from 从哪张表中查找数据 [成绩表score]</span><br><span class="line">where 查询条件 [课程编号为“04”且分数小于60]</span><br><span class="line">group by 分组 [没有]</span><br><span class="line">having 对分组结果指定条件 []</span><br><span class="line">order by 对查询结果排序[查询结果按按分数降序排列];</span><br><span class="line">*/</span><br><span class="line">select 学号</span><br><span class="line">from score</span><br><span class="line">where 课程号=&#x27;04&#x27; and 成绩 &lt;60</span><br><span class="line">order by 成绩 desc;</span><br></pre></td></tr></table></figure>
+
+<ol start="12">
+<li><p>统计每门课程的学生选修人数(超过2人的课程才统计)</p>
+<p>要求输出课程号和选修人数，查询结果按人数降序排序，若人数相同，按课程号升序排序</p>
+</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">/* </span><br><span class="line">分析思路</span><br><span class="line">select 查询结果 [要求输出课程号和选修人数]</span><br><span class="line">from 从哪张表中查找数据 []</span><br><span class="line">where 查询条件 []</span><br><span class="line">group by 分组 [每门课程：按课程号分组]</span><br><span class="line">having 对分组结果指定条件 [学生选修人数(超过2人的课程才统计)：每门课程学生人数&gt;2]</span><br><span class="line">order by 对查询结果排序[查询结果按人数降序排序，若人数相同，按课程号升序排序];</span><br><span class="line">*/</span><br><span class="line">select 课程号, count(学号) as &#x27;选修人数&#x27;</span><br><span class="line">from score</span><br><span class="line">group by 课程号</span><br><span class="line">having count(学号)&gt;2</span><br><span class="line">order by count(学号) desc,课程号 asc;</span><br></pre></td></tr></table></figure>
+
+<ol start="13">
+<li> 查询两门以上不及格课程的同学的学号及其平均成绩 </li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">/*</span><br><span class="line">分析思路</span><br><span class="line">先分解题目：</span><br><span class="line">1）[两门以上][不及格课程]限制条件</span><br><span class="line">2）[同学的学号及其平均成绩]，也就是每个学生的平均成绩，显示学号，平均成绩</span><br><span class="line">分析过程：</span><br><span class="line">第1步：得到每个学生的平均成绩，显示学号，平均成绩</span><br><span class="line">第2步：再加上限制条件：</span><br><span class="line">1）不及格课程</span><br><span class="line">2）两门以上[不及格课程]：课程数目&gt;2</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">/* </span><br><span class="line">第1步：得到每个学生的平均成绩，显示学号，平均成绩</span><br><span class="line">select 查询结果 [学号,平均成绩：汇总函数avg(成绩)]</span><br><span class="line">from 从哪张表中查找数据 [涉及到成绩：成绩表score]</span><br><span class="line">where 查询条件 [没有]</span><br><span class="line">group by 分组 [每个学生的平均：按学号分组]</span><br><span class="line">having 对分组结果指定条件 [没有]</span><br><span class="line">order by 对查询结果排序[没有];</span><br><span class="line">*/</span><br><span class="line">select 学号, avg(成绩) as 平均成绩</span><br><span class="line">from score</span><br><span class="line">group by 学号;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">/* </span><br><span class="line">第2步：再加上限制条件：</span><br><span class="line">1）不及格课程</span><br><span class="line">2）两门以上[不及格课程]</span><br><span class="line">select 查询结果 [学号,平均成绩：汇总函数avg(成绩)]</span><br><span class="line">from 从哪张表中查找数据 [涉及到成绩：成绩表score]</span><br><span class="line">where 查询条件 [限制条件：不及格课程，平均成绩&lt;60]</span><br><span class="line">group by 分组 [每个学生的平均：按学号分组]</span><br><span class="line">having 对分组结果指定条件 [限制条件：课程数目&gt;2,汇总函数count(课程号)&gt;2]</span><br><span class="line">order by 对查询结果排序[没有];</span><br><span class="line">*/</span><br><span class="line">select 学号, avg(成绩) as 平均成绩</span><br><span class="line">from score</span><br><span class="line">where 成绩 &lt;60</span><br><span class="line">group by 学号</span><br><span class="line">having count(课程号)&gt;=2;</span><br></pre></td></tr></table></figure>
+
+<ol start="14">
+<li> 查询所有课程成绩小于60分学生的学号、姓名 </li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">【知识点】子查询</span><br><span class="line"></span><br><span class="line">1.翻译成大白话</span><br><span class="line">1）查询结果：学生学号，姓名</span><br><span class="line">2）查询条件：所有课程成绩 &lt; 60 的学生，需要从成绩表里查找，用到子查询</span><br><span class="line"></span><br><span class="line">第1步，写子查询（所有课程成绩 &lt; 60 的学生）</span><br><span class="line">select 查询结果[学号]</span><br><span class="line">from 从哪张表中查找数据[成绩表：score]</span><br><span class="line">where 查询条件[成绩 &lt; 60]</span><br><span class="line">group by 分组[没有]</span><br><span class="line">having 对分组结果指定条件[没有]</span><br><span class="line">order by 对查询结果排序[没有]</span><br><span class="line">limit 从查询结果中取出指定行[没有];</span><br><span class="line"></span><br><span class="line">select 学号 </span><br><span class="line">from student</span><br><span class="line">where 成绩 &lt; 60;</span><br><span class="line"></span><br><span class="line">第2步，查询结果：学生学号，姓名，条件是前面1步查到的学号</span><br><span class="line"></span><br><span class="line">select 查询结果[学号,姓名]</span><br><span class="line">from 从哪张表中查找数据[学生表:student]</span><br><span class="line">where 查询条件[用到运算符in]</span><br><span class="line">group by 分组[没有]</span><br><span class="line">having 对分组结果指定条件[没有]</span><br><span class="line">order by 对查询结果排序[没有]</span><br><span class="line">limit 从查询结果中取出指定行[没有];</span><br><span class="line">*/</span><br><span class="line">select 学号,姓名</span><br><span class="line">from student</span><br><span class="line">where  学号 in (</span><br><span class="line">select 学号 </span><br><span class="line">from student</span><br><span class="line">where 成绩 &lt; 60</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<ol start="15">
+<li> 查询没有学全所有课的学生的学号、姓名 </li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">/*</span><br><span class="line">查找出学号，条件：没有学全所有课，也就是该学生选修的课程数 &lt; 总的课程数</span><br><span class="line">【考察知识点】in，子查询</span><br><span class="line">*/</span><br><span class="line">select 学号,姓名</span><br><span class="line">from student</span><br><span class="line">where 学号 in(</span><br><span class="line">select 学号 </span><br><span class="line">from score</span><br><span class="line">group by 学号</span><br><span class="line">having count(课程号) &lt; (select count(课程号) from course)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<ol start="16">
+<li> 查询出只选修了两门课程的全部学生的学号和姓名 </li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">select 学号,姓名</span><br><span class="line">from student</span><br><span class="line">where 学号 in(</span><br><span class="line">select 学号</span><br><span class="line">from score</span><br><span class="line">group by 学号</span><br><span class="line">having count(课程号)=2</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<ol start="17">
+<li> 1990年出生的学生名单 </li>
+</ol>
+<p>mysql 日期显示：<img src="/images/sql%E7%BB%83%E4%B9%A0/1572354768646.png" alt="1572354768646"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">/*</span><br><span class="line">查找1990年出生的学生名单</span><br><span class="line">学生表中出生日期列的类型是datetime</span><br><span class="line">*/</span><br><span class="line">select 学号,姓名 </span><br><span class="line">from student </span><br><span class="line">where year(出生日期)=1990; </span><br></pre></td></tr></table></figure>
+
+<ol start="18">
+<li> 查询各科成绩前两名的记录 </li>
+</ol>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/MuxjlFV0gi1GydOrYfiSeQ">参考微信公众号</a></p>
+<h3 id="5、多表查询"><a href="#5、多表查询" class="headerlink" title="5、多表查询"></a>5、多表查询</h3><ol>
+<li> 查询所有学生的学号、姓名、选课数、总成绩 </li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">select a.学号,a.姓名,count(b.课程号) as 选课数,sum(b.成绩) as 总成绩</span><br><span class="line">from student as a left join score as b</span><br><span class="line">on a.学号 = b.学号</span><br><span class="line">group by a.学号;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li> 查询平均成绩大于85的所有学生的学号、姓名和平均成绩 </li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">select a.学号,a.姓名, avg(b.成绩) as 平均成绩</span><br><span class="line">from student as a left join score as b</span><br><span class="line">on a.学号 = b.学号</span><br><span class="line">group by a.学号</span><br><span class="line">having avg(b.成绩)&gt;85;</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li> 查询学生的选课情况：学号，姓名，课程号，课程名称 </li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">select a.学号, a.姓名, c.课程号,c.课程名称</span><br><span class="line">from student a inner join score b on a.学号=b.学号</span><br><span class="line">inner join course c on b.课程号=c.课程号;</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li> 查询出每门课程的及格人数和不及格人数 </li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">-- 考察case表达式</span><br><span class="line">select 课程号,</span><br><span class="line">sum(case when 成绩&gt;=60 then 1 </span><br><span class="line">	 else 0 </span><br><span class="line">    end) as 及格人数,</span><br><span class="line">sum(case when 成绩 &lt;  60 then 1 </span><br><span class="line">	 else 0 </span><br><span class="line">    end) as 不及格人数</span><br><span class="line">from score</span><br><span class="line">group by 课程号;</span><br></pre></td></tr></table></figure>
+
+<ol start="5">
+<li> 使用分段[100-85],[85-70],[70-60],[&lt;60]来统计各科成绩，分别统计：各分数段人数，课程号和课程名称 </li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">-- 考察case表达式</span><br><span class="line">select a.课程号,b.课程名称,</span><br><span class="line">sum(case when 成绩 between 85 and 100 </span><br><span class="line">	 then 1 else 0 end) as &#x27;[100-85]&#x27;,</span><br><span class="line">sum(case when 成绩 &gt;=70 and 成绩&lt;85 </span><br><span class="line">	 then 1 else 0 end) as &#x27;[85-70]&#x27;,</span><br><span class="line">sum(case when 成绩&gt;=60 and 成绩&lt;70  </span><br><span class="line">	 then 1 else 0 end) as &#x27;[70-60]&#x27;,</span><br><span class="line">sum(case when 成绩&lt;60 then 1 else 0 end) as &#x27;[&lt;60]&#x27;</span><br><span class="line">from score as a right join course as b </span><br><span class="line">on a.课程号=b.课程号</span><br><span class="line">group by a.课程号,b.课程名称;</span><br></pre></td></tr></table></figure>
+
+<ol start="6">
+<li> 查询课程编号为0003且课程成绩在80分以上的学生的学号和姓名</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">select a.学号,a.姓名</span><br><span class="line">from student  as a inner join score as b on a.学号=b.学号</span><br><span class="line">where b.课程号=&#x27;0003&#x27; and b.成绩&gt;80;</span><br></pre></td></tr></table></figure>
+
+<ol start="7">
+<li>行列转换</li>
+</ol>
+<p><img src="/images/sql%E7%BB%83%E4%B9%A0/1572355005805.png"></p>
+<p><img src="/images/sql%E7%BB%83%E4%B9%A0/1572355013320.png" alt="1572355013320"></p>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/6Kll4Q6Xp37i2PiLUh4cMA">参考</a></p>
+<p>本文参考自：<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/38354000">猴子</a>，方便以后随时查看。</p>
+<h3 id="整理："><a href="#整理：" class="headerlink" title="整理："></a>整理：</h3><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/qdhxhz/p/6433222.html">Oracle基本操作</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/qdhxhz/p/6438938.html">多表查询</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/sql/" rel="tag"># sql</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/10/16/redis%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" rel="next" title="redis常用命令">
+                <i class="fa fa-chevron-left"></i> redis常用命令
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/10/30/hexo%E5%8D%9A%E5%AE%A2%E4%BC%98%E5%8C%96%E5%8F%82%E8%80%83/" rel="prev" title="hexo搭建个人博客参考">
+                hexo搭建个人博客参考 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">72</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">58</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E5%B8%B8%E8%A7%81sql%E5%AD%A6%E4%B9%A0"><span class="nav-number">1.</span> <span class="nav-text">一、常见sql学习</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81%E8%A1%A8%E8%81%94%E7%BB%93%E5%85%B3%E7%B3%BB"><span class="nav-number">1.1.</span> <span class="nav-text">1、表联结关系</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%E3%80%81%E5%BB%BA%E8%A1%A8%E5%8F%8A%E6%8F%92%E5%85%A5%E6%95%B0%E6%8D%AE"><span class="nav-number">1.2.</span> <span class="nav-text">2、建表及插入数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3%E3%80%81%E7%AE%80%E5%8D%95%E6%9F%A5%E8%AF%A2"><span class="nav-number">1.3.</span> <span class="nav-text">3、简单查询</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4%E3%80%81%E6%B1%87%E6%80%BB%E5%88%86%E6%9E%90"><span class="nav-number">1.4.</span> <span class="nav-text">4、汇总分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5%E3%80%81%E5%A4%9A%E8%A1%A8%E6%9F%A5%E8%AF%A2"><span class="nav-number">1.5.</span> <span class="nav-text">5、多表查询</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B4%E7%90%86%EF%BC%9A"><span class="nav-number">1.6.</span> <span class="nav-text">整理：</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">wentz</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">共91.6k字</span>
+</div>
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
